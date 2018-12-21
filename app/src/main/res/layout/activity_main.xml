@@ -7,18 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Switch
-        android:id="@+id/sw1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:checked="false"
-        android:showText="false"
-        android:text="Switch"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:checked="false"
-        tools:layout_editor_absoluteY="187dp" />
-
     <ImageView
         android:id="@+id/imageViewBtOff"
         android:layout_width="118dp"
@@ -44,16 +32,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/bt_on" />
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="244dp" />
 
 </android.support.constraint.ConstraintLayout>
