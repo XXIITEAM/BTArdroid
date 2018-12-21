@@ -21,12 +21,11 @@
 
     <Button
         android:id="@+id/bt4"
-        android:layout_width="0dp"
+        android:layout_width="128dp"
         android:layout_height="83dp"
         android:background="@android:color/holo_red_light"
         android:onClick="bt4Click"
         android:text="@string/co2"
-        app:layout_constraintEnd_toStartOf="@+id/bt5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bt1" />
 
@@ -76,19 +75,17 @@
         app:layout_constraintStart_toEndOf="@+id/bt2"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ToggleButton
-        android:id="@+id/tb1"
+    <Switch
+        android:id="@+id/sw1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="21dp"
         android:checked="false"
-        android:text="Mode"
-        android:textColor="?android:attr/navigationBarColor"
-        android:textOff="Manuel"
-        android:textOn="Auto"
-        android:textStyle="bold"
-        android:typeface="normal"
+        android:showText="false"
+        android:text="Switch"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt4" />
+        app:layout_constraintTop_toBottomOf="@+id/bt4"
+        tools:checked="false" />
 
 </android.support.constraint.ConstraintLayout>
