@@ -1,10 +1,10 @@
 package com.ip.jmc.btardroid;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.bluetooth.BluetoothDevice;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.harrysoft.androidbluetoothserial.BluetoothManager;
 import com.harrysoft.androidbluetoothserial.BluetoothSerialDevice;
 import com.harrysoft.androidbluetoothserial.SimpleBluetoothDeviceInterface;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     BluetoothManager bluetoothManager = BluetoothManager.getInstance();
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     String msgSent = "";
+    String a = "";
     private final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,16 +49,16 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
         if(bluetoothAdapter.isEnabled()) {
-            ImageView ivOn = (ImageView) findViewById(R.id.imageViewBtOn);
+            ImageView ivOn = findViewById(R.id.imageViewBtOn);
             ivOn.setVisibility(View.VISIBLE);
-            ImageView ivOff = (ImageView) findViewById(R.id.imageViewBtOff);
+            ImageView ivOff = findViewById(R.id.imageViewBtOff);
             ivOff.setVisibility(View.INVISIBLE);
         }
         else
         {
-            ImageView ivOn = (ImageView) findViewById(R.id.imageViewBtOn);
+            ImageView ivOn = findViewById(R.id.imageViewBtOn);
             ivOn.setVisibility(View.INVISIBLE);
-            ImageView ivOff = (ImageView) findViewById(R.id.imageViewBtOff);
+            ImageView ivOff = findViewById(R.id.imageViewBtOff);
             ivOff.setVisibility(View.VISIBLE);
         }
     }
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onMessageSent(String message) {
-        
+
     }
 
     private void onMessageReceived(String message) {
