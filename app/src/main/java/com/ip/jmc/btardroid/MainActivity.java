@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
             ivOn.setVisibility(View.INVISIBLE);
             ivOff.setVisibility(View.VISIBLE);
             Toast.makeText(this, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
+            lv = findViewById(R.id.lv1);
+            lv.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -141,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
                 pairedDevices = bluetoothManager.getPairedDevicesList();
             }
             if (!pairedDevices.isEmpty()) {
+                lv = findViewById(R.id.lv1);
+                lv.setVisibility(View.VISIBLE);
                 //setContentView(R.layout.activity_main);
                 for (BluetoothDevice device : pairedDevices) {
                     list.add(device.getName() + " - " + device.getAddress());
@@ -156,6 +160,11 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                 );
+            }
+            else
+            {
+                lv = findViewById(R.id.lv1);
+                lv.setVisibility(View.INVISIBLE);
             }
     }
 
