@@ -40,29 +40,26 @@ public class MainActivity extends AppCompatActivity {
         bt4=findViewById(R.id.bt4);
         bt5=findViewById(R.id.bt5);
         bt6=findViewById(R.id.bt6);
-
+        btOnOff();
         // Setup our BluetoothManager
 
-        /*if (bluetoothManager == null) {
+        if (bluetoothManager == null) {
             // Bluetooth unavailable on this device :( tell the user
             Toast.makeText(this, "Bluetooth not available.", Toast.LENGTH_LONG).show(); // Replace context with your context instance.
             finish();
-        }*/
-        ImageView ivOn = (ImageView) findViewById(R.id.imageViewBtOn);
-        ImageView ivOff = (ImageView) findViewById(R.id.imageViewBtOff);
+        }
         if(bluetoothAdapter.isEnabled()) {
+            ImageView ivOn = (ImageView) findViewById(R.id.imageViewBtOn);
             ivOn.setVisibility(View.VISIBLE);
+            ImageView ivOff = (ImageView) findViewById(R.id.imageViewBtOff);
             ivOff.setVisibility(View.INVISIBLE);
         }
-        else {
+        else
+        {
+            ImageView ivOn = (ImageView) findViewById(R.id.imageViewBtOn);
             ivOn.setVisibility(View.INVISIBLE);
+            ImageView ivOff = (ImageView) findViewById(R.id.imageViewBtOff);
             ivOff.setVisibility(View.VISIBLE);
-
-            ivOff.setOnClickListener(new View.OnClickListener(){
-
-                public void onClick(View view) {
-                    btOnOff();
-                }});
         }
     }
     public void btOnOff() {
@@ -70,16 +67,12 @@ public class MainActivity extends AppCompatActivity {
         if (!bluetoothAdapter.isEnabled()) {
             Intent enableBlueTooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBlueTooth, REQUEST_CODE_ENABLE_BLUETOOTH);
-            Toast.makeText(this, "Activation du Bluetooth", Toast.LENGTH_LONG).show();
-                ImageView ivOn = (ImageView) findViewById(R.id.imageViewBtOn);
-                ImageView ivOff = (ImageView) findViewById(R.id.imageViewBtOff);
-                ivOn.setVisibility(View.VISIBLE);
-                ivOff.setVisibility(View.INVISIBLE);
-
+            //Toast.makeText(this, "Activation du Bluetooth", Toast.LENGTH_LONG).show();
+            setContentView(R.layout.activity_main);
         }
-        else {
-            Toast.makeText(this, R.string.Connexion, Toast.LENGTH_LONG).show();
-        }
+        //else {
+            //Toast.makeText(this, R.string.Connexion, Toast.LENGTH_LONG).show();
+        //}
 
     }
     private SimpleBluetoothDeviceInterface deviceInterface;
@@ -102,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onMessageSent(String message) {
-        
+
     }
 
     private void onMessageReceived(String message) {
