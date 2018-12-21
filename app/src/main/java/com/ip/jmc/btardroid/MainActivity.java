@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bt1=findViewById(R.id.bt1);
+        //bt1=findViewById(R.id.bt1);
         bt2=findViewById(R.id.bt2);
         bt3=findViewById(R.id.bt3);
         bt4=findViewById(R.id.bt4);
