@@ -60,14 +60,22 @@ public class MainActivity extends AppCompatActivity {
         } else {
             ivOn.setVisibility(View.INVISIBLE);
             ivOff.setVisibility(View.VISIBLE);
-            ivOff.setOnClickListener(new View.OnClickListener() {
 
-                public void onClick(View view) {
-
-                    btOnOff();
-                }
-            });
         }
+        ivOff.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+
+                btOnOff();
+            }
+        });
+        ivOn.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+
+                btOnOff();
+            }
+        });
     }
 
     public void btOnOff() {
@@ -75,11 +83,13 @@ public class MainActivity extends AppCompatActivity {
         if (!bluetoothAdapter.isEnabled()) {
             Intent enableBlueTooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBlueTooth, REQUEST_CODE_ENABLE_BLUETOOTH);
-
-
-            //setContentView(R.layout.activity_main);
         } else {
-            Toast.makeText(this, R.string.Connexion, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, R.string.Connexion, Toast.LENGTH_LONG).show();
+            bluetoothAdapter.disable();
+            ImageView ivOn = findViewById(R.id.imageViewBtOn);
+            ImageView ivOff = findViewById(R.id.imageViewBtOff);
+            ivOn.setVisibility(View.INVISIBLE);
+            ivOff.setVisibility(View.VISIBLE);
         }
 
     }
@@ -203,14 +213,14 @@ public class MainActivity extends AppCompatActivity {
         // check that it is the SecondActivity with an OK result
         if (requestCode == REQUEST_CODE_ENABLE_BLUETOOTH) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-
-                Toast.makeText(this, "Activation du Bluetooth", Toast.LENGTH_LONG).show();
                 ImageView ivOn = findViewById(R.id.imageViewBtOn);
                 ImageView ivOff = findViewById(R.id.imageViewBtOff);
                 ivOn.setVisibility(View.VISIBLE);
                 ivOff.setVisibility(View.INVISIBLE);
             }
-            
+            if (resultCode == Activity.RESULT_CANCELED) {
+                Toast.makeText(this, "Abandon par l'utilisateur ...", Toast.LENGTH_LONG).show();
+            }
         }
     }//onActivityResult
 }
