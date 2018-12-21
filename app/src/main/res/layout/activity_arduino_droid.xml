@@ -31,12 +31,10 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/listView"
+            <ListView
+                android:id="@+id/listViewParams"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </android.support.v7.widget.RecyclerView>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -55,7 +53,7 @@
                     android:gravity="center">
 
                     <Button
-                        android:id="@+id/button14"
+                        android:id="@+id/btnHaut"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="btnHautClick"
@@ -68,14 +66,14 @@
                     android:gravity="center">
 
                     <Button
-                        android:id="@+id/button15"
+                        android:id="@+id/btnGauche"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="btnGaucheClick"
                         android:text="Button" />
 
                     <Button
-                        android:id="@+id/button16"
+                        android:id="@+id/btnDroit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="btnDroiteClick"
@@ -88,7 +86,7 @@
                     android:gravity="center">
 
                     <Button
-                        android:id="@+id/button17"
+                        android:id="@+id/btnBas"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="btnBasClick"
@@ -112,9 +110,17 @@
                     android:gravity="center">
 
                     <Button
-                        android:id="@+id/button18"
+                        android:id="@+id/btnAccel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="btnAccelClick"
+                        android:text="Button" />
+
+                    <Button
+                        android:id="@+id/btnFrein"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="btnFreinClick"
                         android:text="Button" />
                 </TableRow>
 

@@ -9,12 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.harrysoft.androidbluetoothserial.BluetoothManager;
 import com.harrysoft.androidbluetoothserial.BluetoothSerialDevice;
@@ -27,16 +24,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
+    public final static String EXTRA_MESSAGE = "com.ip.jmc.MESSAGE";
+    private final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
+    public static SimpleBluetoothDeviceInterface deviceInterface;
+    public static String sentMsg = "";
+    public static String receptMsg = "";
     Button bt1, bt2, bt3, bt4, bt5, bt6;
     ListView lv;
     ListView lv1;
     BluetoothManager bluetoothManager = BluetoothManager.getInstance();
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    String msgSent = "";
-    private final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
-    public final static String EXTRA_MESSAGE = "com.ip.jmc.MESSAGE";
-    public SimpleBluetoothDeviceInterface deviceInterface;
-
     public void btOnOff() {
 
         if (!bluetoothAdapter.isEnabled()) {
@@ -68,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Bluetooth not available.", Toast.LENGTH_LONG).show(); // Replace context with your context instance.
             finish();
         }*/
-       ImageView ivOn = findViewById(R.id.imageViewBtOn);
+        ImageView ivOn = findViewById(R.id.imageViewBtOn);
         ImageView ivOff = findViewById(R.id.imageViewBtOff);
         if (bluetoothAdapter.isEnabled()) {
             ivOn.setVisibility(View.VISIBLE);
@@ -105,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(this::onConnected, this::onError);
     }
 
-    private void onConnected(BluetoothSerialDevice connectedDevice) {
+    public void onConnected(BluetoothSerialDevice connectedDevice) {
         // You are now connected to this device!
         // Here you may want to retain an instance to your device:
         deviceInterface = connectedDevice.toSimpleDeviceInterface();
@@ -115,57 +112,53 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    private void onMessageSent(String message) {
-
+    public void onMessageSent(String message) {
+        //Toast.makeText(this, "Envoi de : " + message, Toast.LENGTH_LONG).show(); // Replace context with your context instance.
+        sentMsg = message;
     }
 
-    private void onMessageReceived(String message) {
-        // We received a message! Handle it here.
-        if (message == msgSent) {
-            Toast.makeText(this, "Commande reçue " + message, Toast.LENGTH_LONG).show(); // Replace context with your context instance.
-        } else {
-            Toast.makeText(this, "Une erreur est survenue " + message, Toast.LENGTH_LONG).show(); // Replace context with your context instance.
-
-        }
+    public void onMessageReceived(String message) {
+        receptMsg = message;
+        // ArduinoDroid.msgToList(message);
+        //Toast.makeText(this, "Message envoyé -> " + sentMsg + "Message recu " + message, Toast.LENGTH_LONG).show(); // Replace context with your context instance.
+        //(message);
     }
 
-    private void onError(Throwable error) {
+
+    public void onError(Throwable error) {
         // Handle the error
-        Toast.makeText(this, "Received a message! Message was: " + error, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Erreur : " + error, Toast.LENGTH_LONG).show();
     }
 
     public void listDevicesBT() {
 
-            ArrayList list = new ArrayList();
+        ArrayList list = new ArrayList();
 
-            List<BluetoothDevice> pairedDevices = bluetoothManager.getPairedDevicesList();
-            while (pairedDevices.isEmpty()) {
-                pairedDevices = bluetoothManager.getPairedDevicesList();
+        List<BluetoothDevice> pairedDevices = bluetoothManager.getPairedDevicesList();
+        while (pairedDevices.isEmpty()) {
+            pairedDevices = bluetoothManager.getPairedDevicesList();
+        }
+        if (!pairedDevices.isEmpty()) {
+            lv = findViewById(R.id.lv1);
+            lv.setVisibility(View.VISIBLE);
+            //setContentView(R.layout.activity_main);
+            for (BluetoothDevice device : pairedDevices) {
+                list.add(device.getName() + " - " + device.getAddress());
             }
-            if (!pairedDevices.isEmpty()) {
-                lv = findViewById(R.id.lv1);
-                lv.setVisibility(View.VISIBLE);
-                //setContentView(R.layout.activity_main);
-                for (BluetoothDevice device : pairedDevices) {
-                    list.add(device.getName() + " - " + device.getAddress());
-                }
-                final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
-                lv = findViewById(R.id.lv1);
-                lv.setAdapter(adapter);
-                lv.setOnItemClickListener((popup, lv1, position, id) -> {
-                            String selLv = lv.getItemAtPosition(position).toString().trim();
-                            String segments[] = selLv.split(" - ");
-                            String macItem = segments[segments.length - 1];
-                            connectDevice(macItem);
-                        }
+            final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
+            lv.setAdapter(adapter);
+            lv.setOnItemClickListener((popup, lv1, position, id) -> {
+                        String selLv = lv.getItemAtPosition(position).toString().trim();
+                        String segments[] = selLv.split(" - ");
+                        String macItem = segments[segments.length - 1];
+                        connectDevice(macItem);
+                    }
 
-                );
-            }
-            else
-            {
-                lv = findViewById(R.id.lv1);
-                lv.setVisibility(View.INVISIBLE);
-            }
+            );
+        } else {
+            lv = findViewById(R.id.lv1);
+            lv.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void deconnexion(View v) {
@@ -184,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
     @Override
     public void onBackPressed() {
         //Toast.makeText(this,"Thanks for using application!!",Toast.LENGTH_LONG).show();

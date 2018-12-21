@@ -1,90 +1,115 @@
 package com.ip.jmc.btardroid;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
+import java.util.ArrayList;
 
-public class ArduinoDroid extends MainActivity {
+import static com.ip.jmc.btardroid.MainActivity.deviceInterface;
+import static com.ip.jmc.btardroid.MainActivity.receptMsg;
+import static com.ip.jmc.btardroid.MainActivity.sentMsg;
 
+public class ArduinoDroid extends AppCompatActivity {
+    ListView listViewParams;
 
+    void msgToList() {
+        // We received a message! Handle it here.
+        if (sentMsg != null) {
+            switch (sentMsg) {
+                case "F":
+                    break;
+                case "B":
+                    break;
+                case "Z":
+                    ArrayList<String> listParams = new ArrayList();
+                    listViewParams = findViewById(R.id.listViewParams);
+                    //  listViewParams.setVisibility(View.VISIBLE);
+                    //List listParam = findViewById(R.id.listViewParam);
+                    /*for (String mess : receptMsg.split("/")) {
+
+                        listParams.add(mess);
+                    }
+                    */
+                    listParams.add(receptMsg);
+                    listParams.add("OK");
+
+                    final ArrayAdapter adapterParams = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listParams);
+
+                    listViewParams.setAdapter(adapterParams);
+                    break;
+
+            }
+        } else {
+
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arduino_droid);
-
-        //Intent intent = getIntent();
-        //String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-
-        // Capture the layout's TextView and set the string as its text
-        //TextView textView = findViewById(R.id.TV01);
-        //textView.setText(message);
-
+        listViewParams = findViewById(R.id.listViewParams);
     }
 
     public void btn1Click(View v) {
-        deviceInterface.sendMessage("2");
-        msgSent = "2";
+
+
+        deviceInterface.sendMessage("A");
     }
 
     public void btn2Click(View v) {
-        deviceInterface.sendMessage("2");
-        msgSent = "2";
+        deviceInterface.sendMessage("Z");
     }
 
     public void btn3Click(View v) {
         deviceInterface.sendMessage("3");
-        msgSent = "3";
     }
 
     public void btn4Click(View v) {
         deviceInterface.sendMessage("4");
-        msgSent = "4";
     }
 
     public void btn5Click(View v) {
         deviceInterface.sendMessage("4");
-        msgSent = "4";
 
     }
 
     public void btn6Click(View v) {
         deviceInterface.sendMessage("6");
-        msgSent = "6";
     }
 
     public void btn7Click(View v) {
         deviceInterface.sendMessage("6");
-        msgSent = "6";
     }
 
     public void btn8Click(View v) {
         deviceInterface.sendMessage("6");
-        msgSent = "6";
     }
 
     public void btnHautClick(View v) {
-        deviceInterface.sendMessage("6");
-        msgSent = "6";
+        deviceInterface.sendMessage("F");
     }
 
     public void btnBasClick(View v) {
-        deviceInterface.sendMessage("6");
-        msgSent = "6";
+        deviceInterface.sendMessage("B");
     }
 
     public void btnGaucheClick(View v) {
-        deviceInterface.sendMessage("6");
-        msgSent = "6";
+        deviceInterface.sendMessage("G");
     }
 
     public void btnDroiteClick(View v) {
-        deviceInterface.sendMessage("6");
-        msgSent = "6";
+        deviceInterface.sendMessage("D");
     }
 
     public void btnAccelClick(View v) {
-        deviceInterface.sendMessage("6");
-        msgSent = "6";
+        deviceInterface.sendMessage("F");
+    }
+
+    public void btnFreinClick(View v) {
+        deviceInterface.sendMessage("S");
     }
 
 }
