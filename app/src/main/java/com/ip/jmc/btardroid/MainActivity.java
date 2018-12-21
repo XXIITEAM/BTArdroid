@@ -160,7 +160,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void btTest(View v) {
+        //deviceInterface.sendMessage("5");
+        //msgSent = "5";
+        Intent intent = new Intent(this, ArduinoDroid.class);
+        //TextView editText = findViewById(R.id.editText);
+        //String message = editText.getText().toString();
+        //intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
 
+    }
     @Override
     public void onBackPressed() {
         //Toast.makeText(this,"Thanks for using application!!",Toast.LENGTH_LONG).show();

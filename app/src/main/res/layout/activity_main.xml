@@ -70,4 +70,14 @@
         android:layout_height="wrap_content"
         app:barrierDirection="top" />
 
+    <Button
+        android:id="@+id/btTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:onClick="btTest"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
