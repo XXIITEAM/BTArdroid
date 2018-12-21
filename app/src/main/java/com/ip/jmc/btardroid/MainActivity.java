@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.harrysoft.androidbluetoothserial.BluetoothManager;
@@ -33,15 +32,28 @@ public class MainActivity extends AppCompatActivity {
     String msgSent = "";
     private final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
     public final static String EXTRA_MESSAGE = "com.ip.jmc.MESSAGE";
+    public SimpleBluetoothDeviceInterface deviceInterface;
+
+    public void btOnOff() {
+
+        if (!bluetoothAdapter.isEnabled()) {
+            Intent enableBlueTooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBlueTooth, REQUEST_CODE_ENABLE_BLUETOOTH);
+        } else {
+            //Toast.makeText(this, R.string.Connexion, Toast.LENGTH_LONG).show();
+            bluetoothAdapter.disable();
+            ImageView ivOn = findViewById(R.id.imageViewBtOn);
+            ImageView ivOff = findViewById(R.id.imageViewBtOff);
+            ivOn.setVisibility(View.INVISIBLE);
+            ivOff.setVisibility(View.VISIBLE);
+        }
+
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bt1 = findViewById(R.id.bt1);
-        bt2 = findViewById(R.id.bt2);
-        bt3 = findViewById(R.id.bt3);
-        bt4 = findViewById(R.id.bt4);
-        bt5 = findViewById(R.id.bt5);
-        bt6 = findViewById(R.id.bt6);
+
 
         // Setup our BluetoothManager
 
@@ -75,24 +87,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    public void btOnOff() {
-
-        if (!bluetoothAdapter.isEnabled()) {
-            Intent enableBlueTooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBlueTooth, REQUEST_CODE_ENABLE_BLUETOOTH);
-        } else {
-            //Toast.makeText(this, R.string.Connexion, Toast.LENGTH_LONG).show();
-            bluetoothAdapter.disable();
-            ImageView ivOn = findViewById(R.id.imageViewBtOn);
-            ImageView ivOff = findViewById(R.id.imageViewBtOff);
-            ivOn.setVisibility(View.INVISIBLE);
-            ivOff.setVisibility(View.VISIBLE);
-        }
-
-    }
-
-    private SimpleBluetoothDeviceInterface deviceInterface;
 
     private void connectDevice(String mac) {
         bluetoothManager.openSerialDevice(mac)
@@ -165,36 +159,7 @@ public class MainActivity extends AppCompatActivity {
         bluetoothManager.close();
     }
 
-    public void bt2Click(View v) {
-        deviceInterface.sendMessage("2");
-        msgSent = "2";
-    }
 
-    public void bt3Click(View v) {
-        deviceInterface.sendMessage("3");
-        msgSent = "3";
-    }
-
-    public void bt4Click(View v) {
-        deviceInterface.sendMessage("4");
-        msgSent = "4";
-    }
-
-    public void bt5Click(View v) {
-        //deviceInterface.sendMessage("5");
-        //msgSent = "5";
-        Intent intent = new Intent(this, ArduinoDroid.class);
-        TextView editText = findViewById(R.id.editText);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
-
-    }
-
-    public void bt6Click(View v) {
-        deviceInterface.sendMessage("6");
-        msgSent = "6";
-    }
 
     @Override
     public void onBackPressed() {
