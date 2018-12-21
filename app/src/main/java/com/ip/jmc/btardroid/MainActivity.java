@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Received a message! Message was: " + error, Toast.LENGTH_LONG).show();
     }
 
-    public void listDevicesBT(View v) {
+    public void listDevicesBT() {
 
         if (bluetoothAdapter.isEnabled()) {
             ArrayList list = new ArrayList();
