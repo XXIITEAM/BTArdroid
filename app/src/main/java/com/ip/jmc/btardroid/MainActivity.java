@@ -8,11 +8,9 @@ import android.bluetooth.BluetoothDevice;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.harrysoft.androidbluetoothserial.BluetoothManager;
 import com.harrysoft.androidbluetoothserial.BluetoothSerialDevice;
@@ -25,10 +23,8 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-import static java.lang.Boolean.TRUE;
-
 public class MainActivity extends AppCompatActivity {
-    Button bt1,bt2,bt3,bt4,bt5,bt6,tb1;
+    Button bt1,bt2,bt3,bt4,bt5,bt6;
     ListView lv;
     ListView lv1;
     BluetoothManager bluetoothManager = BluetoothManager.getInstance();
@@ -44,16 +40,27 @@ public class MainActivity extends AppCompatActivity {
         bt4=findViewById(R.id.bt4);
         bt5=findViewById(R.id.bt5);
         bt6=findViewById(R.id.bt6);
-        tb1=findViewById(R.id.sw1);
-
-
+        btOnOff();
         // Setup our BluetoothManager
+
         if (bluetoothManager == null) {
             // Bluetooth unavailable on this device :( tell the user
             Toast.makeText(this, "Bluetooth not available.", Toast.LENGTH_LONG).show(); // Replace context with your context instance.
             finish();
         }
-
+        if(bluetoothAdapter.isEnabled()) {
+            ImageView ivOn = (ImageView) findViewById(R.id.imageViewBtOn);
+            ivOn.setVisibility(View.VISIBLE);
+            ImageView ivOff = (ImageView) findViewById(R.id.imageViewBtOff);
+            ivOff.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            ImageView ivOn = (ImageView) findViewById(R.id.imageViewBtOn);
+            ivOn.setVisibility(View.INVISIBLE);
+            ImageView ivOff = (ImageView) findViewById(R.id.imageViewBtOff);
+            ivOff.setVisibility(View.VISIBLE);
+        }
     }
     public void btOnOff() {
 
@@ -107,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Received a message! Message was: " + error, Toast.LENGTH_LONG).show();
     }
     public void listDevicesBT(View v){
-        btOnOff();
+
     if(bluetoothAdapter.isEnabled()) {
         ArrayList list = new ArrayList();
 
@@ -134,21 +141,6 @@ public class MainActivity extends AppCompatActivity {
             //onBackPressed();
         }
     }
-    }
-
-    public void onSwitchChange(){
-        // initiate a Switch
-        Switch simpleSwitch = (Switch) findViewById(R.id.sw1);
-
-        //      check current state of a Switch (true or false).
-        Boolean switchState = simpleSwitch.isChecked();
-
-        if (switchState == TRUE) {
-            deviceInterface.sendMessage("A");
-        }
-        else {
-            deviceInterface.sendMessage("P");
-        }
     }
 
     public void deconnexion(View v) {
