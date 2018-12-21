@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //Toast.makeText(this,"Thanks for using application!!",Toast.LENGTH_LONG).show();
-        //getApplicationContext();
+        getApplicationContext();
         super.onBackPressed();
     }
 }
