@@ -1,6 +1,5 @@
 package com.ip.jmc.btardroid;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -24,8 +23,6 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-
 public class MainActivity extends AppCompatActivity {
     Button bt1, bt2, bt3, bt4, bt5, bt6;
     ListView lv;
@@ -34,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     String msgSent = "";
     private final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
-
+    public final static String EXTRA_MESSAGE = "com.ip.jmc.MESSAGE";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
