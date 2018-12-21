@@ -2,27 +2,29 @@ package com.ip.jmc.btardroid;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.bluetooth.BluetoothDevice;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.harrysoft.androidbluetoothserial.BluetoothManager;
 import com.harrysoft.androidbluetoothserial.BluetoothSerialDevice;
 import com.harrysoft.androidbluetoothserial.SimpleBluetoothDeviceInterface;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
     Button bt1, bt2, bt3, bt4, bt5, bt6;
@@ -50,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Bluetooth not available.", Toast.LENGTH_LONG).show(); // Replace context with your context instance.
             finish();
         }*/
-        ImageView ivOn = (ImageView) findViewById(R.id.imageViewBtOn);
-        ImageView ivOff = (ImageView) findViewById(R.id.imageViewBtOff);
+        ImageView ivOn = findViewById(R.id.imageViewBtOn);
+        ImageView ivOff = findViewById(R.id.imageViewBtOff);
         if (bluetoothAdapter.isEnabled()) {
             ivOn.setVisibility(View.VISIBLE);
             ivOff.setVisibility(View.INVISIBLE);
@@ -171,8 +173,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bt5Click(View v) {
-        deviceInterface.sendMessage("5");
-        msgSent = "5";
+        //deviceInterface.sendMessage("5");
+        //msgSent = "5";
+        Intent intent = new Intent(this, ArduinoDroid.class);
+        TextView editText = findViewById(R.id.editText);
+        String message = editText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+
     }
 
     public void bt6Click(View v) {
@@ -197,8 +205,8 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
 
                 Toast.makeText(this, "Activation du Bluetooth", Toast.LENGTH_LONG).show();
-                ImageView ivOn = (ImageView) findViewById(R.id.imageViewBtOn);
-                ImageView ivOff = (ImageView) findViewById(R.id.imageViewBtOff);
+                ImageView ivOn = findViewById(R.id.imageViewBtOn);
+                ImageView ivOff = findViewById(R.id.imageViewBtOff);
                 ivOn.setVisibility(View.VISIBLE);
                 ivOff.setVisibility(View.INVISIBLE);
             }

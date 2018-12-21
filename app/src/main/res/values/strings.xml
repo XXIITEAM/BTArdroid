@@ -11,4 +11,7 @@
     <string name="mod">Mode</string>
     <string name="Manuel">Mode</string>
     <string name="Auto">Mode</string>
+    <string name="title_activity_arduino_droid">ArduinoDroid</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

@@ -116,4 +116,15 @@
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/bt_on" />
 
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="244dp" />
+
 </android.support.constraint.ConstraintLayout>
