@@ -24,6 +24,7 @@
         android:layout_width="128dp"
         android:layout_height="83dp"
         android:background="@android:color/holo_red_light"
+        android:contentDescription="@string/Auto"
         android:onClick="bt4Click"
         android:text="@string/co2"
         app:layout_constraintStart_toStartOf="parent"

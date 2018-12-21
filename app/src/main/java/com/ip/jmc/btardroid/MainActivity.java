@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         bt3=findViewById(R.id.bt3);
         bt4=findViewById(R.id.bt4);
         bt5=findViewById(R.id.bt5);
-        bt6=findViewById(R.id.bt6);
+        //bt6=findViewById(R.id.bt6);
         btOnOff();
         // Setup our BluetoothManager
 
