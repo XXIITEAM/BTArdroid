@@ -60,11 +60,11 @@ public class ArduinoDroid extends AppCompatActivity {
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity);
+        //String message = intent.getStringExtra(MainActivity);
 
         // Capture the layout's TextView and set the string as its text
         TextView textView = findViewById(R.id.TV01);
-        textView.setText(message);
+        //textView.setText(message);
 
 
     }
