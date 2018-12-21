@@ -9,4 +9,6 @@
     <string name="co2">CO2</string>
     <string name="cam">Camera</string>
     <string name="mod">Mode</string>
+    <string name="Manuel">Mode</string>
+    <string name="Auto">Mode</string>
 </resources>

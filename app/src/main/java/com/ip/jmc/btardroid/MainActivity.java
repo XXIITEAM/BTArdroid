@@ -4,10 +4,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.bluetooth.BluetoothDevice;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -30,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     ListView lv1;
     BluetoothManager bluetoothManager = BluetoothManager.getInstance();
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    String msgSent = "";
     private final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,12 +87,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void onMessageReceived(String message) {
         // We received a message! Handle it here.
-        //Toast.makeText(null, "Received a message! Message was: " + message, Toast.LENGTH_LONG).show(); // Replace context with your context instance.
+        if(message == msgSent){
+            Toast.makeText(this, "Commande reçue " + message, Toast.LENGTH_LONG).show(); // Replace context with your context instance.
+        }
+        else {
+            Toast.makeText(this, "Une erreur est survenue " + message, Toast.LENGTH_LONG).show(); // Replace context with your context instance.
+
+        }
     }
 
     private void onError(Throwable error) {
         // Handle the error
-        Toast.makeText(null, "Received a message! Message was: " + error, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Received a message! Message was: " + error, Toast.LENGTH_LONG).show();
     }
     public void listDevicesBT(View v){
         btOnOff();
@@ -129,8 +134,25 @@ public class MainActivity extends AppCompatActivity {
         bluetoothManager.closeDevice(deviceInterface); // Close by interface instance
         bluetoothManager.close();
     }
-    public void click6(View v) {
-        deviceInterface.sendMessage("I");
+    public void bt2Click(View v) {
+        deviceInterface.sendMessage("2");
+        msgSent = "2";
+    }
+    public void bt3Click(View v) {
+        deviceInterface.sendMessage("3");
+        msgSent = "3";
+    }
+    public void bt4Click(View v) {
+        deviceInterface.sendMessage("4");
+        msgSent = "4";
+    }
+    public void bt5Click(View v) {
+        deviceInterface.sendMessage("5");
+        msgSent = "5";
+    }
+    public void bt6Click(View v) {
+        deviceInterface.sendMessage("6");
+        msgSent = "6";
     }
 
     @Override
