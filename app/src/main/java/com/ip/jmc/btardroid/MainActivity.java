@@ -54,12 +54,12 @@ public class MainActivity extends AppCompatActivity {
         if (!bluetoothAdapter.isEnabled()) {
             Intent enableBlueTooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBlueTooth, REQUEST_CODE_ENABLE_BLUETOOTH);
-            //Toast.makeText(this, "Activation du Bluetooth", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Activation du Bluetooth", Toast.LENGTH_LONG).show();
             setContentView(R.layout.activity_main);
         }
-        else {
-            Toast.makeText(this, R.string.Connexion, Toast.LENGTH_LONG).show();
-        }
+        //else {
+            //Toast.makeText(this, R.string.Connexion, Toast.LENGTH_LONG).show();
+        //}
 
     }
     private SimpleBluetoothDeviceInterface deviceInterface;
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void listDevicesBT(View v){
         btOnOff();
-    if(bluetoothAdapter.isEnabled()) {
+    //if(bluetoothAdapter.isEnabled()) {
         ArrayList list = new ArrayList();
 
         List<BluetoothDevice> pairedDevices = bluetoothManager.getPairedDevicesList();
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
             onBackPressed();
         }
     }
-    }
+    //}
 
     public void deconnexion(View v) {
         bluetoothManager.closeDevice(deviceInterface); // Close by interface instance
