@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">BTArdroid</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="Connexion">Connexion BT</string>
+    <string name="temp">Température</string>
+    <string name="dt">Détection</string>
+    <string name="co2">CO2</string>
+    <string name="cam">Camera</string>
+    <string name="mod">Mode</string>
+</resources>
