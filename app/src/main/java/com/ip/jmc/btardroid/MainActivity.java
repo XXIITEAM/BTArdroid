@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
         if (!bluetoothAdapter.isEnabled()) {
             Intent enableBlueTooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBlueTooth, REQUEST_CODE_ENABLE_BLUETOOTH);
-            Toast.makeText(this, "Activation du Bluetooth", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Activation du Bluetooth", Toast.LENGTH_LONG).show();
+            setContentView(R.layout.activity_main);
         }
         else {
             Toast.makeText(this, R.string.Connexion, Toast.LENGTH_LONG).show();
@@ -96,20 +97,20 @@ public class MainActivity extends AppCompatActivity {
     }
     public void listDevicesBT(View v){
         btOnOff();
-
+    if(bluetoothAdapter.isEnabled()) {
         ArrayList list = new ArrayList();
 
         List<BluetoothDevice> pairedDevices = bluetoothManager.getPairedDevicesList();
         while (pairedDevices.isEmpty()) {
-                pairedDevices = bluetoothManager.getPairedDevicesList();
+            pairedDevices = bluetoothManager.getPairedDevicesList();
         }
-        if (!pairedDevices.isEmpty()){
+        if (!pairedDevices.isEmpty()) {
             setContentView(R.layout.activity_list_devices);
             for (BluetoothDevice device : pairedDevices) {
                 list.add(device.getName() + " - " + device.getAddress());
             }
-            final ArrayAdapter adapter = new  ArrayAdapter(this,android.R.layout.simple_list_item_1, list);
-            lv=findViewById(R.id.lv1);
+            final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
+            lv = findViewById(R.id.lv1);
             lv.setAdapter(adapter);
             lv.setOnItemClickListener((popup, lv1, position, id) -> {
                         String selLv = lv.getItemAtPosition(position).toString().trim();
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             );
             onBackPressed();
         }
-
+    }
     }
 
     public void deconnexion(View v) {
