@@ -210,9 +210,7 @@ public class MainActivity extends AppCompatActivity {
                 ivOn.setVisibility(View.VISIBLE);
                 ivOff.setVisibility(View.INVISIBLE);
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                setContentView(R.layout.activity_main);
-            }
+            
         }
     }//onActivityResult
 }
