@@ -9,9 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.harrysoft.androidbluetoothserial.BluetoothManager;
 import com.harrysoft.androidbluetoothserial.BluetoothSerialDevice;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             ImageView ivOff = findViewById(R.id.imageViewBtOff);
             ivOn.setVisibility(View.INVISIBLE);
             ivOff.setVisibility(View.VISIBLE);
+            Toast.makeText(this, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -62,16 +66,18 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Bluetooth not available.", Toast.LENGTH_LONG).show(); // Replace context with your context instance.
             finish();
         }*/
-        ImageView ivOn = findViewById(R.id.imageViewBtOn);
+       ImageView ivOn = findViewById(R.id.imageViewBtOn);
         ImageView ivOff = findViewById(R.id.imageViewBtOff);
         if (bluetoothAdapter.isEnabled()) {
             ivOn.setVisibility(View.VISIBLE);
             ivOff.setVisibility(View.INVISIBLE);
+            listDevicesBT();
         } else {
             ivOn.setVisibility(View.INVISIBLE);
             ivOff.setVisibility(View.VISIBLE);
 
         }
+
         ivOff.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -86,7 +92,9 @@ public class MainActivity extends AppCompatActivity {
                 btOnOff();
             }
         });
+
     }
+
 
     private void connectDevice(String mac) {
         bluetoothManager.openSerialDevice(mac)
@@ -126,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void listDevicesBT() {
 
-        if (bluetoothAdapter.isEnabled()) {
             ArrayList list = new ArrayList();
 
             List<BluetoothDevice> pairedDevices = bluetoothManager.getPairedDevicesList();
@@ -134,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 pairedDevices = bluetoothManager.getPairedDevicesList();
             }
             if (!pairedDevices.isEmpty()) {
-                setContentView(R.layout.activity_list_devices);
+                //setContentView(R.layout.activity_main);
                 for (BluetoothDevice device : pairedDevices) {
                     list.add(device.getName() + " - " + device.getAddress());
                 }
@@ -149,9 +156,7 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                 );
-                //onBackPressed();
             }
-        }
     }
 
     public void deconnexion(View v) {
@@ -189,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 ImageView ivOff = findViewById(R.id.imageViewBtOff);
                 ivOn.setVisibility(View.VISIBLE);
                 ivOff.setVisibility(View.INVISIBLE);
+                listDevicesBT();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(this, "Abandon par l'utilisateur ...", Toast.LENGTH_LONG).show();

@@ -7,16 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Switch
-        android:id="@+id/sw1"
-        android:layout_width="wrap_content"
-        android:layout_height="26dp"
-        android:checked="false"
-        android:showText="false"
-        android:text="Off"
-        tools:checked="false"
-        tools:layout_editor_absoluteX="61dp"
-        tools:layout_editor_absoluteY="0dp" />
+    <ListView
+        android:id="@+id/lv1"
+        android:layout_width="326dp"
+        android:layout_height="331dp"
+        android:layout_marginStart="4dp"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:scrollbars="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageViewBtOff"
@@ -24,8 +29,8 @@
         android:layout_height="43dp"
         android:visibility="invisible"
         app:srcCompat="@drawable/bt_off"
-        tools:layout_editor_absoluteX="7dp"
-        tools:layout_editor_absoluteY="4dp" />
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp" />
 
     <ImageView
         android:id="@+id/imageViewBtOn"
@@ -33,42 +38,8 @@
         android:layout_height="42dp"
         android:visibility="invisible"
         app:srcCompat="@drawable/bt_on"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="4dp" />
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="247dp" />
-
-    <android.support.constraint.Barrier
-        android:id="@+id/barrier4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="left" />
-
-    <android.support.constraint.Barrier
-        android:id="@+id/barrier5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="top" />
-
-    <android.support.constraint.Barrier
-        android:id="@+id/barrier6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="left" />
-
-    <android.support.constraint.Barrier
-        android:id="@+id/barrier7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="top" />
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <Button
         android:id="@+id/btTest"
