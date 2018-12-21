@@ -3,7 +3,6 @@ package com.ip.jmc.btardroid;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 
 public class ArduinoDroid extends MainActivity {
@@ -48,9 +47,9 @@ public class ArduinoDroid extends MainActivity {
         //deviceInterface.sendMessage("5");
         //msgSent = "5";
         Intent intent = new Intent(this, ArduinoDroid.class);
-        TextView editText = findViewById(R.id.editText);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
+        //TextView editText = findViewById(R.id.editText);
+        //String message = editText.getText().toString();
+        //intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
 
     }
