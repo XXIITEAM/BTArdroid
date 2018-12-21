@@ -25,7 +25,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
     Button bt1,bt2,bt3,bt4,bt5,bt6;
-    ListView lv;
+    //ListView lv;
     ListView lv1;
     BluetoothManager bluetoothManager = BluetoothManager.getInstance();
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
