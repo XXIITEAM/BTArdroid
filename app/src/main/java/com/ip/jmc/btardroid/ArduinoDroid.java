@@ -10,16 +10,21 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import static com.ip.jmc.btardroid.MainActivity.deviceInterface;
-import static com.ip.jmc.btardroid.MainActivity.receptMsg;
-import static com.ip.jmc.btardroid.MainActivity.sentMsg;
+import static com.ip.jmc.btardroid.MainActivity.strMessageEnvoye;
+import static com.ip.jmc.btardroid.MainActivity.strMessageRecu;
 
 public class ArduinoDroid extends AppCompatActivity {
     ListView listViewParams;
-    public static Context mContext2;
-    void msgToList() {
+    public static Context mContextArduinoDroid;
+
+    public static Context getContext() {
+        return mContextArduinoDroid;
+    }
+
+    void convertParams() {
         // We received a message! Handle it here.
-        if (sentMsg != null) {
-            switch (sentMsg) {
+        if (strMessageEnvoye != null) {
+            switch (strMessageEnvoye) {
                 case "F":
                     break;
                 case "B":
@@ -29,7 +34,7 @@ public class ArduinoDroid extends AppCompatActivity {
                     listViewParams = findViewById(R.id.listViewParams);
                     //  listViewParams.setVisibility(View.VISIBLE);
                     //List listParam = findViewById(R.id.listViewParam);
-                    for (String mess : receptMsg.split("/")) {
+                    for (String mess : strMessageRecu.split("/")) {
                         listParams.add(mess);
                     }
 
@@ -43,13 +48,6 @@ public class ArduinoDroid extends AppCompatActivity {
 
         }
     }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        mContext2 = getBaseContext();
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_arduino_droid);
-        listViewParams = findViewById(R.id.listViewParams);
-    }
 
     public void btn1Click(View v) {
 
@@ -58,9 +56,12 @@ public class ArduinoDroid extends AppCompatActivity {
 
     }
 
-    public void btn2Click(View v) {
-        deviceInterface.sendMessage("Z");
-        msgToList();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        mContextArduinoDroid = getBaseContext();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_arduino_droid);
+        listViewParams = findViewById(R.id.listViewParams);
     }
 
     public void btn3Click(View v) {
@@ -112,7 +113,9 @@ public class ArduinoDroid extends AppCompatActivity {
     public void btnFreinClick(View v) {
         deviceInterface.sendMessage("S");
     }
-    public static Context getContext() {
-        return mContext2;
+
+    public void btn2Click(View v) {
+        deviceInterface.sendMessage("Z");
+        convertParams();
     }
 }

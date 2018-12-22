@@ -2,13 +2,13 @@ package com.ip.jmc.btardroid;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.harrysoft.androidbluetoothserial.BluetoothManager;
@@ -18,47 +18,41 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
-    public static Context mContext;
+    public static Context mContextMainActivity;
     public final static String EXTRA_MESSAGE = "com.ip.jmc.MESSAGE";
     public final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
     public static SimpleBluetoothDeviceInterface deviceInterface;
-    public static String sentMsg = "";
-    public static String receptMsg = "";
+    public static String strMessageEnvoye = "";
+    public static String strMessageRecu = "";
     BluetoothManager bluetoothManager = BluetoothManager.getInstance();
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     Button bt1, bt2, bt3, bt4, bt5, bt6;
-    public static ListView lvbt;
-    public static ImageView ivOn;
-    public static ImageView ivOff;
-    public static ArrayList list = new ArrayList();
+    public static ListView listViewBlueToothDevices;
+    public static ArrayList listBluetoothDevices = new ArrayList();
     static ArrayAdapter listeArrayAdapter;
-    static ImageButton btnBT;
+    static ImageButton bouttonBluetoothConnect;
 
     public static void btnBTOn(View v) {
-        //deviceInterface.sendMessage("5");
-        //msgSent = "5";
-        //Intent intent = new Intent(this, BluetoothCustom.class);
-        //TextView editText = findViewById(R.id.editText);
-        //String message = editText.getText().toString();
-        //intent.putExtra(EXTRA_MESSAGE, message);
-        //startActivity(intent);
         new BluetoothCustom().btOnOff();
-
     }
 
     public static Context getContext() {
-        return mContext;
+        return mContextMainActivity;
+    }
+
+    public void btnSuivant(View v) {
+        Intent intent = new Intent(mContextMainActivity, ArduinoDroid.class);
+        startActivity(intent);
+
     }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mContext = getBaseContext();
-        lvbt = findViewById(R.id.listviewbt);
-        //ivOn = findViewById(R.id.imageViewBtOn);
-        //ivOff = findViewById(R.id.imageViewBtOff);
-        btnBT = findViewById(R.id.BtnBT);
-        listeArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
+        mContextMainActivity = getBaseContext();
+        listViewBlueToothDevices = findViewById(R.id.listviewbt);
+        bouttonBluetoothConnect = findViewById(R.id.BtnBT);
+        listeArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listBluetoothDevices);
         BluetoothCustom btCustom = new BluetoothCustom();
     }
 

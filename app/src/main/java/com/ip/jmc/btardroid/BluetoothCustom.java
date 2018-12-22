@@ -25,25 +25,26 @@ public class BluetoothCustom extends MainActivity  {
         }
         //Affichage de l'icône Bluetooth activé ou désactivé
         if (bluetoothAdapter.isEnabled()) {
-            btnBT.setImageResource(R.drawable.bt_on);
+            bouttonBluetoothConnect.setImageResource(R.drawable.bt_on);
             listDevicesBT();
         } else {
-            btnBT.setImageResource(R.drawable.bt_off);
+            bouttonBluetoothConnect.setImageResource(R.drawable.bt_off);
         }
     }
     public void btOnOff() {
         //Si le Bluetooth n'est pas activé on demande à l'utilisateur de l'activer
         if (!bluetoothAdapter.isEnabled()) {
             bluetoothAdapter.enable();
-            btnBT.setImageResource(R.drawable.bt_on);
+            bouttonBluetoothConnect.setImageResource(R.drawable.bt_on);
             listDevicesBT();
         }
         //Sinon on le désactive et on modifie l'icône et on cache la liste des appareils
         else {
             bluetoothAdapter.disable();
             //Toast.makeText(this, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
-            btnBT.setImageResource(R.drawable.bt_off);
-            lvbt.setVisibility(View.INVISIBLE);
+            bouttonBluetoothConnect.setImageResource(R.drawable.bt_off);
+            //listViewBlueToothDevices.setVisibility(View.INVISIBLE);
+            listViewBlueToothDevices.setAdapter(null);
         }
     }
 
@@ -60,19 +61,19 @@ public class BluetoothCustom extends MainActivity  {
         deviceInterface = connectedDevice.toSimpleDeviceInterface();
         // Listen to bluetooth events
         deviceInterface.setListeners(this::onMessageReceived, this::onMessageSent, this::onError);
-        Intent myIntent = new Intent(mContext, ArduinoDroid.class);
-        mContext.startActivity(myIntent);
+        Intent myIntent = new Intent(mContextMainActivity, ArduinoDroid.class);
+        mContextMainActivity.startActivity(myIntent);
     }
 
     public void onMessageSent(String message) {
         //Toast.makeText(this, "Envoi de : " + message, Toast.LENGTH_LONG).show(); // Replace context with your context instance.
-        sentMsg = message;
+        strMessageEnvoye = message;
     }
 
     public void onMessageReceived(String message) {
-        receptMsg = message;
-        // ArduinoDroid.msgToList(message);
-        //Toast.makeText(this, "Message envoyé -> " + sentMsg + "Message recu " + message, Toast.LENGTH_LONG).show(); // Replace context with your context instance.
+        strMessageRecu = message;
+        // ArduinoDroid.convertParams(message);
+        //Toast.makeText(this, "Message envoyé -> " + strMessageEnvoye + "Message recu " + message, Toast.LENGTH_LONG).show(); // Replace context with your context instance.
         //(message);
     }
 
@@ -89,13 +90,13 @@ public class BluetoothCustom extends MainActivity  {
             pairedDevices = bluetoothManager.getPairedDevicesList();
         }
         if (!pairedDevices.isEmpty()) {
-            lvbt.setVisibility(View.VISIBLE);
+            //listViewBlueToothDevices.setVisibility(View.VISIBLE);
             for (BluetoothDevice device : pairedDevices) {
-                list.add(device.getName() + " - " + device.getAddress());
+                listBluetoothDevices.add(device.getName() + " - " + device.getAddress());
             }
-            lvbt.setAdapter(listeArrayAdapter);
-            lvbt.setOnItemClickListener((popup, lv1, position, id) -> {
-                        String selLv = lvbt.getItemAtPosition(position).toString().trim();
+            listViewBlueToothDevices.setAdapter(listeArrayAdapter);
+            listViewBlueToothDevices.setOnItemClickListener((popup, lv1, position, id) -> {
+                String selLv = listViewBlueToothDevices.getItemAtPosition(position).toString().trim();
                         String segments[] = selLv.split(" - ");
                         String macItem = segments[segments.length - 1];
                         connectDevice(macItem);
@@ -103,7 +104,7 @@ public class BluetoothCustom extends MainActivity  {
             );
             listeArrayAdapter.notifyDataSetChanged();
         } else {
-            lvbt.setVisibility(View.INVISIBLE);
+            listViewBlueToothDevices.setVisibility(View.INVISIBLE);
         }
     }
 
