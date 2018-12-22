@@ -1,6 +1,7 @@
 package com.ip.jmc.btardroid;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
+    public static Context mContext;
     public final static String EXTRA_MESSAGE = "com.ip.jmc.MESSAGE";
     public final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
     public static SimpleBluetoothDeviceInterface deviceInterface;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mContext = getBaseContext();
         lvbt = (ListView) findViewById(R.id.listviewbt);
         ivOn = findViewById(R.id.imageViewBtOn);
         ivOff = findViewById(R.id.imageViewBtOff);
@@ -40,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         BluetoothCustom btCustom = new BluetoothCustom();
     }
 
+    public static Context getContext() {
+        return mContext;
+    }
 
     public void btTest(View v) {
         //deviceInterface.sendMessage("5");
@@ -49,9 +55,6 @@ public class MainActivity extends AppCompatActivity {
         //String message = editText.getText().toString();
         //intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
+
     }
-public void test() {
-    Intent intent = new Intent(this, ArduinoDroid.class);
-    startActivity(intent);
-}
 }

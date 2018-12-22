@@ -1,5 +1,6 @@
 package com.ip.jmc.btardroid;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,7 +15,7 @@ import static com.ip.jmc.btardroid.MainActivity.sentMsg;
 
 public class ArduinoDroid extends AppCompatActivity {
     ListView listViewParams;
-
+    public static Context mContext2;
     void msgToList() {
         // We received a message! Handle it here.
         if (sentMsg != null) {
@@ -48,6 +49,7 @@ public class ArduinoDroid extends AppCompatActivity {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mContext2 = getBaseContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arduino_droid);
         listViewParams = findViewById(R.id.listViewParams);
@@ -111,5 +113,7 @@ public class ArduinoDroid extends AppCompatActivity {
     public void btnFreinClick(View v) {
         deviceInterface.sendMessage("S");
     }
-
+    public static Context getContext() {
+        return mContext2;
+    }
 }

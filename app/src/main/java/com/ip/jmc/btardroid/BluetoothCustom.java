@@ -2,6 +2,7 @@ package com.ip.jmc.btardroid;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -30,7 +31,6 @@ public class BluetoothCustom extends MainActivity  {
             finish();
         }
         //Affichage de l'icône Bluetooth activé ou désactivé
-
         if (bluetoothAdapter.isEnabled()) {
             ivOn.setVisibility(View.VISIBLE);
             ivOff.setVisibility(View.INVISIBLE);
@@ -84,6 +84,8 @@ public class BluetoothCustom extends MainActivity  {
         deviceInterface = connectedDevice.toSimpleDeviceInterface();
         // Listen to bluetooth events
         deviceInterface.setListeners(this::onMessageReceived, this::onMessageSent, this::onError);
+        Intent myIntent = new Intent(mContext, ArduinoDroid.class);
+        mContext.startActivity(myIntent);
     }
 
     public void onMessageSent(String message) {
@@ -143,20 +145,4 @@ public class BluetoothCustom extends MainActivity  {
         super.onBackPressed();
     }
 
-
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // check that it is the SecondActivity with an OK result
-        if (requestCode == REQUEST_CODE_ENABLE_BLUETOOTH) {
-            if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-                ivOn.setVisibility(View.VISIBLE);
-                ivOff.setVisibility(View.INVISIBLE);
-                listDevicesBT();
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(this, "Abandon par l'utilisateur ...", Toast.LENGTH_LONG).show();
-            }
-        }
-    }*/
 }
