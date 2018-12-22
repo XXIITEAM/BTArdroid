@@ -24,49 +24,31 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
+
     public final static String EXTRA_MESSAGE = "com.ip.jmc.MESSAGE";
     private final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
     public static SimpleBluetoothDeviceInterface deviceInterface;
     public static String sentMsg = "";
     public static String receptMsg = "";
+    BluetoothManager bluetoothManager = BluetoothManager.getInstance();
+    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     Button bt1, bt2, bt3, bt4, bt5, bt6;
     ListView lv;
     ListView lv1;
-    BluetoothManager bluetoothManager = BluetoothManager.getInstance();
-    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    public void btOnOff() {
-
-        if (!bluetoothAdapter.isEnabled()) {
-            Intent enableBlueTooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBlueTooth, REQUEST_CODE_ENABLE_BLUETOOTH);
-        } else {
-            //Toast.makeText(this, R.string.Connexion, Toast.LENGTH_LONG).show();
-            bluetoothAdapter.disable();
-            ImageView ivOn = findViewById(R.id.imageViewBtOn);
-            ImageView ivOff = findViewById(R.id.imageViewBtOff);
-            ivOn.setVisibility(View.INVISIBLE);
-            ivOff.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
-            lv = findViewById(R.id.lv1);
-            lv.setVisibility(View.INVISIBLE);
-        }
-
-    }
+    ImageView ivOn ;
+    ImageView ivOff;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        // Setup our BluetoothManager
-
-        /*if (bluetoothManager == null) {
-            // Bluetooth unavailable on this device :( tell the user
-            Toast.makeText(this, "Bluetooth not available.", Toast.LENGTH_LONG).show(); // Replace context with your context instance.
+        //Test si le Bluetooth est supporté
+        if (bluetoothManager == null) {
+            Toast.makeText(this, "Le Bluetooth n'est pas supporté", Toast.LENGTH_LONG).show(); // Replace context with your context instance.
             finish();
-        }*/
-        ImageView ivOn = findViewById(R.id.imageViewBtOn);
-        ImageView ivOff = findViewById(R.id.imageViewBtOff);
+        }
+        //Affichage de l'icône Bluetooth activé ou désactivé
+        ivOn = findViewById(R.id.imageViewBtOn);
+        ivOff = findViewById(R.id.imageViewBtOff);
         if (bluetoothAdapter.isEnabled()) {
             ivOn.setVisibility(View.VISIBLE);
             ivOff.setVisibility(View.INVISIBLE);
@@ -74,26 +56,38 @@ public class MainActivity extends AppCompatActivity {
         } else {
             ivOn.setVisibility(View.INVISIBLE);
             ivOff.setVisibility(View.VISIBLE);
-
         }
-
+        //En appuyant sur l'icône : activation ou désactivation du Bluetooth
         ivOff.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View view) {
-
                 btOnOff();
             }
         });
         ivOn.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View view) {
-
                 btOnOff();
             }
         });
-
     }
 
+    public void btOnOff() {
+        //Si le Bluetooth n'est pas activé on demande à l'utilisateur de l'activer
+        if (!bluetoothAdapter.isEnabled()) {
+            Intent enableBlueTooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBlueTooth, REQUEST_CODE_ENABLE_BLUETOOTH);
+        }
+        //Sinon on le désactive et on modifie l'icône et on cache la liste des appareils
+        else {
+            bluetoothAdapter.disable();
+            Toast.makeText(this, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
+            ivOn = findViewById(R.id.imageViewBtOn);
+            ivOff = findViewById(R.id.imageViewBtOff);
+            ivOn.setVisibility(View.INVISIBLE);
+            ivOff.setVisibility(View.VISIBLE);
+            lv = findViewById(R.id.lv1);
+            lv.setVisibility(View.INVISIBLE);
+        }
+    }
 
     private void connectDevice(String mac) {
         bluetoothManager.openSerialDevice(mac)
@@ -108,8 +102,7 @@ public class MainActivity extends AppCompatActivity {
         deviceInterface = connectedDevice.toSimpleDeviceInterface();
         // Listen to bluetooth events
         deviceInterface.setListeners(this::onMessageReceived, this::onMessageSent, this::onError);
-
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
     }
 
     public void onMessageSent(String message) {
@@ -131,9 +124,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void listDevicesBT() {
-
         ArrayList list = new ArrayList();
-
         List<BluetoothDevice> pairedDevices = bluetoothManager.getPairedDevicesList();
         while (pairedDevices.isEmpty()) {
             pairedDevices = bluetoothManager.getPairedDevicesList();
@@ -141,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
         if (!pairedDevices.isEmpty()) {
             lv = findViewById(R.id.lv1);
             lv.setVisibility(View.VISIBLE);
-            //setContentView(R.layout.activity_main);
             for (BluetoothDevice device : pairedDevices) {
                 list.add(device.getName() + " - " + device.getAddress());
             }
@@ -153,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
                         String macItem = segments[segments.length - 1];
                         connectDevice(macItem);
                     }
-
             );
         } else {
             lv = findViewById(R.id.lv1);
@@ -175,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
         //String message = editText.getText().toString();
         //intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
-
     }
 
     @Override
@@ -189,12 +177,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         // check that it is the SecondActivity with an OK result
         if (requestCode == REQUEST_CODE_ENABLE_BLUETOOTH) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-                ImageView ivOn = findViewById(R.id.imageViewBtOn);
-                ImageView ivOff = findViewById(R.id.imageViewBtOff);
+                ivOn = findViewById(R.id.imageViewBtOn);
+                ivOff = findViewById(R.id.imageViewBtOff);
                 ivOn.setVisibility(View.VISIBLE);
                 ivOff.setVisibility(View.INVISIBLE);
                 listDevicesBT();
@@ -203,5 +190,5 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Abandon par l'utilisateur ...", Toast.LENGTH_LONG).show();
             }
         }
-    }//onActivityResult
+    }
 }
