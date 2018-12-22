@@ -84,7 +84,6 @@ public class BluetoothCustom extends MainActivity  {
         deviceInterface = connectedDevice.toSimpleDeviceInterface();
         // Listen to bluetooth events
         deviceInterface.setListeners(this::onMessageReceived, this::onMessageSent, this::onError);
-        this.test();
     }
 
     public void onMessageSent(String message) {
