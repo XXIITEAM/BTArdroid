@@ -106,7 +106,7 @@ public class BluetoothCustom extends MainActivity  {
     }
 
     public void listDevicesBT() {
-
+    listeArrayAdapter.clear();
         List<BluetoothDevice> pairedDevices = bluetoothManager.getPairedDevicesList();
         while (pairedDevices.isEmpty()) {
             pairedDevices = bluetoothManager.getPairedDevicesList();
