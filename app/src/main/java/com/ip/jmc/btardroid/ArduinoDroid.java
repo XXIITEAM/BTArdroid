@@ -29,13 +29,9 @@ public class ArduinoDroid extends AppCompatActivity {
                     listViewParams = findViewById(R.id.listViewParams);
                     //  listViewParams.setVisibility(View.VISIBLE);
                     //List listParam = findViewById(R.id.listViewParam);
-                    /*for (String mess : receptMsg.split("/")) {
-
+                    for (String mess : receptMsg.split("/")) {
                         listParams.add(mess);
                     }
-                    */
-                    listParams.add(receptMsg);
-                    listParams.add("OK");
 
                     final ArrayAdapter adapterParams = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listParams);
 
@@ -58,11 +54,13 @@ public class ArduinoDroid extends AppCompatActivity {
     public void btn1Click(View v) {
 
 
-        deviceInterface.sendMessage("A");
+        //deviceInterface.sendMessage("A");
+
     }
 
     public void btn2Click(View v) {
         deviceInterface.sendMessage("Z");
+        msgToList();
     }
 
     public void btn3Click(View v) {
@@ -107,6 +105,7 @@ public class ArduinoDroid extends AppCompatActivity {
     }
 
     public void btnAccelClick(View v) {
+
         deviceInterface.sendMessage("F");
     }
 

@@ -2,12 +2,12 @@ package com.ip.jmc.btardroid;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -32,29 +32,34 @@ public class MainActivity extends AppCompatActivity {
     public static ImageView ivOff;
     public static ArrayList list = new ArrayList();
     static ArrayAdapter listeArrayAdapter;
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mContext = getBaseContext();
-        lvbt = (ListView) findViewById(R.id.listviewbt);
-        ivOn = findViewById(R.id.imageViewBtOn);
-        ivOff = findViewById(R.id.imageViewBtOff);
-        listeArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
-        BluetoothCustom btCustom = new BluetoothCustom();
+    static ImageButton btnBT;
+
+    public static void btnBTOn(View v) {
+        //deviceInterface.sendMessage("5");
+        //msgSent = "5";
+        //Intent intent = new Intent(this, BluetoothCustom.class);
+        //TextView editText = findViewById(R.id.editText);
+        //String message = editText.getText().toString();
+        //intent.putExtra(EXTRA_MESSAGE, message);
+        //startActivity(intent);
+        new BluetoothCustom().btOnOff();
+
     }
 
     public static Context getContext() {
         return mContext;
     }
 
-    public void btTest(View v) {
-        //deviceInterface.sendMessage("5");
-        //msgSent = "5";
-        Intent intent = new Intent(this, ArduinoDroid.class);
-        //TextView editText = findViewById(R.id.editText);
-        //String message = editText.getText().toString();
-        //intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mContext = getBaseContext();
+        lvbt = findViewById(R.id.listviewbt);
+        //ivOn = findViewById(R.id.imageViewBtOn);
+        //ivOff = findViewById(R.id.imageViewBtOff);
+        btnBT = findViewById(R.id.BtnBT);
+        listeArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
+        BluetoothCustom btCustom = new BluetoothCustom();
     }
+
 }

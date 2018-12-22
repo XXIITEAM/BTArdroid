@@ -1,17 +1,12 @@
 package com.ip.jmc.btardroid;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
-
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.harrysoft.androidbluetoothserial.BluetoothSerialDevice;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -19,8 +14,6 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BluetoothCustom extends MainActivity  {
 
-
-    //Context ctx = getApplicationContext();
 
     public BluetoothCustom()
     {
@@ -32,41 +25,24 @@ public class BluetoothCustom extends MainActivity  {
         }
         //Affichage de l'icône Bluetooth activé ou désactivé
         if (bluetoothAdapter.isEnabled()) {
-            ivOn.setVisibility(View.VISIBLE);
-            ivOff.setVisibility(View.INVISIBLE);
+            btnBT.setImageResource(R.drawable.bt_on);
             listDevicesBT();
         } else {
-            ivOn.setVisibility(View.INVISIBLE);
-            ivOff.setVisibility(View.VISIBLE);
+            btnBT.setImageResource(R.drawable.bt_off);
         }
-        //En appuyant sur l'icône : activation ou désactivation du Bluetooth
-        ivOff.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                btOnOff();
-            }
-        });
-        ivOn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                btOnOff();
-            }
-        });
     }
     public void btOnOff() {
         //Si le Bluetooth n'est pas activé on demande à l'utilisateur de l'activer
         if (!bluetoothAdapter.isEnabled()) {
             bluetoothAdapter.enable();
-            //Intent enableBlueTooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            //startActivityForResult(enableBlueTooth, REQUEST_CODE_ENABLE_BLUETOOTH);
-            ivOn.setVisibility(View.VISIBLE);
-            ivOff.setVisibility(View.INVISIBLE);
+            btnBT.setImageResource(R.drawable.bt_on);
             listDevicesBT();
         }
         //Sinon on le désactive et on modifie l'icône et on cache la liste des appareils
         else {
             bluetoothAdapter.disable();
             //Toast.makeText(this, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
-            ivOn.setVisibility(View.INVISIBLE);
-            ivOff.setVisibility(View.VISIBLE);
+            btnBT.setImageResource(R.drawable.bt_off);
             lvbt.setVisibility(View.INVISIBLE);
         }
     }
