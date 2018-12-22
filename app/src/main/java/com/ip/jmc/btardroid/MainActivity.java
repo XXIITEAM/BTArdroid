@@ -12,6 +12,8 @@ import android.widget.ListView;
 import com.harrysoft.androidbluetoothserial.BluetoothManager;
 import com.harrysoft.androidbluetoothserial.SimpleBluetoothDeviceInterface;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "com.ip.jmc.MESSAGE";
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     ListView lv1;
     public static ImageView ivOn;
     public static ImageView ivOff;
-
+    ArrayList list = new ArrayList();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

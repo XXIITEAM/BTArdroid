@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import com.harrysoft.androidbluetoothserial.BluetoothSerialDevice;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -31,7 +30,7 @@ public class BluetoothCustom extends MainActivity  {
         if (bluetoothAdapter.isEnabled()) {
             ivOn.setVisibility(View.VISIBLE);
             ivOff.setVisibility(View.INVISIBLE);
-            listDevicesBT();
+            //listDevicesBT();
         } else {
             ivOn.setVisibility(View.INVISIBLE);
             ivOff.setVisibility(View.VISIBLE);
@@ -54,14 +53,17 @@ public class BluetoothCustom extends MainActivity  {
             bluetoothAdapter.enable();
             //Intent enableBlueTooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             //startActivityForResult(enableBlueTooth, REQUEST_CODE_ENABLE_BLUETOOTH);
+            ivOn.setVisibility(View.VISIBLE);
+            ivOff.setVisibility(View.INVISIBLE);
+            listDevicesBT();
         }
         //Sinon on le désactive et on modifie l'icône et on cache la liste des appareils
         else {
             bluetoothAdapter.disable();
-            Toast.makeText(this, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
             ivOn.setVisibility(View.INVISIBLE);
             ivOff.setVisibility(View.VISIBLE);
-            lv.setVisibility(View.INVISIBLE);
+            //lv.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -100,17 +102,17 @@ public class BluetoothCustom extends MainActivity  {
     }
 
     public void listDevicesBT() {
-        ArrayList list = new ArrayList();
+
         List<BluetoothDevice> pairedDevices = bluetoothManager.getPairedDevicesList();
         while (pairedDevices.isEmpty()) {
             pairedDevices = bluetoothManager.getPairedDevicesList();
         }
         if (!pairedDevices.isEmpty()) {
-            lv.setVisibility(View.VISIBLE);
+            //lv.setVisibility(View.VISIBLE);
             for (BluetoothDevice device : pairedDevices) {
                 list.add(device.getName() + " - " + device.getAddress());
             }
-            final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
+            ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
             lv.setAdapter(adapter);
             lv.setOnItemClickListener((popup, lv1, position, id) -> {
                         String selLv = lv.getItemAtPosition(position).toString().trim();
