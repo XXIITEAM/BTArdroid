@@ -25,7 +25,7 @@ import io.reactivex.schedulers.Schedulers;
 import com.harrysoft.androidbluetoothserial.BluetoothManager;
 import com.harrysoft.androidbluetoothserial.SimpleBluetoothDeviceInterface;
 
-public class Bluetooth extends AppCompatActivity  {
+public class Bluetooth extends MainActivity  {
     public final static String EXTRA_MESSAGE = "com.ip.jmc.MESSAGE";
     private final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
     public static SimpleBluetoothDeviceInterface deviceInterface;

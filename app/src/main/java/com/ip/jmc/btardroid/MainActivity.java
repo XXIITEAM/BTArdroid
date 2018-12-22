@@ -42,33 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Bluetooth bluetooth = new Bluetooth();
-        //Test si le Bluetooth est supporté
-        if (bluetoothManager == null) {
-            Toast.makeText(this, "Le Bluetooth n'est pas supporté", Toast.LENGTH_LONG).show(); // Replace context with your context instance.
-            finish();
-        }
-        //Affichage de l'icône Bluetooth activé ou désactivé
-        ivOn = findViewById(R.id.imageViewBtOn);
-        ivOff = findViewById(R.id.imageViewBtOff);
-        if (bluetoothAdapter.isEnabled()) {
-            ivOn.setVisibility(View.VISIBLE);
-            ivOff.setVisibility(View.INVISIBLE);
-            bluetooth.listDevicesBT();
-        } else {
-            ivOn.setVisibility(View.INVISIBLE);
-            ivOff.setVisibility(View.VISIBLE);
-        }
-        //En appuyant sur l'icône : activation ou désactivation du Bluetooth
-        ivOff.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                bluetooth.btOnOff();
-            }
-        });
-        ivOn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                bluetooth.btOnOff();
-            }
-        });
+        bluetooth.init();
     }
 
 
