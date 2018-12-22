@@ -14,9 +14,8 @@ import com.harrysoft.androidbluetoothserial.SimpleBluetoothDeviceInterface;
 
 
 public class MainActivity extends AppCompatActivity {
-
     public final static String EXTRA_MESSAGE = "com.ip.jmc.MESSAGE";
-    private final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
+    public final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
     public static SimpleBluetoothDeviceInterface deviceInterface;
     public static String sentMsg = "";
     public static String receptMsg = "";
@@ -31,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BluetoothCustom btcustom = new BluetoothCustom();
+        BluetoothCustom btCustom = new BluetoothCustom();
         ivOn = findViewById(R.id.imageViewBtOn);
         ivOff = findViewById(R.id.imageViewBtOff);
-        btcustom.main();
+        btCustom.main();
     }
 
 
