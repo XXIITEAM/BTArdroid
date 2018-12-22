@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.harrysoft.androidbluetoothserial.BluetoothSerialDevice;
@@ -16,7 +15,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BluetoothCustom extends MainActivity  {
 
-
+    //Context ctx = getApplicationContext();
 
     public void main()
     {
@@ -112,8 +111,7 @@ public class BluetoothCustom extends MainActivity  {
             for (BluetoothDevice device : pairedDevices) {
                 list.add(device.getName() + " - " + device.getAddress());
             }
-            ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
-            lv.setAdapter(adapter);
+            lv.setAdapter(listeArrayAdapter);
             lv.setOnItemClickListener((popup, lv1, position, id) -> {
                         String selLv = lv.getItemAtPosition(position).toString().trim();
                         String segments[] = selLv.split(" - ");
