@@ -61,7 +61,6 @@ public class BluetoothCustom extends MainActivity  {
             Toast.makeText(this, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
             ivOn.setVisibility(View.INVISIBLE);
             ivOff.setVisibility(View.VISIBLE);
-            lv = findViewById(R.id.lv1);
             lv.setVisibility(View.INVISIBLE);
         }
     }
@@ -107,7 +106,6 @@ public class BluetoothCustom extends MainActivity  {
             pairedDevices = bluetoothManager.getPairedDevicesList();
         }
         if (!pairedDevices.isEmpty()) {
-            lv = findViewById(R.id.lv1);
             lv.setVisibility(View.VISIBLE);
             for (BluetoothDevice device : pairedDevices) {
                 list.add(device.getName() + " - " + device.getAddress());
@@ -122,7 +120,6 @@ public class BluetoothCustom extends MainActivity  {
                     }
             );
         } else {
-            lv = findViewById(R.id.lv1);
             lv.setVisibility(View.INVISIBLE);
         }
     }
@@ -148,8 +145,6 @@ public class BluetoothCustom extends MainActivity  {
         // check that it is the SecondActivity with an OK result
         if (requestCode == REQUEST_CODE_ENABLE_BLUETOOTH) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-                ivOn = findViewById(R.id.imageViewBtOn);
-                ivOff = findViewById(R.id.imageViewBtOff);
                 ivOn.setVisibility(View.VISIBLE);
                 ivOff.setVisibility(View.INVISIBLE);
                 listDevicesBT();

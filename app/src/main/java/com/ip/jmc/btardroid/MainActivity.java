@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BluetoothCustom btCustom = new BluetoothCustom();
+        lv = findViewById(R.id.lv1);
         ivOn = findViewById(R.id.imageViewBtOn);
         ivOff = findViewById(R.id.imageViewBtOff);
         btCustom.main();
