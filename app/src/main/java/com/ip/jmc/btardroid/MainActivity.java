@@ -50,5 +50,8 @@ public class MainActivity extends AppCompatActivity {
         //intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
     }
-
+public void test() {
+    Intent intent = new Intent(this, ArduinoDroid.class);
+    startActivity(intent);
+}
 }
