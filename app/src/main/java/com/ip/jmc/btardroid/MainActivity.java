@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BluetoothCustom bluetooth = new BluetoothCustom();
-        bluetooth.init();
+        Intent intent = new Intent(getApplicationContext(), BluetoothCustom.class);
+        startActivity(intent);
     }
 
 

@@ -39,7 +39,7 @@ public class BluetoothCustom extends MainActivity  {
     ImageView ivOn ;
     ImageView ivOff;
 
-    public void init()
+    public void main()
     {
         //Test si le Bluetooth est supporté
         if (bluetoothManager == null) {
