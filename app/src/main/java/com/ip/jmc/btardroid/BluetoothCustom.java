@@ -3,11 +3,14 @@ package com.ip.jmc.btardroid;
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.harrysoft.androidbluetoothserial.BluetoothSerialDevice;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -15,10 +18,12 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BluetoothCustom extends MainActivity  {
 
+
     //Context ctx = getApplicationContext();
 
-    public void main()
+    public BluetoothCustom()
     {
+
         //Test si le Bluetooth est supporté
         if (bluetoothManager == null) {
             Toast.makeText(this, "Le Bluetooth n'est pas supporté", Toast.LENGTH_LONG).show(); // Replace context with your context instance.
@@ -29,7 +34,7 @@ public class BluetoothCustom extends MainActivity  {
         if (bluetoothAdapter.isEnabled()) {
             ivOn.setVisibility(View.VISIBLE);
             ivOff.setVisibility(View.INVISIBLE);
-            //listDevicesBT();
+            listDevicesBT();
         } else {
             ivOn.setVisibility(View.INVISIBLE);
             ivOff.setVisibility(View.VISIBLE);
@@ -62,7 +67,7 @@ public class BluetoothCustom extends MainActivity  {
             //Toast.makeText(this, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
             ivOn.setVisibility(View.INVISIBLE);
             ivOff.setVisibility(View.VISIBLE);
-            //lv.setVisibility(View.INVISIBLE);
+            lvbt.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -107,20 +112,21 @@ public class BluetoothCustom extends MainActivity  {
             pairedDevices = bluetoothManager.getPairedDevicesList();
         }
         if (!pairedDevices.isEmpty()) {
-            //lv.setVisibility(View.VISIBLE);
+            lvbt.setVisibility(View.VISIBLE);
             for (BluetoothDevice device : pairedDevices) {
                 list.add(device.getName() + " - " + device.getAddress());
             }
-            lv.setAdapter(listeArrayAdapter);
-            lv.setOnItemClickListener((popup, lv1, position, id) -> {
-                        String selLv = lv.getItemAtPosition(position).toString().trim();
+            lvbt.setAdapter(listeArrayAdapter);
+            lvbt.setOnItemClickListener((popup, lv1, position, id) -> {
+                        String selLv = lvbt.getItemAtPosition(position).toString().trim();
                         String segments[] = selLv.split(" - ");
                         String macItem = segments[segments.length - 1];
                         connectDevice(macItem);
                     }
             );
+            listeArrayAdapter.notifyDataSetChanged();
         } else {
-            lv.setVisibility(View.INVISIBLE);
+            lvbt.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -139,7 +145,7 @@ public class BluetoothCustom extends MainActivity  {
     }
 
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // check that it is the SecondActivity with an OK result
@@ -153,5 +159,5 @@ public class BluetoothCustom extends MainActivity  {
                 Toast.makeText(this, "Abandon par l'utilisateur ...", Toast.LENGTH_LONG).show();
             }
         }
-    }
+    }*/
 }

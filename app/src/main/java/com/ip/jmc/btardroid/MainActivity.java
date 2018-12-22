@@ -25,23 +25,19 @@ public class MainActivity extends AppCompatActivity {
     BluetoothManager bluetoothManager = BluetoothManager.getInstance();
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     Button bt1, bt2, bt3, bt4, bt5, bt6;
-    public static ListView lv;
-    ListView lv1;
+    public static ListView lvbt;
     public static ImageView ivOn;
     public static ImageView ivOff;
-    ArrayList list = new ArrayList();
+    public static ArrayList list = new ArrayList();
     static ArrayAdapter listeArrayAdapter;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BluetoothCustom btCustom = new BluetoothCustom();
-        lv = findViewById(R.id.lv1);
+        lvbt = (ListView) findViewById(R.id.listviewbt);
         ivOn = findViewById(R.id.imageViewBtOn);
         ivOff = findViewById(R.id.imageViewBtOff);
         listeArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
-
-        btCustom.main();
-
+        BluetoothCustom btCustom = new BluetoothCustom();
     }
 
 

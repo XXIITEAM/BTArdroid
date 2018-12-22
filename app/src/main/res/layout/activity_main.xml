@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <ListView
-        android:id="@+id/lv1"
+        android:id="@+id/listviewbt"
         android:layout_width="326dp"
         android:layout_height="331dp"
         android:layout_marginStart="4dp"
