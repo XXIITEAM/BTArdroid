@@ -4,16 +4,10 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.harrysoft.androidbluetoothserial.BluetoothManager;
 import com.harrysoft.androidbluetoothserial.BluetoothSerialDevice;
 import com.harrysoft.androidbluetoothserial.SimpleBluetoothDeviceInterface;
 
@@ -22,8 +16,9 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import com.harrysoft.androidbluetoothserial.BluetoothManager;
-import com.harrysoft.androidbluetoothserial.SimpleBluetoothDeviceInterface;
+
+import static com.ip.jmc.btardroid.R.id.imageViewBtOff;
+import static com.ip.jmc.btardroid.R.id.imageViewBtOn;
 
 public class BluetoothCustom extends MainActivity  {
     public final static String EXTRA_MESSAGE = "com.ip.jmc.MESSAGE";
@@ -31,13 +26,7 @@ public class BluetoothCustom extends MainActivity  {
     public static SimpleBluetoothDeviceInterface deviceInterface;
     public static String sentMsg = "";
     public static String receptMsg = "";
-    BluetoothManager bluetoothManager = BluetoothManager.getInstance();
-    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    Button bt1, bt2, bt3, bt4, bt5, bt6;
-    ListView lv;
-    ListView lv1;
-    ImageView ivOn ;
-    ImageView ivOff;
+
 
     public void main()
     {
@@ -47,8 +36,7 @@ public class BluetoothCustom extends MainActivity  {
             finish();
         }
         //Affichage de l'icône Bluetooth activé ou désactivé
-        ivOn = findViewById(R.id.imageViewBtOn);
-        ivOff = findViewById(R.id.imageViewBtOff);
+
         if (bluetoothAdapter.isEnabled()) {
             ivOn.setVisibility(View.VISIBLE);
             ivOff.setVisibility(View.INVISIBLE);
@@ -79,8 +67,8 @@ public class BluetoothCustom extends MainActivity  {
         else {
             bluetoothAdapter.disable();
             Toast.makeText(this, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
-            ivOn = findViewById(R.id.imageViewBtOn);
-            ivOff = findViewById(R.id.imageViewBtOff);
+            ivOn = findViewById(imageViewBtOn);
+            ivOff = findViewById(imageViewBtOff);
             ivOn.setVisibility(View.INVISIBLE);
             ivOff.setVisibility(View.VISIBLE);
             lv = findViewById(R.id.lv1);
@@ -170,8 +158,8 @@ public class BluetoothCustom extends MainActivity  {
         // check that it is the SecondActivity with an OK result
         if (requestCode == REQUEST_CODE_ENABLE_BLUETOOTH) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-                ivOn = findViewById(R.id.imageViewBtOn);
-                ivOff = findViewById(R.id.imageViewBtOff);
+                ivOn = findViewById(imageViewBtOn);
+                ivOff = findViewById(imageViewBtOff);
                 ivOn.setVisibility(View.VISIBLE);
                 ivOff.setVisibility(View.INVISIBLE);
                 listDevicesBT();

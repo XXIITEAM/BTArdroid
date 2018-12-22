@@ -1,27 +1,17 @@
 package com.ip.jmc.btardroid;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.harrysoft.androidbluetoothserial.BluetoothManager;
-import com.harrysoft.androidbluetoothserial.BluetoothSerialDevice;
 import com.harrysoft.androidbluetoothserial.SimpleBluetoothDeviceInterface;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,14 +25,16 @@ public class MainActivity extends AppCompatActivity {
     Button bt1, bt2, bt3, bt4, bt5, bt6;
     ListView lv;
     ListView lv1;
-    ImageView ivOn ;
-    ImageView ivOff;
+    public static ImageView ivOn;
+    public static ImageView ivOff;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = new Intent(getApplicationContext(), BluetoothCustom.class);
-        startActivity(intent);
+        BluetoothCustom btcustom = new BluetoothCustom();
+        ivOn = findViewById(R.id.imageViewBtOn);
+        ivOff = findViewById(R.id.imageViewBtOff);
+        btcustom.main();
     }
 
 
