@@ -84,7 +84,8 @@ public class BluetoothCustom extends MainActivity  {
         deviceInterface = connectedDevice.toSimpleDeviceInterface();
         // Listen to bluetooth events
         deviceInterface.setListeners(this::onMessageReceived, this::onMessageSent, this::onError);
-        //setContentView(R.layout.activity_main);
+        Intent intent = new Intent(this, ArduinoDroid.class);
+        startActivity(intent);
     }
 
     public void onMessageSent(String message) {
