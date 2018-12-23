@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import static com.ip.jmc.btardroid.MainActivity.deviceInterface;
 
 public class ArduinoDroid extends MainActivity {
-    ListView listViewParams;
     static Button boutonMode, boutonDonnees, bt3, bt4, bt5, bt6;
 
     public static Context mContextArduinoDroid;
@@ -41,7 +40,7 @@ public class ArduinoDroid extends MainActivity {
         mContextArduinoDroid = getBaseContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arduino_droid);
-        listViewParams = findViewById(R.id.listViewParams);
+
     }
 
     public void convertParams(String messageEnvoye, String messageRecu) {
@@ -55,7 +54,6 @@ public class ArduinoDroid extends MainActivity {
                     break;
                 case "Z":
                     ArrayList<String> listParams = new ArrayList();
-                    listViewParams = findViewById(R.id.listViewParams);
                     for (String mess : messageRecu.split("/")) {
                         listParams.add(mess);
                     }

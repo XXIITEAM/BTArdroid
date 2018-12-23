@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     public static Button bt1, bt2, bt3, bt4, bt5, bt6;
     public static ListView listViewBluetoothDevices;
+    public static ListView listViewParams;
     public static ArrayList listBluetoothDevices = new ArrayList();
     static ArrayAdapter listeArrayAdapter;
     static ArrayAdapter adapterParams;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mContextMainActivity = getBaseContext();
         listViewBluetoothDevices = findViewById(R.id.listviewbt);
+        listViewParams = findViewById(R.id.listViewParams);
         bouttonBluetoothConnect = findViewById(R.id.BtnBT);
         new BluetoothCustom().BluetoothCustomOnCreate();
     }
