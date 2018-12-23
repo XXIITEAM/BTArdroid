@@ -16,15 +16,11 @@ package com.ip.jmc.btardroid;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 
 import java.util.ArrayList;
-
-import static com.ip.jmc.btardroid.MainActivity.deviceInterface;
 
 public class ArduinoDroid extends MainActivity {
     static Button boutonMode, boutonDonnees, bt3, bt4, bt5, bt6;
@@ -40,7 +36,7 @@ public class ArduinoDroid extends MainActivity {
         mContextArduinoDroid = getBaseContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arduino_droid);
-
+        listViewParams = findViewById(R.id.listViewParams);
     }
 
     public void convertParams(String messageEnvoye, String messageRecu) {

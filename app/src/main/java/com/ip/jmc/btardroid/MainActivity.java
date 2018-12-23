@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mContextMainActivity = getBaseContext();
         listViewBluetoothDevices = findViewById(R.id.listviewbt);
-        listViewParams = findViewById(R.id.listViewParams);
+        //listViewParams = findViewById(R.id.listViewParams);
         bouttonBluetoothConnect = findViewById(R.id.BtnBT);
         new BluetoothCustom().BluetoothCustomOnCreate();
     }
