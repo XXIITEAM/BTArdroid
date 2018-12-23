@@ -126,10 +126,7 @@ public class BluetoothCustom extends MainActivity  {
 
     public void decouverteBluetooth()
     {
-        btDecouverte.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                bluetoothAdapter.startDiscovery();
-            }
-        });
+        Toast.makeText(mContextMainActivity,"Découverte des appareils Bluetooth",Toast.LENGTH_LONG).show();
+        bluetoothAdapter.startDiscovery();
     }
 }

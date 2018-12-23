@@ -36,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
         new BluetoothCustom().btOnOff();
     }
 
+    public static void btnDecouverte(View v) {
+        new BluetoothCustom().decouverteBluetooth();
+    }
+
     public static Context getContext() {
         return mContextMainActivity;
     }
