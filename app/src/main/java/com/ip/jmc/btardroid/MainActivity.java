@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public static ListView listViewBluetoothDevices;
     public static ArrayList listBluetoothDevices = new ArrayList();
     static ArrayAdapter listeArrayAdapter;
+    static ArrayAdapter adapterParams;
     static ImageButton bouttonBluetoothConnect;
 
     public static void btnBTOn(View v) {
@@ -47,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     public void btnSuivant(View v) {
         Intent intent = new Intent(mContextMainActivity, ArduinoDroid.class);
         startActivity(intent);
-
     }
 
     protected void onCreate(Bundle savedInstanceState) {

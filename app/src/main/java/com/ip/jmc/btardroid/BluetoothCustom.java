@@ -77,7 +77,7 @@ public class BluetoothCustom extends MainActivity  {
 
     public void onMessageReceived(String message) {
         strMessageRecu = message;
-        ard.convertParams(strMessageEnvoye, strMessageRecu);
+        new ArduinoDroid().convertParams(strMessageEnvoye, strMessageRecu);
     }
 
 

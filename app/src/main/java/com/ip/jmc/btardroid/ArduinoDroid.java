@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 import static com.ip.jmc.btardroid.MainActivity.deviceInterface;
 
-public class ArduinoDroid extends AppCompatActivity {
+public class ArduinoDroid extends MainActivity {
     ListView listViewParams;
     static Button boutonMode, boutonDonnees, bt3, bt4, bt5, bt6;
 
@@ -60,7 +60,7 @@ public class ArduinoDroid extends AppCompatActivity {
                         listParams.add(mess);
                     }
 
-                    final ArrayAdapter adapterParams = new ArrayAdapter(mContextArduinoDroid, android.R.layout.simple_list_item_1, listParams);
+                    adapterParams = new ArrayAdapter(mContextArduinoDroid, android.R.layout.simple_list_item_1, listParams);
 
                     listViewParams.setAdapter(adapterParams);
                     break;
