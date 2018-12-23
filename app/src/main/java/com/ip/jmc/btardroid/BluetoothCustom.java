@@ -16,12 +16,11 @@ import io.reactivex.schedulers.Schedulers;
 public class BluetoothCustom extends MainActivity  {
 
 
-    public BluetoothCustom()
+    public void BluetoothCustomOnCreate()
     {
-
         //Test si le Bluetooth est supporté
         if (bluetoothManager == null) {
-            Toast.makeText(this, "Le Bluetooth n'est pas supporté", Toast.LENGTH_LONG).show(); // Replace context with your context instance.
+            Toast.makeText(mContextMainActivity, "Le Bluetooth n'est pas supporté", Toast.LENGTH_LONG).show(); // Replace context with your context instance.
             finish();
         }
         //Affichage de l'icône Bluetooth activé ou désactivé
@@ -33,18 +32,18 @@ public class BluetoothCustom extends MainActivity  {
         }
     }
     public void btOnOff() {
-        //Si le Bluetooth n'est pas activé on demande à l'utilisateur de l'activer
+        //Si le Bluetooth n'est pas activé on l'active
         if (!bluetoothAdapter.isEnabled()) {
+            Toast.makeText(mContextMainActivity, "Activation du Bluetooth ...", Toast.LENGTH_LONG).show();
             bluetoothAdapter.enable();
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_on);
             listDevicesBT();
         }
-        //Sinon on le désactive et on modifie l'icône et on cache la liste des appareils
+        //Sinon on le désactive et on modifie l'icône
         else {
+            Toast.makeText(mContextMainActivity, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
             bluetoothAdapter.disable();
-            //Toast.makeText(this, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_off);
-            //listViewBluetoothDevices.setAdapter(null);
             listeArrayAdapter.clear();
         }
     }
@@ -85,27 +84,29 @@ public class BluetoothCustom extends MainActivity  {
     }
 
     public void listDevicesBT() {
-
+        try { Thread.sleep(1800); }
+        catch (InterruptedException ex) { android.util.Log.d("BTArdroid Erreur", ex.toString()); }
         List<BluetoothDevice> pairedDevices = bluetoothManager.getPairedDevicesList();
+        listeArrayAdapter = new ArrayAdapter(mContextMainActivity, android.R.layout.simple_list_item_1, listBluetoothDevices);
         while (pairedDevices.isEmpty()) {
             pairedDevices = bluetoothManager.getPairedDevicesList();
+            break;
         }
         if (!pairedDevices.isEmpty()) {
-            //listViewBluetoothDevices.setVisibility(View.VISIBLE);
             for (BluetoothDevice device : pairedDevices) {
                 listBluetoothDevices.add(device.getName() + " - " + device.getAddress());
             }
-            listeArrayAdapter = new ArrayAdapter(mContextMainActivity, android.R.layout.simple_list_item_1, listBluetoothDevices);
 
             listViewBluetoothDevices.setAdapter(listeArrayAdapter);
             listViewBluetoothDevices.setOnItemClickListener((popup, lv1, position, id) -> {
-                String selLv = listViewBluetoothDevices.getItemAtPosition(position).toString().trim();
+                        String selLv = listViewBluetoothDevices.getItemAtPosition(position).toString().trim();
                         String segments[] = selLv.split(" - ");
                         String macItem = segments[segments.length - 1];
+                        Toast.makeText(mContextMainActivity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
                         connectDevice(macItem);
                     }
             );
-            listeArrayAdapter.notifyDataSetChanged();
+            //listeArrayAdapter.notifyDataSetChanged();
         }
     }
 
@@ -118,9 +119,17 @@ public class BluetoothCustom extends MainActivity  {
 
     @Override
     public void onBackPressed() {
-        //Toast.makeText(this,"Thanks for using application!!",Toast.LENGTH_LONG).show();
+        Toast.makeText(mContextMainActivity,"Merci d'avoir utilisé l'application!!",Toast.LENGTH_LONG).show();
         getApplicationContext();
         super.onBackPressed();
     }
 
+    public void decouverteBluetooth()
+    {
+        btDecouverte.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                bluetoothAdapter.startDiscovery();
+            }
+        });
+    }
 }
