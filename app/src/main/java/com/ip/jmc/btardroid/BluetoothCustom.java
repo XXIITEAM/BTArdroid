@@ -1,6 +1,7 @@
 package com.ip.jmc.btardroid;
 
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,9 +16,13 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BluetoothCustom extends MainActivity  {
     ArduinoDroid ard;
-
+    public static Context mContextBluetoothCustom;
+    public static Context getContext() {
+        return mContextBluetoothCustom;
+    }
     public void BluetoothCustomOnCreate()
     {
+        mContextBluetoothCustom = getBaseContext();
         //Test si le Bluetooth est supporté
         if (bluetoothManager == null) {
             Toast.makeText(mContextMainActivity, "Le Bluetooth n'est pas supporté", Toast.LENGTH_LONG).show(); // Replace context with your context instance.
