@@ -14,7 +14,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class BluetoothCustom extends MainActivity  {
-
+    ArduinoDroid ard;
 
     public void BluetoothCustomOnCreate()
     {
@@ -72,9 +72,7 @@ public class BluetoothCustom extends MainActivity  {
 
     public void onMessageReceived(String message) {
         strMessageRecu = message;
-        // ArduinoDroid.convertParams(message);
-        //Toast.makeText(this, "Message envoyé -> " + strMessageEnvoye + "Message recu " + message, Toast.LENGTH_LONG).show(); // Replace context with your context instance.
-        //(message);
+        ard.convertParams(strMessageEnvoye, strMessageRecu);
     }
 
 

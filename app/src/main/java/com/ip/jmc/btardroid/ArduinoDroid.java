@@ -1,3 +1,17 @@
+/* COMMANDES ARDUINO
+#define CMD_FORWARD     'F'
+#define CMD_RIGHT_FRONT 'R'
+#define CMD_RIGHT_FORWARD	'D'
+#define CMD_LEFT_FORWARD	'G'
+#define CMD_RIGHT_BACK		'J'
+#define CMD_LEFT_BACK		'H'
+#define CMD_BACKWARD		'B'
+#define CMD_AUTONOME		'A'
+#define CMD_LEFT_FRONT		'L'
+#define CMD_STOP			'S'
+#define CMD_DIST			'Z'
+ */
+
 package com.ip.jmc.btardroid;
 
 import android.content.Context;
@@ -5,55 +19,21 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 import static com.ip.jmc.btardroid.MainActivity.deviceInterface;
-import static com.ip.jmc.btardroid.MainActivity.strMessageEnvoye;
-import static com.ip.jmc.btardroid.MainActivity.strMessageRecu;
 
 public class ArduinoDroid extends AppCompatActivity {
     ListView listViewParams;
+    static Button boutonMode, boutonDonnees, bt3, bt4, bt5, bt6;
+
     public static Context mContextArduinoDroid;
 
     public static Context getContext() {
         return mContextArduinoDroid;
-    }
-
-    void convertParams() {
-        // We received a message! Handle it here.
-        if (strMessageEnvoye != null) {
-            switch (strMessageEnvoye) {
-                case "F":
-                    break;
-                case "B":
-                    break;
-                case "Z":
-                    ArrayList<String> listParams = new ArrayList();
-                    listViewParams = findViewById(R.id.listViewParams);
-                    //  listViewParams.setVisibility(View.VISIBLE);
-                    //List listParam = findViewById(R.id.listViewParam);
-                    for (String mess : strMessageRecu.split("/")) {
-                        listParams.add(mess);
-                    }
-
-                    final ArrayAdapter adapterParams = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listParams);
-
-                    listViewParams.setAdapter(adapterParams);
-                    break;
-
-            }
-        } else {
-
-        }
-    }
-
-    public void btn1Click(View v) {
-
-
-        //deviceInterface.sendMessage("A");
-
     }
 
     @Override
@@ -64,11 +44,57 @@ public class ArduinoDroid extends AppCompatActivity {
         listViewParams = findViewById(R.id.listViewParams);
     }
 
+    public void convertParams(String messageEnvoye, String messageRecu) {
+
+        // We received a message! Handle it here.
+        if (messageEnvoye != null) {
+            switch (messageEnvoye) {
+                case "F":
+                    break;
+                case "B":
+                    break;
+                case "Z":
+                    ArrayList<String> listParams = new ArrayList();
+                    listViewParams = findViewById(R.id.listViewParams);
+                    for (String mess : messageRecu.split("/")) {
+                        listParams.add(mess);
+                    }
+
+                    final ArrayAdapter adapterParams = new ArrayAdapter(mContextArduinoDroid, android.R.layout.simple_list_item_1, listParams);
+
+                    listViewParams.setAdapter(adapterParams);
+                    break;
+
+            }
+        } else {
+
+        }
+    }
+
+    public void boutonModeClick(View v) {
+        boutonMode = findViewById(R.id.boutonMode);
+        if (boutonMode.getText().equals(getString(R.string.strCommandeManuelle))) {
+            boutonMode.setText(R.string.strCommandeAuto);
+            deviceInterface.sendMessage("A");
+        } else {
+            boutonMode.setText(R.string.strCommandeManuelle);
+            deviceInterface.sendMessage("S");
+        }
+    }
+
+
+    public void boutonDonneesClick(View v) {
+        deviceInterface.sendMessage("Z");
+
+    }
+
+
     public void btn3Click(View v) {
         deviceInterface.sendMessage("3");
     }
 
     public void btn4Click(View v) {
+
         deviceInterface.sendMessage("4");
     }
 
@@ -78,30 +104,37 @@ public class ArduinoDroid extends AppCompatActivity {
     }
 
     public void btn6Click(View v) {
+
         deviceInterface.sendMessage("6");
     }
 
     public void btn7Click(View v) {
+
         deviceInterface.sendMessage("6");
     }
 
     public void btn8Click(View v) {
+
         deviceInterface.sendMessage("6");
     }
 
     public void btnHautClick(View v) {
+
         deviceInterface.sendMessage("F");
     }
 
     public void btnBasClick(View v) {
+
         deviceInterface.sendMessage("B");
     }
 
     public void btnGaucheClick(View v) {
+
         deviceInterface.sendMessage("G");
     }
 
     public void btnDroiteClick(View v) {
+
         deviceInterface.sendMessage("D");
     }
 
@@ -111,11 +144,8 @@ public class ArduinoDroid extends AppCompatActivity {
     }
 
     public void btnFreinClick(View v) {
+
         deviceInterface.sendMessage("S");
     }
 
-    public void btn2Click(View v) {
-        deviceInterface.sendMessage("Z");
-        convertParams();
-    }
 }

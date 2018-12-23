@@ -16,25 +16,26 @@
             android:gravity="center_horizontal">
 
             <Button
-                android:id="@+id/bt1"
+                android:id="@+id/boutonMode"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="btn1Click"
-                android:text="Button" />
+                android:onClick="boutonModeClick"
+                android:text="@string/strCommandeManuelle" />
 
             <Button
-                android:id="@+id/bt2"
+                android:id="@+id/boutonDonnees"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="btn2Click"
-                android:text="Button" />
+                android:onClick="boutonDonneesClick"
+                android:text="@string/strBoutonDonnees" />
 
             <Button
                 android:id="@+id/bt3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="btn3Click"
-                android:text="Button" />
+                android:onClick="btn3Click" />
 
             <Button
                 android:id="@+id/bt4"
