@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     public static String strMessageRecu = "";
     BluetoothManager bluetoothManager = BluetoothManager.getInstance();
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    Button bt1, bt2, bt3, bt4, bt5, bt6;
+    public static Button bt1, bt2, bt3, bt4, bt5, bt6;
     public static ListView listViewBluetoothDevices;
     public static ArrayList listBluetoothDevices = new ArrayList();
     static ArrayAdapter listeArrayAdapter;
@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
     public static void btnBTOn(View v) {
         new BluetoothCustom().btOnOff();
     }
+    public static void btnDecouverte(View v) {
+        new BluetoothCustom().decouverteBluetooth();
+    }
+
 
     public static Context getContext() {
         return mContextMainActivity;
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         mContextMainActivity = getBaseContext();
         listViewBluetoothDevices = findViewById(R.id.listviewbt);
         bouttonBluetoothConnect = findViewById(R.id.BtnBT);
-        BluetoothCustom btCustom = new BluetoothCustom();
+        new BluetoothCustom().BluetoothCustomOnCreate();
     }
 
 }
