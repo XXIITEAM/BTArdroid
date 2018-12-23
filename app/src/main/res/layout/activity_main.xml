@@ -11,21 +11,19 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="top"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/BtnBT"
                 android:layout_width="59dp"
                 android:layout_height="59dp"
+                android:baselineAligned="false"
                 android:contentDescription="@string/bt_activation"
                 android:onClick="btnBTOn"
                 android:scaleType="centerCrop"
@@ -38,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:layout_marginStart="4dp"
+                android:baselineAligned="false"
                 android:footerDividersEnabled="false"
                 android:headerDividersEnabled="false"
                 android:scrollbars="vertical"
