@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     BluetoothManager bluetoothManager = BluetoothManager.getInstance();
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     Button bt1, bt2, bt3, bt4, bt5, bt6;
-    public static ListView listViewBlueToothDevices;
+    public static ListView listViewBluetoothDevices;
     public static ArrayList listBluetoothDevices = new ArrayList();
     static ArrayAdapter listeArrayAdapter;
     static ImageButton bouttonBluetoothConnect;
@@ -50,9 +50,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContextMainActivity = getBaseContext();
-        listViewBlueToothDevices = findViewById(R.id.listviewbt);
+        listViewBluetoothDevices = findViewById(R.id.listviewbt);
         bouttonBluetoothConnect = findViewById(R.id.BtnBT);
-        listeArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listBluetoothDevices);
         BluetoothCustom btCustom = new BluetoothCustom();
     }
 

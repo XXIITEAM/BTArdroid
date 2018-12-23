@@ -3,6 +3,7 @@ package com.ip.jmc.btardroid;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.harrysoft.androidbluetoothserial.BluetoothSerialDevice;
@@ -43,8 +44,8 @@ public class BluetoothCustom extends MainActivity  {
             bluetoothAdapter.disable();
             //Toast.makeText(this, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_off);
-            //listViewBlueToothDevices.setVisibility(View.INVISIBLE);
-            listViewBlueToothDevices.setAdapter(null);
+            //listViewBluetoothDevices.setAdapter(null);
+            listeArrayAdapter.clear();
         }
     }
 
@@ -84,27 +85,27 @@ public class BluetoothCustom extends MainActivity  {
     }
 
     public void listDevicesBT() {
-    listeArrayAdapter.clear();
+
         List<BluetoothDevice> pairedDevices = bluetoothManager.getPairedDevicesList();
         while (pairedDevices.isEmpty()) {
             pairedDevices = bluetoothManager.getPairedDevicesList();
         }
         if (!pairedDevices.isEmpty()) {
-            //listViewBlueToothDevices.setVisibility(View.VISIBLE);
+            //listViewBluetoothDevices.setVisibility(View.VISIBLE);
             for (BluetoothDevice device : pairedDevices) {
                 listBluetoothDevices.add(device.getName() + " - " + device.getAddress());
             }
-            listViewBlueToothDevices.setAdapter(listeArrayAdapter);
-            listViewBlueToothDevices.setOnItemClickListener((popup, lv1, position, id) -> {
-                String selLv = listViewBlueToothDevices.getItemAtPosition(position).toString().trim();
+            listeArrayAdapter = new ArrayAdapter(mContextMainActivity, android.R.layout.simple_list_item_1, listBluetoothDevices);
+
+            listViewBluetoothDevices.setAdapter(listeArrayAdapter);
+            listViewBluetoothDevices.setOnItemClickListener((popup, lv1, position, id) -> {
+                String selLv = listViewBluetoothDevices.getItemAtPosition(position).toString().trim();
                         String segments[] = selLv.split(" - ");
                         String macItem = segments[segments.length - 1];
                         connectDevice(macItem);
                     }
             );
             listeArrayAdapter.notifyDataSetChanged();
-        } else {
-            listViewBlueToothDevices.setVisibility(View.INVISIBLE);
         }
     }
 
