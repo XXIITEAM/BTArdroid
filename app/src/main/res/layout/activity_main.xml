@@ -59,14 +59,6 @@
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             tools:layout_editor_absoluteX="0dp">
 
-            <EditText
-                android:id="@+id/messageText"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Message :" />
         </LinearLayout>
 
         <LinearLayout
