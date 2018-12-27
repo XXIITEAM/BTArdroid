@@ -61,7 +61,6 @@ public class BluetoothCustom extends MainActivity  {
     public void btOnOff() {
         //Si le Bluetooth n'est pas activé on l'active
         if (!bluetoothAdapter.isEnabled()) {
-            Toast.makeText(mContextMainActivity, "Activation du Bluetooth ...", Toast.LENGTH_LONG).show();
             textViewBluetooth.setTextColor(Color.rgb(0,200,0));
             textViewBluetooth.setText("Activation du Bluetooth ...");
             Handler handler = new Handler();
@@ -69,16 +68,16 @@ public class BluetoothCustom extends MainActivity  {
                 public void run() {
                     textViewBluetooth.setText("");
                 }
-            }, 4000);
+            }, 3000);
             bluetoothAdapter.enable();
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_on_2);
             textViewBtnBT.setTextColor(Color.rgb(104,149,197));
             textViewBtnBT.setText("Désactiver");
             listDevicesBT();
+
         }
         //Sinon on le désactive et on modifie l'icône
         else {
-            Toast.makeText(mContextMainActivity, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
             textViewDiscovered.setVisibility(TextView.INVISIBLE);
             textViewAppaires.setVisibility(TextView.INVISIBLE);
             textViewBluetooth.setTextColor(Color.rgb(200,0,0));
@@ -88,13 +87,14 @@ public class BluetoothCustom extends MainActivity  {
                 public void run() {
                     textViewBluetooth.setText("");
                 }
-            }, 4000);
+            }, 2000);
             bluetoothAdapter.disable();
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_off);
             textViewBtnBT.setTextColor(Color.rgb(200,0,0));
             textViewBtnBT.setText("Activer");
             listeArrayAdapter.clear();
-            //listeArrayAdapterBTDecouverte.clear();
+            listeArrayAdapterBTDecouverte.clear();
+            Toast.makeText(mContextMainActivity, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -136,6 +136,7 @@ public class BluetoothCustom extends MainActivity  {
         catch (InterruptedException ex) { android.util.Log.d("BTArdroid Erreur", ex.toString()); }
         List<BluetoothDevice> pairedDevices = bluetoothManager.getPairedDevicesList();
         listeArrayAdapter = new ArrayAdapter(mContextMainActivity, android.R.layout.simple_list_item_1, listBluetoothDevices);
+        listeArrayAdapter.clear();
         while (pairedDevices.isEmpty()) {
             pairedDevices = bluetoothManager.getPairedDevicesList();
             break;
@@ -181,8 +182,16 @@ public class BluetoothCustom extends MainActivity  {
                 bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_1);
                 textViewBtnRecherche.setTextColor(Color.rgb(104,149,197));
                 textViewBtnRecherche.setText("Rechercher");
-                Toast.makeText(mContextMainActivity, "Fin de la recherche ...",
-                        Toast.LENGTH_LONG).show();
+                textViewBluetooth.setTextColor(Color.rgb(0,200,0));
+                textViewBluetooth.setText("Fin de la recherche ...");
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        textViewBluetooth.setText("");
+                    }
+                }, 1500);
+                /*Toast.makeText(mContextMainActivity, "Fin de la recherche ...",
+                        Toast.LENGTH_LONG).show();*/
             } else {
                 listeArrayAdapterBTDecouverte = new ArrayAdapter(mContextMainActivity, android.R.layout.simple_list_item_1, listBluetoothDevicesDiscovered);
                 bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_2);
@@ -197,7 +206,13 @@ public class BluetoothCustom extends MainActivity  {
                 textViewBluetooth.setText("Recherche en cours ...");
                 textViewBtnRecherche.setText("Arrêter");
                 //listDevicesBT();
-                textViewDiscovered.setVisibility(TextView.VISIBLE);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        textViewDiscovered.setVisibility(TextView.VISIBLE);
+                    }
+                }, 1500);
+
                 //mContextMainActivity.registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
             }
         }
@@ -219,10 +234,6 @@ public class BluetoothCustom extends MainActivity  {
             String action = intent.getAction();
             // When discovery finds a device
             //if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-            if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_STARTED))
-            {
-
-            }
             if(action.equals(BluetoothDevice.ACTION_FOUND)) {
                 // Get the BluetoothDevice object from the Intent
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
@@ -254,7 +265,7 @@ public class BluetoothCustom extends MainActivity  {
                     public void run() {
                         textViewBluetooth.setText("");
                     }
-                }, 4000);
+                }, 1500);
             }
         }
     };
