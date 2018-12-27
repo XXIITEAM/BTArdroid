@@ -47,6 +47,11 @@ public class BluetoothCustom extends MainActivity  {
         if (bluetoothAdapter.isEnabled()) {
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_on);
             listDevicesBT();
+            IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+            filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+            filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+            filter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
+            mContextMainActivity.registerReceiver(bReceiver, filter);
         } else {
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_off);
         }
@@ -150,16 +155,11 @@ public class BluetoothCustom extends MainActivity  {
                     Toast.LENGTH_LONG).show();
         } else {
             listBluetoothDevices.clear();
-            listeArrayAdapter.clear();
-            IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-            filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-            filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-            filter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
-            mContextMainActivity.registerReceiver(bReceiver, filter);
+            listeArrayAdapter.notifyDataSetChanged();
+
             Toast.makeText(mContextMainActivity, "Recherche de nouveaux périphériques",
                     Toast.LENGTH_LONG).show();
             bluetoothAdapter.startDiscovery();
-
             //mContextMainActivity.registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
         }
     }
