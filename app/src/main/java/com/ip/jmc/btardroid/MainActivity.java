@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.harrysoft.androidbluetoothserial.BluetoothManager;
@@ -42,17 +43,15 @@ public class MainActivity extends AppCompatActivity {
     static ArrayAdapter listeArrayAdapter;
     static ArrayAdapter adapterParams;
     static ImageButton bouttonBluetoothConnect;
+    static ImageButton bouttonBluetoothRecherche;
+    static TextView textViewBluetooth;
 
     public static void btnBTOn(View v) {
         new BluetoothCustom().btOnOff();
     }
-    public void btnDecouverte(View v) {
+    public void BtnRecherche(View v) {
         new BluetoothCustom().decouverteBluetooth();
     }
-
-
-
-
 
     public static Context getContext() {
         return mContextMainActivity;
@@ -70,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         listViewBluetoothDevices = findViewById(R.id.listviewbt);
         //listViewParams = findViewById(R.id.listViewParams);
         bouttonBluetoothConnect = findViewById(R.id.BtnBT);
+        bouttonBluetoothRecherche = findViewById(R.id.BtnRecherche);
+        textViewBluetooth = findViewById(R.id.textViewBT);
         new BluetoothCustom().BluetoothCustomOnCreate();
         int MY_PERMISSIONS_REQUEST = 200;
         int permissions=ContextCompat.checkSelfPermission (this,Manifest.permission.ACCESS_FINE_LOCATION);

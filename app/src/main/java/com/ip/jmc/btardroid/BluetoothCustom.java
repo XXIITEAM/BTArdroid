@@ -45,7 +45,7 @@ public class BluetoothCustom extends MainActivity  {
         }
         //Affichage de l'icône Bluetooth activé ou désactivé
         if (bluetoothAdapter.isEnabled()) {
-            bouttonBluetoothConnect.setImageResource(R.drawable.bt_on);
+            bouttonBluetoothConnect.setImageResource(R.drawable.bt_on_2);
             listDevicesBT();
             IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
             filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
@@ -61,7 +61,7 @@ public class BluetoothCustom extends MainActivity  {
         if (!bluetoothAdapter.isEnabled()) {
             Toast.makeText(mContextMainActivity, "Activation du Bluetooth ...", Toast.LENGTH_LONG).show();
             bluetoothAdapter.enable();
-            bouttonBluetoothConnect.setImageResource(R.drawable.bt_on);
+            bouttonBluetoothConnect.setImageResource(R.drawable.bt_on_2);
             listDevicesBT();
         }
         //Sinon on le désactive et on modifie l'icône
@@ -151,15 +151,18 @@ public class BluetoothCustom extends MainActivity  {
         if (bluetoothAdapter.isDiscovering()) {
             // the button is pressed when it discovers, so cancel the discovery
             bluetoothAdapter.cancelDiscovery();
+            bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_1);
             Toast.makeText(mContextMainActivity, "Fin de la recherche ...",
                     Toast.LENGTH_LONG).show();
         } else {
+            bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_2);
             listBluetoothDevices.clear();
             listeArrayAdapter.notifyDataSetChanged();
 
             Toast.makeText(mContextMainActivity, "Recherche de nouveaux périphériques",
                     Toast.LENGTH_LONG).show();
             bluetoothAdapter.startDiscovery();
+            textViewBluetooth.setText("Recherche en cours ...");
             //mContextMainActivity.registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
         }
     }
@@ -176,6 +179,10 @@ public class BluetoothCustom extends MainActivity  {
                     listBluetoothDevices.add(device.getName() + " - " + device.getAddress());
                     listeArrayAdapter.notifyDataSetChanged();
                 }
+            }
+            if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
+                textViewBluetooth.setText("");
+                bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_1);
             }
         }
     };

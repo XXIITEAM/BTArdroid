@@ -11,11 +11,15 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="60dp"
             android:gravity="top"
             android:orientation="horizontal">
 
@@ -31,8 +35,35 @@
                 android:padding="5dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/bt_on"
+                app:srcCompat="@drawable/bt_on_2"
                 tools:layout_editor_absoluteY="0dp" />
+
+            <ImageButton
+                android:id="@+id/BtnRecherche"
+                android:layout_width="59dp"
+                android:layout_height="59dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/bt_recherche"
+                android:maxWidth="5dp"
+                android:maxHeight="5dp"
+                android:onClick="BtnRecherche"
+                app:srcCompat="@drawable/loupe_1" />
+
+            <TextView
+                android:id="@+id/textViewBT"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:textAlignment="viewStart" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            tools:layout_editor_absoluteX="0dp">
 
             <ListView
                 android:id="@+id/listviewbt"
@@ -52,16 +83,6 @@
                 app:layout_constraintVertical_bias="0.0">
 
             </ListView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-            tools:layout_editor_absoluteX="0dp">
-
         </LinearLayout>
 
         <LinearLayout
@@ -72,14 +93,6 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             tools:layout_editor_absoluteY="456dp">
-
-            <Button
-                android:id="@+id/btDecouverte"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:baselineAligned="false"
-                android:onClick="btnDecouverte"
-                android:text="Découverte Bluetooth" />
 
             <Button
                 android:id="@+id/btTest"

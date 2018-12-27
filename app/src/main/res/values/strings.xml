@@ -12,4 +12,5 @@
     <string name="strCommandeManuelle">Mode M</string>
     <string name="strCommandeAuto">Mode A</string>
     <string name="strBoutonDonnees">Données</string>
+    <string name="bt_recherche">Rechercher des périphériques</string>
 </resources>
