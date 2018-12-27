@@ -62,6 +62,14 @@ public class BluetoothCustom extends MainActivity  {
         //Si le Bluetooth n'est pas activé on l'active
         if (!bluetoothAdapter.isEnabled()) {
             Toast.makeText(mContextMainActivity, "Activation du Bluetooth ...", Toast.LENGTH_LONG).show();
+            textViewBluetooth.setTextColor(Color.rgb(0,200,0));
+            textViewBluetooth.setText("Activation du Bluetooth ...");
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    textViewBluetooth.setText("");
+                }
+            }, 4000);
             bluetoothAdapter.enable();
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_on_2);
             textViewBtnBT.setTextColor(Color.rgb(104,149,197));
@@ -73,12 +81,20 @@ public class BluetoothCustom extends MainActivity  {
             Toast.makeText(mContextMainActivity, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
             textViewDiscovered.setVisibility(TextView.INVISIBLE);
             textViewAppaires.setVisibility(TextView.INVISIBLE);
+            textViewBluetooth.setTextColor(Color.rgb(200,0,0));
+            textViewBluetooth.setText("Déconnexion du Bluetooth ...");
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    textViewBluetooth.setText("");
+                }
+            }, 4000);
             bluetoothAdapter.disable();
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_off);
             textViewBtnBT.setTextColor(Color.rgb(200,0,0));
             textViewBtnBT.setText("Activer");
             listeArrayAdapter.clear();
-            listeArrayAdapterBTDecouverte.clear();
+            //listeArrayAdapterBTDecouverte.clear();
         }
     }
 

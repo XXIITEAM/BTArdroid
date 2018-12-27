@@ -53,9 +53,9 @@
             <TextView
                 android:id="@+id/textViewBT"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="58dp"
                 android:layout_weight="1"
-                android:paddingLeft="5dp"
+                android:paddingLeft="10dp"
                 android:paddingTop="17dp"
                 android:textAlignment="viewStart"
                 android:textSize="12sp"
@@ -192,6 +192,7 @@
                 android:baselineAligned="false"
                 android:onClick="btnSuivant"
                 android:text="Suivant"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </LinearLayout>
