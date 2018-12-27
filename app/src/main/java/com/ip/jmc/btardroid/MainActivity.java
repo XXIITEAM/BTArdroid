@@ -84,14 +84,6 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.BLUETOOTH_ADMIN},
                 MY_PERMISSIONS_REQUEST);
-        permissions=ContextCompat.checkSelfPermission (this,Manifest.permission.ACCESS_COARSE_LOCATION);
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                MY_PERMISSIONS_REQUEST);
-        permissions=ContextCompat.checkSelfPermission (this,Manifest.permission.RECEIVE_BOOT_COMPLETED);
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.RECEIVE_BOOT_COMPLETED},
-                MY_PERMISSIONS_REQUEST);
     }
 
 }
