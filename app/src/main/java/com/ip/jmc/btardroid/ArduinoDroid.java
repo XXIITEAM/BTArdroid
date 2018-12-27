@@ -32,7 +32,7 @@ public class ArduinoDroid extends MainActivity {
     public static Context getContext() {
         return mContextArduinoDroid;
     }
-
+    String strMessageRecu = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mContextArduinoDroid = getBaseContext();
@@ -41,35 +41,29 @@ public class ArduinoDroid extends MainActivity {
         listViewParams = findViewById(R.id.listViewParams);
     }
 
-    public void convertParams(String messageEnvoye, String messageRecu) {
 
+    public void traitementReponse(String messageEnvoye, String messageRecu) {
         // We received a message! Handle it here.
-        if (messageEnvoye != null) {
+        if (messageEnvoye != null && messageRecu != null) {
             switch (messageEnvoye) {
                 case "F":
                     break;
                 case "B":
                     break;
+
                 case "Z":
-                    Drawable drawable = boutonMode.getDrawable();
 
-                    if (!drawable.getConstantState().equals(getResources().getDrawable(R.drawable.infos).getConstantState())) {
-                        boutonMode.setImageResource(R.drawable.infos);
-
-                    } else {
-                        boutonMode.setImageResource(R.drawable.req_data);
-
-                    }
-                    ArrayList<String> listParams = new ArrayList();
-                    for (String mess : messageRecu.split("/")) {
-                        listParams.add(mess);
-                    }
-
-                    adapterParams = new ArrayAdapter(mContextArduinoDroid, android.R.layout.simple_list_item_1, listParams);
-
-                    listViewParams.setAdapter(adapterParams);
+                    listParams(messageRecu);
                     break;
 
+            }
+            switch (messageRecu) {
+                case "A" :
+                    boutonMode.setImageResource(R.drawable.autonome);
+                    break;
+                case "S" :
+                    boutonMode.setImageResource(R.drawable.human);
+                    break;
             }
         } else {
 
@@ -80,27 +74,38 @@ public class ArduinoDroid extends MainActivity {
         boutonMode = findViewById(R.id.boutonMode);
         Drawable drawable = boutonMode.getDrawable();
         if (!drawable.getConstantState().equals(getResources().getDrawable(R.drawable.autonome).getConstantState())) {
-            boutonMode.setImageResource(R.drawable.autonome);
+
             deviceInterface.sendMessage("A");
         } else {
-            boutonMode.setImageResource(R.drawable.human);
+
             deviceInterface.sendMessage("S");
         }
     }
 
 
     public void boutonDonneesClick(View v) {
-        Drawable drawable = boutonMode.getDrawable();
+        boutonDonnees = findViewById(R.id.boutonDonnees);
+        Drawable drawableBtDonnees = boutonDonnees.getDrawable();
         deviceInterface.sendMessage("Z");
-        if (!drawable.getConstantState().equals(getResources().getDrawable(R.drawable.infos).getConstantState())) {
-            boutonMode.setImageResource(R.drawable.infos);
+        if (!drawableBtDonnees.getConstantState().equals(getResources().getDrawable(R.drawable.empty).getConstantState())) {
+            boutonDonnees.setImageResource(R.drawable.empty);
 
         } else {
-            boutonMode.setImageResource(R.drawable.req_data);
+            boutonDonnees.setImageResource(R.drawable.req_data);
 
         }
     }
+    public void listParams(String messageRecu) {
+        ArrayList<String> listParams = new ArrayList();
+        for (String mess : messageRecu.split("/")) {
+            listParams.add(mess);
+        }
 
+        adapterParams = new ArrayAdapter(mContextArduinoDroid, android.R.layout.simple_list_item_1, listParams);
+
+        listViewParams.setAdapter(adapterParams);
+        boutonDonnees.setImageResource(R.drawable.empty);
+    }
 
     public void btn3Click(View v) {
         deviceInterface.sendMessage("3");

@@ -1,8 +1,6 @@
 package com.ip.jmc.btardroid;
 
-import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,16 +8,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.harrysoft.androidbluetoothserial.BluetoothSerialDevice;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -107,7 +101,7 @@ public class BluetoothCustom extends MainActivity  {
 
     public void onMessageReceived(String message) {
         strMessageRecu = message;
-        new ArduinoDroid().convertParams(strMessageEnvoye, strMessageRecu);
+        new ArduinoDroid().traitementReponse(strMessageEnvoye, strMessageRecu);
     }
 
 

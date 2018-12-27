@@ -25,10 +25,10 @@
 
             <ImageButton
                 android:id="@+id/boutonDonnees"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="boutonDonneesClick"
-                android:src="@drawable/req_data" />
+                custom:srcCompat="@drawable/empty" />
 
             <ImageButton
                 android:id="@+id/bt3"
