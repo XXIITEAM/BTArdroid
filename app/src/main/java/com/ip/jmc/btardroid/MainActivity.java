@@ -38,15 +38,20 @@ public class MainActivity extends AppCompatActivity {
     public static BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     public static Button bt1, bt2, bt3, bt4, bt5, bt6;
     public static ListView listViewBluetoothDevices;
+    public static ListView listViewbtdiscover;
     public static ListView listViewParams;
     public static ArrayList listBluetoothDevices = new ArrayList();
+    public static ArrayList listBluetoothDevicesDiscovered = new ArrayList();
     static ArrayAdapter listeArrayAdapter;
+    static ArrayAdapter listeArrayAdapterBTDecouverte;
     static ArrayAdapter adapterParams;
     static ImageButton bouttonBluetoothConnect;
     static ImageButton bouttonBluetoothRecherche;
     static TextView textViewBluetooth;
     static TextView textViewBtnRecherche;
     static TextView textViewBtnBT;
+    static TextView textViewDiscovered;
+    static TextView textViewAppaires;
 
     public static void btnBTOn(View v) {
         new BluetoothCustom().btOnOff();
@@ -69,12 +74,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mContextMainActivity = getBaseContext();
         listViewBluetoothDevices = findViewById(R.id.listviewbt);
+        listViewbtdiscover = findViewById(R.id.listviewbtdiscover);
         //listViewParams = findViewById(R.id.listViewParams);
         bouttonBluetoothConnect = findViewById(R.id.BtnBT);
         bouttonBluetoothRecherche = findViewById(R.id.BtnRecherche);
         textViewBluetooth = findViewById(R.id.textViewBT);
         textViewBtnRecherche = findViewById(R.id.textViewBtnRecherche);
         textViewBtnBT = findViewById(R.id.textViewBtnBt);
+        textViewAppaires = findViewById(R.id.textViewAppaires);
+        textViewDiscovered = findViewById(R.id.textViewDiscovered);
         new BluetoothCustom().BluetoothCustomOnCreate();
         int MY_PERMISSIONS_REQUEST = 200;
         int permissions=ContextCompat.checkSelfPermission (this,Manifest.permission.ACCESS_FINE_LOCATION);
