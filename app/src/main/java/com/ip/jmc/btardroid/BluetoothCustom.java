@@ -1,8 +1,13 @@
 package com.ip.jmc.btardroid;
 
+import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -19,6 +24,10 @@ public class BluetoothCustom extends MainActivity  {
     public static Context mContextBluetoothCustom;
     public static Context getContext() {
         return mContextBluetoothCustom;
+    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
     }
     public void BluetoothCustomOnCreate()
     {
@@ -131,5 +140,47 @@ public class BluetoothCustom extends MainActivity  {
     {
         Toast.makeText(mContextMainActivity,"Découverte des appareils Bluetooth",Toast.LENGTH_LONG).show();
         bluetoothAdapter.startDiscovery();
+        Intent discoverableIntent = new Intent(bluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+        discoverableIntent.putExtra(bluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+        mContextMainActivity.startActivity(discoverableIntent);
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        mContextMainActivity.registerReceiver(bluetoothReceiver, filter);
+
+
+    }
+    private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                BluetoothDevice devices = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                //Toast.makeText(mContextMainActivity, "New Device = " + device.getName(), Toast.LENGTH_SHORT).show();
+                listeArrayAdapter.clear();
+                listBluetoothDevices.clear();
+
+
+                        listBluetoothDevices.add(devices.getName() + " - " + devices.getAddress());
+
+
+                    listViewBluetoothDevices.setAdapter(listeArrayAdapter);
+                    listViewBluetoothDevices.setOnItemClickListener((popup, lv1, position, id) -> {
+                                String selLv = listViewBluetoothDevices.getItemAtPosition(position).toString().trim();
+                                String segments[] = selLv.split(" - ");
+                                String macItem = segments[segments.length - 1];
+                                Toast.makeText(mContextMainActivity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
+                                connectDevice(macItem);
+                            }
+                    );
+                    //listeArrayAdapter.notifyDataSetChanged();
+                }
+                //listBluetoothDevices.add(device.getName() + " - " + device.getAddress());
+                //listeArrayAdapter = new ArrayAdapter(mContextMainActivity, android.R.layout.simple_list_item_1, device);
+
+            }
+    };
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        bluetoothAdapter.cancelDiscovery();
+        unregisterReceiver(bluetoothReceiver);
     }
 }
