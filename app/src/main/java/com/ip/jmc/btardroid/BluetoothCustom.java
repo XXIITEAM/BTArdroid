@@ -93,7 +93,7 @@ public class BluetoothCustom extends MainActivity  {
             textViewBtnBT.setTextColor(Color.rgb(200,0,0));
             textViewBtnBT.setText("Activer");
             listeArrayAdapter.clear();
-            listBluetoothDevicesDiscovered.clear();
+            listeArrayAdapterBTDecouverte.clear();
             Toast.makeText(mContextMainActivity, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
         }
     }
@@ -181,8 +181,16 @@ public class BluetoothCustom extends MainActivity  {
                 bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_1);
                 textViewBtnRecherche.setTextColor(Color.rgb(104,149,197));
                 textViewBtnRecherche.setText("Rechercher");
-                Toast.makeText(mContextMainActivity, "Fin de la recherche ...",
-                        Toast.LENGTH_LONG).show();
+                textViewBluetooth.setTextColor(Color.rgb(0,200,0));
+                textViewBluetooth.setText("Fin de la recherche ...");
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        textViewBluetooth.setText("");
+                    }
+                }, 4000);
+                /*Toast.makeText(mContextMainActivity, "Fin de la recherche ...",
+                        Toast.LENGTH_LONG).show();*/
             } else {
                 listeArrayAdapterBTDecouverte = new ArrayAdapter(mContextMainActivity, android.R.layout.simple_list_item_1, listBluetoothDevicesDiscovered);
                 bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_2);
