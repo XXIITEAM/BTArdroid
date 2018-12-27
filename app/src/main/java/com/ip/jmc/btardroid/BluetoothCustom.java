@@ -1,5 +1,6 @@
 package com.ip.jmc.btardroid;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
@@ -8,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -146,29 +149,38 @@ public class BluetoothCustom extends MainActivity  {
             Toast.makeText(mContextMainActivity, "Fin de la recherche ...",
                     Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(mContextMainActivity, "Recherche de nouveaux périphériques",
-                    Toast.LENGTH_LONG).show();
             listBluetoothDevices.clear();
             listeArrayAdapter.clear();
+            IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+            filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+            filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+            filter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
+            mContextMainActivity.registerReceiver(bReceiver, filter);
+            Toast.makeText(mContextMainActivity, "Recherche de nouveaux périphériques",
+                    Toast.LENGTH_LONG).show();
             Intent discoverableIntent =
                     new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 60);
             mContextMainActivity.startActivity(discoverableIntent);
             bluetoothAdapter.startDiscovery();
-            mContextMainActivity.registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
+
+            //mContextMainActivity.registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
         }
     }
     final BroadcastReceiver bReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             // When discovery finds a device
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+            //if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+            if(action.equals(BluetoothDevice.ACTION_FOUND)) {
                 // Get the BluetoothDevice object from the Intent
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // add the name and the MAC address of the object to the arrayAdapter
-                listBluetoothDevices.add(device.getName() + "\n" + device.getAddress());
-                listeArrayAdapter.notifyDataSetChanged();
-                Toast.makeText(getApplicationContext(), device.getName() + "\n" + device.getAddress(),Toast.LENGTH_LONG).show();
+                if(device != null) {
+                    listBluetoothDevices.add(device.getName() + "\n" + device.getAddress());
+                    listeArrayAdapter.notifyDataSetChanged();
+                    Toast.makeText(mContextMainActivity, device.getName() + "\n" + device.getAddress(), Toast.LENGTH_LONG).show();
+                }
             }
         }
     };

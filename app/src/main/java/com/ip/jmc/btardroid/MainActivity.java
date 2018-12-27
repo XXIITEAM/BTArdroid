@@ -1,5 +1,6 @@
 package com.ip.jmc.btardroid;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
@@ -8,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -67,10 +70,28 @@ public class MainActivity extends AppCompatActivity {
         listViewBluetoothDevices = findViewById(R.id.listviewbt);
         //listViewParams = findViewById(R.id.listViewParams);
         bouttonBluetoothConnect = findViewById(R.id.BtnBT);
-
-
         new BluetoothCustom().BluetoothCustomOnCreate();
-
+        int MY_PERMISSIONS_REQUEST = 200;
+        int permissions=ContextCompat.checkSelfPermission (this,Manifest.permission.ACCESS_FINE_LOCATION);
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                MY_PERMISSIONS_REQUEST);
+        permissions=ContextCompat.checkSelfPermission (this,Manifest.permission.BLUETOOTH);
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.BLUETOOTH},
+                MY_PERMISSIONS_REQUEST);
+        permissions=ContextCompat.checkSelfPermission (this,Manifest.permission.BLUETOOTH_ADMIN);
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.BLUETOOTH_ADMIN},
+                MY_PERMISSIONS_REQUEST);
+        permissions=ContextCompat.checkSelfPermission (this,Manifest.permission.ACCESS_COARSE_LOCATION);
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                MY_PERMISSIONS_REQUEST);
+        permissions=ContextCompat.checkSelfPermission (this,Manifest.permission.RECEIVE_BOOT_COMPLETED);
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.RECEIVE_BOOT_COMPLETED},
+                MY_PERMISSIONS_REQUEST);
     }
 
 }
