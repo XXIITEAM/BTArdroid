@@ -74,7 +74,7 @@ public class BluetoothCustom extends MainActivity  {
             textViewBtnBT.setTextColor(Color.rgb(104,149,197));
             textViewBtnBT.setText("Désactiver");
             listDevicesBT();
-            Toast.makeText(mContextMainActivity, "Activation du Bluetooth ...", Toast.LENGTH_LONG).show();
+
         }
         //Sinon on le désactive et on modifie l'icône
         else {
@@ -87,7 +87,7 @@ public class BluetoothCustom extends MainActivity  {
                 public void run() {
                     textViewBluetooth.setText("");
                 }
-            }, 2000);
+            }, 3000);
             bluetoothAdapter.disable();
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_off);
             textViewBtnBT.setTextColor(Color.rgb(200,0,0));
@@ -210,7 +210,7 @@ public class BluetoothCustom extends MainActivity  {
                 public void run() {
                     textViewBluetooth.setText("");
                 }
-            }, 6000);
+            }, 8000);
 
         }
     }
@@ -219,10 +219,6 @@ public class BluetoothCustom extends MainActivity  {
             String action = intent.getAction();
             // When discovery finds a device
             //if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-            if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_STARTED))
-            {
-
-            }
             if(action.equals(BluetoothDevice.ACTION_FOUND)) {
                 // Get the BluetoothDevice object from the Intent
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
