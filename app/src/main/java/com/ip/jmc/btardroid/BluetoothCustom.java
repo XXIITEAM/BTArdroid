@@ -194,7 +194,7 @@ public class BluetoothCustom extends MainActivity  {
                 public void run() {
                     textViewBluetooth.setText("");
                 }
-            }, 10000);
+            }, 8000);
 
         }
     }
