@@ -51,6 +51,15 @@ public class ArduinoDroid extends MainActivity {
                 case "B":
                     break;
                 case "Z":
+                    Drawable drawable = boutonMode.getDrawable();
+
+                    if (!drawable.getConstantState().equals(getResources().getDrawable(R.drawable.infos).getConstantState())) {
+                        boutonMode.setImageResource(R.drawable.infos);
+
+                    } else {
+                        boutonMode.setImageResource(R.drawable.req_data);
+
+                    }
                     ArrayList<String> listParams = new ArrayList();
                     for (String mess : messageRecu.split("/")) {
                         listParams.add(mess);
@@ -81,8 +90,15 @@ public class ArduinoDroid extends MainActivity {
 
 
     public void boutonDonneesClick(View v) {
+        Drawable drawable = boutonMode.getDrawable();
         deviceInterface.sendMessage("Z");
+        if (!drawable.getConstantState().equals(getResources().getDrawable(R.drawable.infos).getConstantState())) {
+            boutonMode.setImageResource(R.drawable.infos);
 
+        } else {
+            boutonMode.setImageResource(R.drawable.req_data);
+
+        }
     }
 
 

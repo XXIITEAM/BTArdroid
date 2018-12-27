@@ -151,7 +151,7 @@ public class BluetoothCustom extends MainActivity  {
         if (bluetoothAdapter.isDiscovering()) {
             // the button is pressed when it discovers, so cancel the discovery
             bluetoothAdapter.cancelDiscovery();
-            bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_1);
+            bouttonBluetoothRecherche.setImageResource(R.drawable.);
             Toast.makeText(mContextMainActivity, "Fin de la recherche ...",
                     Toast.LENGTH_LONG).show();
         } else {
