@@ -24,6 +24,8 @@ import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
+import io.github.controlwear.virtual.joystick.android.JoystickView;
+
 public class ArduinoDroid extends MainActivity {
     static ImageButton boutonMode, boutonDonnees, bt3, bt4, bt5, bt6;
 
@@ -39,6 +41,28 @@ public class ArduinoDroid extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arduino_droid);
         listViewParams = findViewById(R.id.listViewParams);
+
+
+        JoystickView joystick = (JoystickView) findViewById(R.id.joyStick);
+        joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
+            @Override
+            public void onMove(int angle, int strength) {
+                if(angle > 45 && angle < 135 && strength != 0) {
+                    deviceInterface.sendMessage("F");
+                }
+                else if(angle > 136 && angle < 225 && strength != 0) {
+                    deviceInterface.sendMessage("L");
+                }
+                else if(angle > 226 && angle < 315 && strength != 0) {
+                    deviceInterface.sendMessage("B");
+                }
+                else if(angle < 45 && angle > 316 && strength != 0) {
+                    deviceInterface.sendMessage("R");
+                }
+            }
+
+
+        });
     }
 
 
