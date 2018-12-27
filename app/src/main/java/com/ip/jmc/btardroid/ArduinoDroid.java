@@ -43,21 +43,27 @@ public class ArduinoDroid extends MainActivity {
         listViewParams = findViewById(R.id.listViewParams);
 
 
-        JoystickView joystick = (JoystickView) findViewById(R.id.joyStick);
+        JoystickView joystick = findViewById(R.id.joyStick);
         joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
-                if(angle > 45 && angle < 135 && strength != 0) {
+                if(angle >= 46 && angle <= 135 && strength >= 40) {
                     deviceInterface.sendMessage("F");
                 }
-                else if(angle > 136 && angle < 225 && strength != 0) {
+                else if(angle >= 136 && angle <= 225 && strength >= 40) {
                     deviceInterface.sendMessage("L");
                 }
-                else if(angle > 226 && angle < 315 && strength != 0) {
+                else if(angle >= 226 && angle <= 315 && strength >= 40) {
                     deviceInterface.sendMessage("B");
                 }
-                else if(angle < 45 && angle > 316 && strength != 0) {
+                else if(angle >= 316 && angle <= 360  && strength >= 40) {
                     deviceInterface.sendMessage("R");
+                }
+                else if(angle >= 0 && angle <= 45  && strength >= 40) {
+                    deviceInterface.sendMessage("R");
+                }
+                if (angle == 0 && strength <= 39) {
+                    deviceInterface.sendMessage("S");
                 }
             }
 
@@ -85,7 +91,7 @@ public class ArduinoDroid extends MainActivity {
                 case "A" :
                     boutonMode.setImageResource(R.drawable.autonome);
                     break;
-                case "S" :
+                case "M" :
                     boutonMode.setImageResource(R.drawable.human);
                     break;
             }
@@ -102,7 +108,7 @@ public class ArduinoDroid extends MainActivity {
             deviceInterface.sendMessage("A");
         } else {
 
-            deviceInterface.sendMessage("S");
+            deviceInterface.sendMessage("M");
         }
     }
 
