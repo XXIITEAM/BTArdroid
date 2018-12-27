@@ -47,15 +47,51 @@
                 android:maxWidth="5dp"
                 android:maxHeight="5dp"
                 android:onClick="BtnRecherche"
+                android:paddingBottom="0dp"
                 app:srcCompat="@drawable/loupe_1" />
 
             <TextView
                 android:id="@+id/textViewBT"
                 android:layout_width="wrap_content"
-                android:layout_height="25dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
-                android:textAlignment="viewStart" />
+                android:paddingLeft="5dp"
+                android:paddingTop="17dp"
+                android:textAlignment="viewStart"
+                android:textStyle="bold" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewBtnBt"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Désactiver"
+                android:textAlignment="center"
+                android:textSize="8sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewBtnRecherche"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Rechercher"
+                android:textAlignment="center"
+                android:textSize="8sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewEmpty"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout

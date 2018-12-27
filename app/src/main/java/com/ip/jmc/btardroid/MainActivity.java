@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     static ImageButton bouttonBluetoothConnect;
     static ImageButton bouttonBluetoothRecherche;
     static TextView textViewBluetooth;
+    static TextView textViewBtnRecherche;
+    static TextView textViewBtnBT;
 
     public static void btnBTOn(View v) {
         new BluetoothCustom().btOnOff();
@@ -71,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         bouttonBluetoothConnect = findViewById(R.id.BtnBT);
         bouttonBluetoothRecherche = findViewById(R.id.BtnRecherche);
         textViewBluetooth = findViewById(R.id.textViewBT);
+        textViewBtnRecherche = findViewById(R.id.textViewBtnRecherche);
+        textViewBtnBT = findViewById(R.id.textViewBtnBt);
         new BluetoothCustom().BluetoothCustomOnCreate();
         int MY_PERMISSIONS_REQUEST = 200;
         int permissions=ContextCompat.checkSelfPermission (this,Manifest.permission.ACCESS_FINE_LOCATION);

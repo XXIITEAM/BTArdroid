@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -38,6 +39,7 @@ public class BluetoothCustom extends MainActivity  {
     public void BluetoothCustomOnCreate()
     {
         mContextBluetoothCustom = getBaseContext();
+        textViewBtnRecherche.setTextColor(Color.rgb(104,149,197));
         //Test si le Bluetooth est supporté
         if (bluetoothManager == null) {
             Toast.makeText(mContextMainActivity, "Le Bluetooth n'est pas supporté", Toast.LENGTH_LONG).show(); // Replace context with your context instance.
@@ -46,6 +48,8 @@ public class BluetoothCustom extends MainActivity  {
         //Affichage de l'icône Bluetooth activé ou désactivé
         if (bluetoothAdapter.isEnabled()) {
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_on_2);
+            textViewBtnBT.setTextColor(Color.rgb(104,149,197));
+            textViewBtnBT.setText("Désactiver");
             listDevicesBT();
             IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
             filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
@@ -54,6 +58,8 @@ public class BluetoothCustom extends MainActivity  {
             mContextMainActivity.registerReceiver(bReceiver, filter);
         } else {
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_off);
+            textViewBtnBT.setTextColor(Color.rgb(200,0,0));
+            textViewBtnBT.setText("Activer");
         }
     }
     public void btOnOff() {
@@ -62,6 +68,8 @@ public class BluetoothCustom extends MainActivity  {
             Toast.makeText(mContextMainActivity, "Activation du Bluetooth ...", Toast.LENGTH_LONG).show();
             bluetoothAdapter.enable();
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_on_2);
+            textViewBtnBT.setTextColor(Color.rgb(104,149,197));
+            textViewBtnBT.setText("Désactiver");
             listDevicesBT();
         }
         //Sinon on le désactive et on modifie l'icône
@@ -69,6 +77,8 @@ public class BluetoothCustom extends MainActivity  {
             Toast.makeText(mContextMainActivity, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
             bluetoothAdapter.disable();
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_off);
+            textViewBtnBT.setTextColor(Color.rgb(200,0,0));
+            textViewBtnBT.setText("Activer");
             listeArrayAdapter.clear();
         }
     }
@@ -148,22 +158,34 @@ public class BluetoothCustom extends MainActivity  {
     }
 
     public void decouverteBluetooth() {
-        if (bluetoothAdapter.isDiscovering()) {
-            // the button is pressed when it discovers, so cancel the discovery
-            bluetoothAdapter.cancelDiscovery();
-            bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_1);
-            Toast.makeText(mContextMainActivity, "Fin de la recherche ...",
-                    Toast.LENGTH_LONG).show();
-        } else {
-            bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_2);
-            listBluetoothDevices.clear();
-            listeArrayAdapter.notifyDataSetChanged();
+        if(bluetoothAdapter.isEnabled()) {
+            if (bluetoothAdapter.isDiscovering()) {
+                // the button is pressed when it discovers, so cancel the discovery
+                bluetoothAdapter.cancelDiscovery();
+                bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_1);
+                textViewBtnRecherche.setTextColor(Color.rgb(104,149,197));
+                textViewBtnRecherche.setText("Rechercher");
+                Toast.makeText(mContextMainActivity, "Fin de la recherche ...",
+                        Toast.LENGTH_LONG).show();
+            } else {
+                bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_2);
+                listBluetoothDevices.clear();
+                listeArrayAdapter.notifyDataSetChanged();
 
-            Toast.makeText(mContextMainActivity, "Recherche de nouveaux périphériques",
-                    Toast.LENGTH_LONG).show();
-            bluetoothAdapter.startDiscovery();
-            textViewBluetooth.setText("Recherche en cours ...");
-            //mContextMainActivity.registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
+                Toast.makeText(mContextMainActivity, "Recherche de nouveaux périphériques",
+                        Toast.LENGTH_LONG).show();
+                bluetoothAdapter.startDiscovery();
+                textViewBtnRecherche.setTextColor(Color.rgb(255,127,80));
+                textViewBluetooth.setTextColor(Color.rgb(104,149,197));
+                textViewBluetooth.setText("Recherche en cours ...");
+                textViewBtnRecherche.setText("Arrêter");
+                //mContextMainActivity.registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
+            }
+        }
+        else
+        {
+            textViewBluetooth.setTextColor(Color.rgb(200,0,0));
+            textViewBluetooth.setText("Veuiller activer le Bluetooth en cliquant sur l'icône ...");
         }
     }
     final BroadcastReceiver bReceiver = new BroadcastReceiver() {
@@ -183,6 +205,10 @@ public class BluetoothCustom extends MainActivity  {
             if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
                 textViewBluetooth.setText("");
                 bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_1);
+                textViewBtnRecherche.setTextColor(Color.rgb(104,149,197));
+                textViewBtnRecherche.setText("Rechercher");
+                Toast.makeText(mContextMainActivity, "Fin de la recherche ...",
+                        Toast.LENGTH_LONG).show();
             }
         }
     };
