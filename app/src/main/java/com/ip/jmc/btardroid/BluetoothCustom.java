@@ -177,9 +177,8 @@ public class BluetoothCustom extends MainActivity  {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // add the name and the MAC address of the object to the arrayAdapter
                 if(device != null) {
-                    listBluetoothDevices.add(device.getName() + "\n" + device.getAddress());
+                    listBluetoothDevices.add(device.getName() + " - " + device.getAddress());
                     listeArrayAdapter.notifyDataSetChanged();
-                    Toast.makeText(mContextMainActivity, device.getName() + "\n" + device.getAddress(), Toast.LENGTH_LONG).show();
                 }
             }
         }
