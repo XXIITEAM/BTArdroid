@@ -158,10 +158,6 @@ public class BluetoothCustom extends MainActivity  {
             mContextMainActivity.registerReceiver(bReceiver, filter);
             Toast.makeText(mContextMainActivity, "Recherche de nouveaux périphériques",
                     Toast.LENGTH_LONG).show();
-            Intent discoverableIntent =
-                    new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 60);
-            mContextMainActivity.startActivity(discoverableIntent);
             bluetoothAdapter.startDiscovery();
 
             //mContextMainActivity.registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
