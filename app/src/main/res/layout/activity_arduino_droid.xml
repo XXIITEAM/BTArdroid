@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,68 +16,33 @@
             android:layout_height="match_parent"
             android:gravity="center_horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/boutonMode"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="boutonModeClick"
-                android:text="@string/strCommandeManuelle" />
+                custom:srcCompat="@drawable/human" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/boutonDonnees"
-                style="@style/Widget.AppCompat.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="boutonDonneesClick"
-                android:text="@string/strBoutonDonnees" />
+                android:src="@drawable/req_data" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/bt3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="btn3Click" />
+                android:onClick="btn3Click"
+                android:src="@drawable/vh" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/bt4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="btn4Click"
-                android:text="Button" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal">
-
-            <Button
-                android:id="@+id/bt5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="btn5Click"
-                android:text="Button" />
-
-            <Button
-                android:id="@+id/bt6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="btn6Click"
-                android:text="Button" />
-
-            <Button
-                android:id="@+id/bt7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="btn7Click"
-                android:text="Button" />
-
-            <Button
-                android:id="@+id/bt8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="btn8Click"
-                android:text="Button" />
+                android:src="@drawable/opt" />
         </TableRow>
 
     </TableLayout>
@@ -89,64 +55,13 @@
 
         <TableLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/btnHaut"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="btnHautClick"
-                    android:text="Button" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/btnGauche"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="btnGaucheClick"
-                    android:text="Button" />
-
-                <Button
-                    android:id="@+id/btnDroit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="btnDroiteClick"
-                    android:text="Button" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/btnBas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="btnBasClick"
-                    android:text="Button" />
-            </TableRow>
-
-        </TableLayout>
-
-        <TableLayout
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:gravity="left">
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:gravity="center">
 
             </TableRow>
 
@@ -155,26 +70,29 @@
                 android:layout_height="match_parent"
                 android:gravity="center">
 
-                <Button
-                    android:id="@+id/btnAccel"
-                    android:layout_width="wrap_content"
+                <io.github.controlwear.virtual.joystick.android.JoystickView
+                    android:id="@+id/joyStick"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:onClick="btnAccelClick"
-                    android:text="Button" />
+                    custom:JV_backgroundColor="@color/colorAccent"
+                    custom:JV_backgroundSizeRatio="90%"
+                    custom:JV_borderColor="@color/design_default_color_primary_dark"
+                    custom:JV_borderWidth="4dp"
+                    custom:JV_buttonColor="#FF6E40"
+                    custom:JV_buttonSizeRatio="15%"
+                    custom:JV_fixedCenter="false" />
 
-                <Button
-                    android:id="@+id/btnFrein"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="btnFreinClick"
-                    android:text="Button" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+            </TableRow>
 
         </TableLayout>
+
     </LinearLayout>
 
     <LinearLayout

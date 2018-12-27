@@ -15,15 +15,17 @@
 package com.ip.jmc.btardroid;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
 public class ArduinoDroid extends MainActivity {
-    static Button boutonMode, boutonDonnees, bt3, bt4, bt5, bt6;
+    static ImageButton boutonMode, boutonDonnees, bt3, bt4, bt5, bt6;
 
     public static Context mContextArduinoDroid;
 
@@ -67,11 +69,12 @@ public class ArduinoDroid extends MainActivity {
 
     public void boutonModeClick(View v) {
         boutonMode = findViewById(R.id.boutonMode);
-        if (boutonMode.getText().equals(getString(R.string.strCommandeManuelle))) {
-            boutonMode.setText(R.string.strCommandeAuto);
+        Drawable drawable = boutonMode.getDrawable();
+        if (!drawable.getConstantState().equals(getResources().getDrawable(R.drawable.autonome).getConstantState())) {
+            boutonMode.setImageResource(R.drawable.autonome);
             deviceInterface.sendMessage("A");
         } else {
-            boutonMode.setText(R.string.strCommandeManuelle);
+            boutonMode.setImageResource(R.drawable.human);
             deviceInterface.sendMessage("S");
         }
     }
