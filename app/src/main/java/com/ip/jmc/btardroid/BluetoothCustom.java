@@ -149,36 +149,14 @@ public class BluetoothCustom extends MainActivity  {
             Toast.makeText(mContextMainActivity, "Recherche de nouveaux périphériques",
                     Toast.LENGTH_LONG).show();
             listBluetoothDevices.clear();
+            listeArrayAdapter.clear();
+            Intent discoverableIntent =
+                    new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+            mContextMainActivity.startActivity(discoverableIntent);
             bluetoothAdapter.startDiscovery();
-
             mContextMainActivity.registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
         }
-
-        /*Toast.makeText(mContextMainActivity, "Découverte des appareils Bluetooth ...", Toast.LENGTH_SHORT).show();
-        Intent discoverableIntent =
-                new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-        mContextMainActivity.startActivity(discoverableIntent);
-        bluetoothAdapter.startDiscovery();
-    }
-    // Create a BroadcastReceiver for ACTION_FOUND.
-    /*final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                // Discovery has found a device. Get the BluetoothDevice
-                // object and its info from the Intent.
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                String deviceName = device.getName();
-                String deviceHardwareAddress = device.getAddress(); // MAC address
-                mDeviceList.add(device.getName() + " - " + device.getAddress());
-                Toast.makeText(mContextMainActivity, device.getName() + " - " + device.getAddress(), Toast.LENGTH_SHORT).show();
-                listViewBluetoothDevices.setAdapter(new ArrayAdapter<String>(context,
-                        android.R.layout.simple_list_item_1, mDeviceList));
-            }
-        }
-    };*/
-
     }
     final BroadcastReceiver bReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
@@ -190,17 +168,13 @@ public class BluetoothCustom extends MainActivity  {
                 // add the name and the MAC address of the object to the arrayAdapter
                 listBluetoothDevices.add(device.getName() + "\n" + device.getAddress());
                 listeArrayAdapter.notifyDataSetChanged();
-                Toast.makeText(getApplicationContext(), device.getName() + "\n" + device.getAddress(),
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), device.getName() + "\n" + device.getAddress(),Toast.LENGTH_LONG).show();
             }
         }
     };
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //bluetoothAdapter.cancelDiscovery();
-
-        // Don't forget to unregister the ACTION_FOUND receiver.
         unregisterReceiver(bReceiver);
     }
 }
