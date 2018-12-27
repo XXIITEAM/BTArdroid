@@ -61,7 +61,6 @@ public class BluetoothCustom extends MainActivity  {
     public void btOnOff() {
         //Si le Bluetooth n'est pas activé on l'active
         if (!bluetoothAdapter.isEnabled()) {
-            Toast.makeText(mContextMainActivity, "Activation du Bluetooth ...", Toast.LENGTH_LONG).show();
             textViewBluetooth.setTextColor(Color.rgb(0,200,0));
             textViewBluetooth.setText("Activation du Bluetooth ...");
             Handler handler = new Handler();
@@ -75,10 +74,10 @@ public class BluetoothCustom extends MainActivity  {
             textViewBtnBT.setTextColor(Color.rgb(104,149,197));
             textViewBtnBT.setText("Désactiver");
             listDevicesBT();
+            Toast.makeText(mContextMainActivity, "Activation du Bluetooth ...", Toast.LENGTH_LONG).show();
         }
         //Sinon on le désactive et on modifie l'icône
         else {
-            Toast.makeText(mContextMainActivity, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
             textViewDiscovered.setVisibility(TextView.INVISIBLE);
             textViewAppaires.setVisibility(TextView.INVISIBLE);
             textViewBluetooth.setTextColor(Color.rgb(200,0,0));
@@ -88,13 +87,14 @@ public class BluetoothCustom extends MainActivity  {
                 public void run() {
                     textViewBluetooth.setText("");
                 }
-            }, 4000);
+            }, 2000);
             bluetoothAdapter.disable();
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_off);
             textViewBtnBT.setTextColor(Color.rgb(200,0,0));
             textViewBtnBT.setText("Activer");
             listeArrayAdapter.clear();
-            //listeArrayAdapterBTDecouverte.clear();
+            listBluetoothDevicesDiscovered.clear();
+            Toast.makeText(mContextMainActivity, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -210,7 +210,7 @@ public class BluetoothCustom extends MainActivity  {
                 public void run() {
                     textViewBluetooth.setText("");
                 }
-            }, 8000);
+            }, 6000);
 
         }
     }
