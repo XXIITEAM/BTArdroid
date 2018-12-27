@@ -68,7 +68,7 @@ public class BluetoothCustom extends MainActivity  {
                 public void run() {
                     textViewBluetooth.setText("");
                 }
-            }, 4000);
+            }, 3000);
             bluetoothAdapter.enable();
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_on_2);
             textViewBtnBT.setTextColor(Color.rgb(104,149,197));
@@ -87,7 +87,7 @@ public class BluetoothCustom extends MainActivity  {
                 public void run() {
                     textViewBluetooth.setText("");
                 }
-            }, 3000);
+            }, 2000);
             bluetoothAdapter.disable();
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_off);
             textViewBtnBT.setTextColor(Color.rgb(200,0,0));
@@ -136,6 +136,7 @@ public class BluetoothCustom extends MainActivity  {
         catch (InterruptedException ex) { android.util.Log.d("BTArdroid Erreur", ex.toString()); }
         List<BluetoothDevice> pairedDevices = bluetoothManager.getPairedDevicesList();
         listeArrayAdapter = new ArrayAdapter(mContextMainActivity, android.R.layout.simple_list_item_1, listBluetoothDevices);
+        listeArrayAdapter.clear();
         while (pairedDevices.isEmpty()) {
             pairedDevices = bluetoothManager.getPairedDevicesList();
             break;
@@ -188,7 +189,7 @@ public class BluetoothCustom extends MainActivity  {
                     public void run() {
                         textViewBluetooth.setText("");
                     }
-                }, 4000);
+                }, 1500);
                 /*Toast.makeText(mContextMainActivity, "Fin de la recherche ...",
                         Toast.LENGTH_LONG).show();*/
             } else {
@@ -205,7 +206,13 @@ public class BluetoothCustom extends MainActivity  {
                 textViewBluetooth.setText("Recherche en cours ...");
                 textViewBtnRecherche.setText("Arrêter");
                 //listDevicesBT();
-                textViewDiscovered.setVisibility(TextView.VISIBLE);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        textViewDiscovered.setVisibility(TextView.VISIBLE);
+                    }
+                }, 1500);
+
                 //mContextMainActivity.registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
             }
         }
@@ -258,7 +265,7 @@ public class BluetoothCustom extends MainActivity  {
                     public void run() {
                         textViewBluetooth.setText("");
                     }
-                }, 4000);
+                }, 1500);
             }
         }
     };
