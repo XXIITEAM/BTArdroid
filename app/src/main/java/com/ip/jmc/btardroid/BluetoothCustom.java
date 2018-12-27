@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -70,11 +71,14 @@ public class BluetoothCustom extends MainActivity  {
         //Sinon on le désactive et on modifie l'icône
         else {
             Toast.makeText(mContextMainActivity, "Déconnexion du Bluetooth ...", Toast.LENGTH_LONG).show();
+            textViewDiscovered.setVisibility(TextView.INVISIBLE);
+            textViewAppaires.setVisibility(TextView.INVISIBLE);
             bluetoothAdapter.disable();
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_off);
             textViewBtnBT.setTextColor(Color.rgb(200,0,0));
             textViewBtnBT.setText("Activer");
             listeArrayAdapter.clear();
+            listeArrayAdapterBTDecouverte.clear();
         }
     }
 
@@ -185,6 +189,13 @@ public class BluetoothCustom extends MainActivity  {
         {
             textViewBluetooth.setTextColor(Color.rgb(200,0,0));
             textViewBluetooth.setText("Veuiller activer le Bluetooth en cliquant sur l'icône ...");
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    textViewBluetooth.setText("");
+                }
+            }, 10000);
+
         }
     }
     final BroadcastReceiver bReceiver = new BroadcastReceiver() {
@@ -220,8 +231,14 @@ public class BluetoothCustom extends MainActivity  {
                 bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_1);
                 textViewBtnRecherche.setTextColor(Color.rgb(104,149,197));
                 textViewBtnRecherche.setText("Rechercher");
-                Toast.makeText(mContextMainActivity, "Fin de la recherche ...",
-                        Toast.LENGTH_LONG).show();
+                textViewBluetooth.setTextColor(Color.rgb(0,200,0));
+                textViewBluetooth.setText("Fin de la recherche ...");
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        textViewBluetooth.setText("");
+                    }
+                }, 4000);
             }
         }
     };
