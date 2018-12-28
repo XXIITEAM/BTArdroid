@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     static TextView textViewDiscovered;
     static TextView textViewAppaires;
     static  TextView textViewBtnRafraichir;
+    static TextView textViewBtnQuitter;
+    static TextView textViewBtnVoiture;
 
     public static void btnBTOn(View v) {
         new BluetoothCustom().btOnOff();
@@ -66,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
         textViewBluetooth.setTextColor(Color.rgb(104,149,197));
         textViewBluetooth.setText("Mise à jour de la liste des périphériques appairés ...");
         new BluetoothCustom().listDevicesBT();
+    }
+    public void BtnVoiture(View v) {
+        Intent myIntent = new Intent(mContextMainActivity, ArduinoDroid.class);
+        startActivity(myIntent);
     }
     public void BtnQuitter(View v) {
         System.exit(0);
@@ -83,17 +89,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContextMainActivity = getBaseContext();
-        listViewBluetoothDevices = findViewById(R.id.listviewbt);
-        listViewbtdiscover = findViewById(R.id.listviewbtdiscover);
-        //listViewParams = findViewById(R.id.listViewParams);
-        bouttonBluetoothConnect = findViewById(R.id.BtnBT);
-        bouttonBluetoothRecherche = findViewById(R.id.BtnRecherche);
-        textViewBluetooth = findViewById(R.id.textViewBT);
-        textViewBtnRecherche = findViewById(R.id.textViewBtnRecherche);
-        textViewBtnBT = findViewById(R.id.textViewBtnBt);
-        textViewAppaires = findViewById(R.id.textViewAppaires);
-        textViewDiscovered = findViewById(R.id.textViewDiscovered);
-        textViewBtnRafraichir = findViewById(R.id.textViewBtnRafraichir);
+        initInterface();
         new BluetoothCustom().BluetoothCustomOnCreate();
         int MY_PERMISSIONS_REQUEST = 200;
         int permissions=ContextCompat.checkSelfPermission (this,Manifest.permission.ACCESS_FINE_LOCATION);
@@ -108,6 +104,23 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.BLUETOOTH_ADMIN},
                 MY_PERMISSIONS_REQUEST);
+    }
+    private void initInterface()
+    {
+        listViewBluetoothDevices = findViewById(R.id.listviewbt);
+        listViewbtdiscover = findViewById(R.id.listviewbtdiscover);
+        bouttonBluetoothConnect = findViewById(R.id.BtnBT);
+        bouttonBluetoothRecherche = findViewById(R.id.BtnRecherche);
+        textViewBluetooth = findViewById(R.id.textViewBT);
+        textViewBtnRecherche = findViewById(R.id.textViewBtnRecherche);
+        textViewBtnBT = findViewById(R.id.textViewBtnBt);
+        textViewAppaires = findViewById(R.id.textViewAppaires);
+        textViewDiscovered = findViewById(R.id.textViewDiscovered);
+        textViewBtnRafraichir = findViewById(R.id.textViewBtnRafraichir);
+        textViewBtnVoiture = findViewById(R.id.textViewBtnVoiture);
+        textViewBtnQuitter = findViewById(R.id.textViewBtnQuitter);
+        textViewBtnQuitter.setTextColor(Color.rgb(104,149,197));
+        textViewBtnVoiture.setTextColor(Color.rgb(104,149,197));
     }
 
 }

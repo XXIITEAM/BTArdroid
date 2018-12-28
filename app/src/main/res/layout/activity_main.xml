@@ -63,6 +63,18 @@
                 app:srcCompat="@drawable/rafraichir" />
 
             <ImageButton
+                android:id="@+id/btnVoiture"
+                android:layout_width="59dp"
+                android:layout_height="59dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/bt_recherche"
+                android:maxWidth="5dp"
+                android:maxHeight="5dp"
+                android:onClick="BtnVoiture"
+                android:paddingBottom="0dp"
+                app:srcCompat="@drawable/voiture" />
+
+            <ImageButton
                 android:id="@+id/btnQuitter"
                 android:layout_width="match_parent"
                 android:layout_height="59dp"
@@ -84,7 +96,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="360dp"
+                android:layout_width="480dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal">
@@ -118,6 +130,16 @@
                     android:textAlignment="center"
                     android:textSize="8sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textViewBtnVoiture"
+                    android:layout_width="59dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Voiture"
+                    android:textAlignment="center"
+                    android:textSize="8sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -143,6 +165,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -150,8 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
+                android:paddingLeft="15dp"
                 android:textAlignment="viewStart"
                 android:textSize="12sp"
                 android:textStyle="bold|italic" />
@@ -160,9 +183,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp"
             android:orientation="horizontal">
 
             <TextView
@@ -170,7 +190,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingLeft="10dp"
+                android:paddingLeft="15dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="Liste des périphériques appairés"
