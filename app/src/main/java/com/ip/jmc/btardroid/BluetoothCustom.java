@@ -37,6 +37,7 @@ public class BluetoothCustom extends MainActivity  {
         mContextBluetoothCustom = getBaseContext();
         textViewBtnRecherche.setTextColor(Color.rgb(104,149,197));
         listeArrayAdapterBTDecouverte = new ArrayAdapter(mContextMainActivity, android.R.layout.simple_list_item_1, listBluetoothDevicesDiscovered);
+        listeArrayAdapter = new ArrayAdapter(mContextMainActivity, android.R.layout.simple_list_item_1, listBluetoothDevices);
         //Test si le Bluetooth est supporté
         if (bluetoothManager == null) {
             Toast.makeText(mContextMainActivity, "Le Bluetooth n'est pas supporté", Toast.LENGTH_LONG).show(); // Replace context with your context instance.
@@ -136,7 +137,7 @@ public class BluetoothCustom extends MainActivity  {
         try { Thread.sleep(1800); }
         catch (InterruptedException ex) { android.util.Log.d("BTArdroid Erreur", ex.toString()); }
         List<BluetoothDevice> pairedDevices = bluetoothManager.getPairedDevicesList();
-        listeArrayAdapter = new ArrayAdapter(mContextMainActivity, android.R.layout.simple_list_item_1, listBluetoothDevices);
+
         listeArrayAdapter.clear();
         while (pairedDevices.isEmpty()) {
             pairedDevices = bluetoothManager.getPairedDevicesList();
