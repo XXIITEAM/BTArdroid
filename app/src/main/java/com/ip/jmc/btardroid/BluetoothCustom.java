@@ -113,6 +113,10 @@ public class BluetoothCustom extends MainActivity  {
             device.createRfcommSocketToServiceRecord(MY_UUID);
             textViewBluetooth.setTextColor(Color.rgb(0,200,0));
             textViewBluetooth.setText(device.getName() + " est connecté");
+            bluetoothManager.openSerialDevice(device.getAddress())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::onConnected, this::onError);
         } catch (IOException e) {
             textViewBluetooth.setTextColor(Color.rgb(200,0,0));
             textViewBluetooth.setText("Erreur : " + e.toString());
@@ -169,18 +173,19 @@ public class BluetoothCustom extends MainActivity  {
             for (BluetoothDevice device : pairedDevices) {
                 if(!listBluetoothDevices.contains(device.getName() + " - " + device.getAddress())) {
                     listBluetoothDevices.add(device.getName() + " - " + device.getAddress());
+                    listViewBluetoothDevices.setAdapter(listeArrayAdapter);
+                    listViewBluetoothDevices.setVisibility(TextView.VISIBLE);
+                    listViewBluetoothDevices.setOnItemClickListener((popup, lv1, position, id) -> {
+                                String selLv = listViewBluetoothDevices.getItemAtPosition(position).toString().trim();
+                                String segments[] = selLv.split(" - ");
+                                String macItem = segments[segments.length - 1];
+                                Toast.makeText(mContextMainActivity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
+                                connectDevice(device);
+                            }
+                    );
                 }
             }
-            listViewBluetoothDevices.setAdapter(listeArrayAdapter);
-            listViewBluetoothDevices.setVisibility(TextView.VISIBLE);
-            listViewBluetoothDevices.setOnItemClickListener((popup, lv1, position, id) -> {
-                        String selLv = listViewBluetoothDevices.getItemAtPosition(position).toString().trim();
-                        String segments[] = selLv.split(" - ");
-                        String macItem = segments[segments.length - 1];
-                        Toast.makeText(mContextMainActivity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
-                        //connectDevice(macItem);
-                    }
-            );
+
             listeArrayAdapter.notifyDataSetChanged();
             textViewBluetooth.setTextColor(Color.rgb(124,124,124));
             textViewBluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
