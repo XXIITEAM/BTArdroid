@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         {
             textViewBluetooth.setTextColor(Color.rgb(104,149,197));
             textViewBluetooth.setText("Mise à jour de la liste des périphériques appairés ...");
+            textViewAppaires.setText("");
             new BluetoothCustom().listDevicesBT();
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
