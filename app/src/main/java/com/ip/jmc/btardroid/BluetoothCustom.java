@@ -69,7 +69,8 @@ public class BluetoothCustom extends MainActivity  {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
-                    textViewBluetooth.setText("");
+                    textViewBluetooth.setTextColor(Color.rgb(124,124,124));
+                    textViewBluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
                 }
             }, 3000);
             bluetoothAdapter.enable();
@@ -87,7 +88,8 @@ public class BluetoothCustom extends MainActivity  {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
-                    textViewBluetooth.setText("");
+                    textViewBluetooth.setTextColor(Color.rgb(124,124,124));
+                    textViewBluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
                 }
             }, 2000);
             bluetoothAdapter.disable();
@@ -142,7 +144,6 @@ public class BluetoothCustom extends MainActivity  {
             pairedDevices = bluetoothManager.getPairedDevicesList();
             break;
         }
-
         if (!pairedDevices.isEmpty()) {
             textViewAppaires.setTextColor(Color.rgb(104,149,197));
             textViewAppaires.setText("Liste des périphériques appairés :");
@@ -163,16 +164,18 @@ public class BluetoothCustom extends MainActivity  {
                     }
             );
             listeArrayAdapter.notifyDataSetChanged();
+            textViewBluetooth.setTextColor(Color.rgb(124,124,124));
+            textViewBluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
         }
         else
         {
-
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
                     textViewAppaires.setTextColor(Color.rgb(200,0,0));
                     //textViewBluetooth.setText("Aucun périphérique Bluetooth appairé ...");
-                    textViewBluetooth.setText("");
+                    textViewBluetooth.setTextColor(Color.rgb(124,124,124));
+                    textViewBluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
                     textViewAppaires.setVisibility(TextView.VISIBLE);
                     listViewBluetoothDevices.setVisibility(TextView.INVISIBLE);
                     textViewAppaires.setText("Aucun périphérique Bluetooth appairé");
@@ -207,7 +210,8 @@ public class BluetoothCustom extends MainActivity  {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        textViewBluetooth.setText("");
+                        textViewBluetooth.setTextColor(Color.rgb(124,124,124));
+                        textViewBluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
                     }
                 }, 1500);
             } else {
@@ -216,7 +220,7 @@ public class BluetoothCustom extends MainActivity  {
                 listeArrayAdapterBTDecouverte.clear();
                 bluetoothAdapter.startDiscovery();
                 textViewBtnRecherche.setTextColor(Color.rgb(255,127,80));
-                textViewBluetooth.setTextColor(Color.rgb(104,149,197));
+                textViewBluetooth.setTextColor(Color.rgb(0,200,0));
                 textViewBluetooth.setText("Recherche en cours ...");
                 textViewBtnRecherche.setText("Arrêter");
                 firstFound = true;
@@ -229,7 +233,8 @@ public class BluetoothCustom extends MainActivity  {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
-                    textViewBluetooth.setText("");
+                    textViewBluetooth.setTextColor(Color.rgb(124,124,124));
+                    textViewBluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
                 }
             }, 3000);
         }
@@ -278,7 +283,8 @@ public class BluetoothCustom extends MainActivity  {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        textViewBluetooth.setText("");
+                        textViewBluetooth.setTextColor(Color.rgb(124,124,124));
+                        textViewBluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
                     }
                 }, 1500);
                 if(listBluetoothDevicesDiscovered.isEmpty())
@@ -289,7 +295,8 @@ public class BluetoothCustom extends MainActivity  {
                     handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
-                            textViewBluetooth.setText("");
+                            textViewBluetooth.setTextColor(Color.rgb(124,124,124));
+                            textViewBluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
                         }
                     }, 1500);
                 }

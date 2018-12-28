@@ -67,16 +67,11 @@ public class MainActivity extends AppCompatActivity {
     public void BtnRafraichir(View v) {
         if(bluetoothAdapter.isEnabled())
         {
-            textViewBluetooth.setTextColor(Color.rgb(104,149,197));
+            textViewBluetooth.setTextColor(Color.rgb(0,200,0));
             textViewBluetooth.setText("Mise à jour de la liste des périphériques appairés ...");
             textViewAppaires.setText("");
             new BluetoothCustom().listDevicesBT();
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    textViewBluetooth.setText("");
-                }
-            }, 3000);
+
         }
         else
         {
@@ -85,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
-                    textViewBluetooth.setText("");
+                    textViewBluetooth.setTextColor(Color.rgb(124,124,124));
+                    textViewBluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
                 }
             }, 3000);
         }
