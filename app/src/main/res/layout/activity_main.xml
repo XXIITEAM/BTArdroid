@@ -50,6 +50,18 @@
                 android:paddingBottom="0dp"
                 app:srcCompat="@drawable/loupe_1" />
 
+            <ImageButton
+                android:id="@+id/BtnRafraichir"
+                android:layout_width="59dp"
+                android:layout_height="59dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/bt_recherche"
+                android:maxWidth="5dp"
+                android:maxHeight="5dp"
+                android:onClick="BtnRafraichir"
+                android:paddingBottom="0dp"
+                app:srcCompat="@drawable/rafraichir" />
+
             <TextView
                 android:id="@+id/textViewBT"
                 android:layout_width="wrap_content"
@@ -58,19 +70,19 @@
                 android:paddingLeft="10dp"
                 android:paddingTop="17dp"
                 android:textAlignment="viewStart"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="177dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textViewBtnBt"
-                android:layout_width="35dp"
+                android:layout_width="59dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Désactiver"
@@ -80,7 +92,7 @@
 
             <TextView
                 android:id="@+id/textViewBtnRecherche"
-                android:layout_width="wrap_content"
+                android:layout_width="59dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Rechercher"
@@ -89,10 +101,15 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textViewEmpty"
-                android:layout_width="260dp"
+                android:id="@+id/textViewBtnRafraichir"
+                android:layout_width="59dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="Rafraichir"
+                android:textAlignment="center"
+                android:textSize="8sp"
+                android:textStyle="bold" />
+
         </LinearLayout>
 
         <LinearLayout

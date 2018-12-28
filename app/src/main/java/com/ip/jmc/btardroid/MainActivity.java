@@ -8,7 +8,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     static TextView textViewBtnBT;
     static TextView textViewDiscovered;
     static TextView textViewAppaires;
+    static  TextView textViewBtnRafraichir;
 
     public static void btnBTOn(View v) {
         new BluetoothCustom().btOnOff();
@@ -59,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
     public void BtnRecherche(View v) {
         new BluetoothCustom().decouverteBluetooth();
     }
-
+    public void BtnRafraichir(View v) {
+        new BluetoothCustom().listDevicesBT();
+    }
     public static Context getContext() {
         return mContextMainActivity;
     }
@@ -83,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         textViewBtnBT = findViewById(R.id.textViewBtnBt);
         textViewAppaires = findViewById(R.id.textViewAppaires);
         textViewDiscovered = findViewById(R.id.textViewDiscovered);
+        textViewBtnRafraichir = findViewById(R.id.textViewBtnRafraichir);
         new BluetoothCustom().BluetoothCustomOnCreate();
         int MY_PERMISSIONS_REQUEST = 200;
         int permissions=ContextCompat.checkSelfPermission (this,Manifest.permission.ACCESS_FINE_LOCATION);

@@ -27,12 +27,14 @@ public class BluetoothCustom extends MainActivity  {
     public static Context getContext() {
         return mContextBluetoothCustom;
     }
+    public static boolean firstFound;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
     public void BluetoothCustomOnCreate()
     {
+        textViewBtnRafraichir.setTextColor(Color.rgb(104,149,197));
         mContextBluetoothCustom = getBaseContext();
         textViewBtnRecherche.setTextColor(Color.rgb(104,149,197));
         listeArrayAdapterBTDecouverte = new ArrayAdapter(mContextMainActivity, android.R.layout.simple_list_item_1, listBluetoothDevicesDiscovered);
@@ -140,10 +142,20 @@ public class BluetoothCustom extends MainActivity  {
             pairedDevices = bluetoothManager.getPairedDevicesList();
             break;
         }
+        textViewBluetooth.setTextColor(Color.rgb(104,149,197));
+        textViewBluetooth.setText("Mise à jour de la liste des périphériques appairés ...");
         if (!pairedDevices.isEmpty()) {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    textViewBluetooth.setText("");
+                }
+            }, 3000);
             textViewAppaires.setVisibility(TextView.VISIBLE);
             for (BluetoothDevice device : pairedDevices) {
-                listBluetoothDevices.add(device.getName() + " - " + device.getAddress());
+                if(!listBluetoothDevices.contains(device.getName() + " - " + device.getAddress())) {
+                    listBluetoothDevices.add(device.getName() + " - " + device.getAddress());
+                }
             }
             listViewBluetoothDevices.setAdapter(listeArrayAdapter);
             listViewBluetoothDevices.setOnItemClickListener((popup, lv1, position, id) -> {
@@ -155,6 +167,26 @@ public class BluetoothCustom extends MainActivity  {
                     }
             );
             listeArrayAdapter.notifyDataSetChanged();
+        }
+        else
+        {
+            textViewAppaires.setVisibility(TextView.INVISIBLE);
+
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    textViewBluetooth.setTextColor(Color.rgb(200,0,0));
+                    textViewBluetooth.setText("Aucun périphérique Bluetooth appairé ...");
+                    Handler handler2 = new Handler();
+                    handler2.postDelayed(new Runnable() {
+                        public void run() {
+                            textViewBluetooth.setText("");
+                        }
+                    }, 1500);
+                }
+            }, 2500);
+
         }
     }
 
@@ -195,12 +227,7 @@ public class BluetoothCustom extends MainActivity  {
                 textViewBluetooth.setTextColor(Color.rgb(104,149,197));
                 textViewBluetooth.setText("Recherche en cours ...");
                 textViewBtnRecherche.setText("Arrêter");
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        textViewDiscovered.setVisibility(TextView.VISIBLE);
-                    }
-                }, 500);
+                firstFound = true;
             }
         }
         else
@@ -215,29 +242,41 @@ public class BluetoothCustom extends MainActivity  {
             }, 8000);
         }
     }
+
     final BroadcastReceiver bReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             // When discovery finds a device
             if(action.equals(BluetoothDevice.ACTION_FOUND)) {
+                if(firstFound == true)
+                {
+                    textViewDiscovered.setVisibility(TextView.VISIBLE);
+                    firstFound = false;
+
+                }
                 // Get the BluetoothDevice object from the Intent
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // add the name and the MAC address of the object to the arrayAdapter
                 if(device != null) {
-                    listBluetoothDevicesDiscovered.add(device.getName() + " - " + device.getAddress());
-                    listViewbtdiscover.setAdapter(listeArrayAdapterBTDecouverte);
-                    listViewbtdiscover.setOnItemClickListener((popup, lv1, position, id) -> {
-                                String selLv = listViewbtdiscover.getItemAtPosition(position).toString().trim();
-                                String segments[] = selLv.split(" - ");
-                                String macItem = segments[segments.length - 1];
-                                Toast.makeText(mContextMainActivity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
-                                connectDevice(macItem);
-                            }
-                    );
-                    listeArrayAdapterBTDecouverte.notifyDataSetChanged();
+                    if(!listBluetoothDevicesDiscovered.contains(device.getName() + " - " + device.getAddress()))
+                    {
+                        listBluetoothDevicesDiscovered.add(device.getName() + " - " + device.getAddress());
+                        listViewbtdiscover.setAdapter(listeArrayAdapterBTDecouverte);
+                        listViewbtdiscover.setOnItemClickListener((popup, lv1, position, id) -> {
+                                    String selLv = listViewbtdiscover.getItemAtPosition(position).toString().trim();
+                                    String segments[] = selLv.split(" - ");
+                                    String macItem = segments[segments.length - 1];
+                                    Toast.makeText(mContextMainActivity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
+                                    connectDevice(macItem);
+                                }
+                        );
+                        listeArrayAdapterBTDecouverte.notifyDataSetChanged();
+                    }
+
                 }
             }
             if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
+                firstFound = false;
                 textViewBluetooth.setText("");
                 bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_1);
                 textViewBtnRecherche.setTextColor(Color.rgb(104,149,197));
@@ -250,6 +289,18 @@ public class BluetoothCustom extends MainActivity  {
                         textViewBluetooth.setText("");
                     }
                 }, 1500);
+                if(listBluetoothDevicesDiscovered.isEmpty())
+                {
+                    textViewDiscovered.setVisibility(TextView.INVISIBLE);
+                    textViewBluetooth.setTextColor(Color.rgb(200,0,0));
+                    textViewBluetooth.setText("Aucun périphérique Bluetooth à proximité ...");
+                    handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            textViewBluetooth.setText("");
+                        }
+                    }, 1500);
+                }
             }
         }
     };
