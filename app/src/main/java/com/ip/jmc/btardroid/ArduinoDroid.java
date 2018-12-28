@@ -196,4 +196,8 @@ public class ArduinoDroid extends MainActivity {
         deviceInterface.sendMessage("S");
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

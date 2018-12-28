@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     static TextView textViewBtnBT;
     static TextView textViewDiscovered;
     static TextView textViewAppaires;
-    static  TextView textViewBtnRafraichir;
+    static TextView textViewBtnRafraichir;
     static TextView textViewBtnQuitter;
     static TextView textViewBtnVoiture;
 
