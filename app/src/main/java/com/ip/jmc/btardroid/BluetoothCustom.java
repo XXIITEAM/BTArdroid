@@ -144,12 +144,8 @@ public class BluetoothCustom extends MainActivity  {
         }
 
         if (!pairedDevices.isEmpty()) {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    textViewBluetooth.setText("");
-                }
-            }, 5000);
+            textViewAppaires.setTextColor(Color.rgb(104,149,197));
+            textViewAppaires.setText("Liste des périphériques appairés :");
             textViewAppaires.setVisibility(TextView.VISIBLE);
             for (BluetoothDevice device : pairedDevices) {
                 if(!listBluetoothDevices.contains(device.getName() + " - " + device.getAddress())) {
@@ -170,22 +166,18 @@ public class BluetoothCustom extends MainActivity  {
         }
         else
         {
-            textViewAppaires.setVisibility(TextView.INVISIBLE);
-            listViewBluetoothDevices.setVisibility(TextView.INVISIBLE);
 
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
-                    textViewBluetooth.setTextColor(Color.rgb(200,0,0));
-                    textViewBluetooth.setText("Aucun périphérique Bluetooth appairé ...");
-                    Handler handler2 = new Handler();
-                    handler2.postDelayed(new Runnable() {
-                        public void run() {
-                            textViewBluetooth.setText("");
-                        }
-                    }, 2000);
+                    textViewAppaires.setTextColor(Color.rgb(200,0,0));
+                    //textViewBluetooth.setText("Aucun périphérique Bluetooth appairé ...");
+                    textViewBluetooth.setText("");
+                    textViewAppaires.setVisibility(TextView.VISIBLE);
+                    listViewBluetoothDevices.setVisibility(TextView.INVISIBLE);
+                    textViewAppaires.setText("Aucun périphérique Bluetooth appairé");
                 }
-            }, 2500);
+            }, 4000);
 
         }
     }
@@ -239,7 +231,7 @@ public class BluetoothCustom extends MainActivity  {
                 public void run() {
                     textViewBluetooth.setText("");
                 }
-            }, 8000);
+            }, 3000);
         }
     }
 

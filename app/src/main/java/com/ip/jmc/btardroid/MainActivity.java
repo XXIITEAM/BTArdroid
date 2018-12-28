@@ -65,9 +65,30 @@ public class MainActivity extends AppCompatActivity {
         new BluetoothCustom().decouverteBluetooth();
     }
     public void BtnRafraichir(View v) {
-        textViewBluetooth.setTextColor(Color.rgb(104,149,197));
-        textViewBluetooth.setText("Mise à jour de la liste des périphériques appairés ...");
-        new BluetoothCustom().listDevicesBT();
+        if(bluetoothAdapter.isEnabled())
+        {
+            textViewBluetooth.setTextColor(Color.rgb(104,149,197));
+            textViewBluetooth.setText("Mise à jour de la liste des périphériques appairés ...");
+            new BluetoothCustom().listDevicesBT();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    textViewBluetooth.setText("");
+                }
+            }, 3000);
+        }
+        else
+        {
+            textViewBluetooth.setTextColor(Color.rgb(200,0,0));
+            textViewBluetooth.setText("Veuiller activer le Bluetooth en cliquant sur l'icône ...");
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    textViewBluetooth.setText("");
+                }
+            }, 3000);
+        }
+
     }
     public void BtnVoiture(View v) {
         Intent myIntent = new Intent(mContextMainActivity, ArduinoDroid.class);
