@@ -36,6 +36,7 @@ public class BluetoothCustom extends MainActivity  {
     {
         mContextBluetoothCustom = getBaseContext();
         textViewBtnRecherche.setTextColor(Color.rgb(104,149,197));
+        listeArrayAdapterBTDecouverte = new ArrayAdapter(mContextMainActivity, android.R.layout.simple_list_item_1, listBluetoothDevicesDiscovered);
         //Test si le Bluetooth est supporté
         if (bluetoothManager == null) {
             Toast.makeText(mContextMainActivity, "Le Bluetooth n'est pas supporté", Toast.LENGTH_LONG).show(); // Replace context with your context instance.
@@ -193,7 +194,7 @@ public class BluetoothCustom extends MainActivity  {
                 /*Toast.makeText(mContextMainActivity, "Fin de la recherche ...",
                         Toast.LENGTH_LONG).show();*/
             } else {
-                listeArrayAdapterBTDecouverte = new ArrayAdapter(mContextMainActivity, android.R.layout.simple_list_item_1, listBluetoothDevicesDiscovered);
+                //listeArrayAdapterBTDecouverte = new ArrayAdapter(mContextMainActivity, android.R.layout.simple_list_item_1, listBluetoothDevicesDiscovered);
                 bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_2);
                 listBluetoothDevicesDiscovered.clear();
                 //listeArrayAdapterBTDecouverte.notifyDataSetChanged();
@@ -211,7 +212,7 @@ public class BluetoothCustom extends MainActivity  {
                     public void run() {
                         textViewDiscovered.setVisibility(TextView.VISIBLE);
                     }
-                }, 1500);
+                }, 1000);
 
                 //mContextMainActivity.registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
             }
