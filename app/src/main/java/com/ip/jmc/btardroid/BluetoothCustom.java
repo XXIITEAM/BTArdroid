@@ -153,7 +153,7 @@ public class BluetoothCustom extends MainActivity  {
 
     public void onError(Throwable error) {
         // Handle the error
-        Toast.makeText(mContextMainActivity, "Erreur : " + error, Toast.LENGTH_LONG).show();
+        //Toast.makeText(mContextMainActivity, "Erreur : " + error, Toast.LENGTH_LONG).show();
     }
 
     public void listDevicesBT() {
