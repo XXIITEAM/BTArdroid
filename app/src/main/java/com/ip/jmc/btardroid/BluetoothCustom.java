@@ -1,6 +1,7 @@
 package com.ip.jmc.btardroid;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,7 +17,10 @@ import android.widget.Toast;
 
 import com.harrysoft.androidbluetoothserial.BluetoothSerialDevice;
 
+import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.List;
+import java.util.UUID;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -28,7 +32,7 @@ public class BluetoothCustom extends MainActivity  {
         return mContextBluetoothCustom;
     }
     public static boolean firstFound;
-
+    private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -103,12 +107,25 @@ public class BluetoothCustom extends MainActivity  {
         }
     }
 
-    private void connectDevice(String mac) {
-        bluetoothManager.openSerialDevice(mac)
+    private void connectDevice(BluetoothDevice device) {
+        //bluetoothAdapter.cancelDiscovery();
+        try {
+            device.createRfcommSocketToServiceRecord(MY_UUID);
+            textViewBluetooth.setText(device.getName() + " est connecté");
+        } catch (IOException e) {
+            textViewBluetooth.setTextColor(Color.rgb(200,0,0));
+            textViewBluetooth.setText("Erreur : " + e.toString());
+        }
+    }
+
+
+        /*bluetoothManager.openSerialDevice(mac)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onConnected, this::onError);
-    }
+                .subscribe(this::onConnected, this::onError);*/
+
+
+
 
     public void onConnected(BluetoothSerialDevice connectedDevice) {
         // You are now connected to this device!
@@ -131,7 +148,7 @@ public class BluetoothCustom extends MainActivity  {
 
     public void onError(Throwable error) {
         // Handle the error
-        Toast.makeText(this, "Erreur : " + error, Toast.LENGTH_LONG).show();
+        Toast.makeText(mContextMainActivity, "Erreur : " + error, Toast.LENGTH_LONG).show();
     }
 
     public void listDevicesBT() {
@@ -160,7 +177,7 @@ public class BluetoothCustom extends MainActivity  {
                         String segments[] = selLv.split(" - ");
                         String macItem = segments[segments.length - 1];
                         Toast.makeText(mContextMainActivity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
-                        connectDevice(macItem);
+                        //connectDevice(macItem);
                     }
             );
             listeArrayAdapter.notifyDataSetChanged();
@@ -213,7 +230,7 @@ public class BluetoothCustom extends MainActivity  {
                         textViewBluetooth.setTextColor(Color.rgb(124,124,124));
                         textViewBluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
                     }
-                }, 1500);
+                }, 2000);
             } else {
                 bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_2);
                 listBluetoothDevicesDiscovered.clear();
@@ -264,7 +281,7 @@ public class BluetoothCustom extends MainActivity  {
                                     String segments[] = selLv.split(" - ");
                                     String macItem = segments[segments.length - 1];
                                     Toast.makeText(mContextMainActivity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
-                                    connectDevice(macItem);
+                                    connectDevice(device);
                                 }
                         );
                         listeArrayAdapterBTDecouverte.notifyDataSetChanged();
@@ -286,7 +303,7 @@ public class BluetoothCustom extends MainActivity  {
                         textViewBluetooth.setTextColor(Color.rgb(124,124,124));
                         textViewBluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
                     }
-                }, 1500);
+                }, 2000);
                 if(listBluetoothDevicesDiscovered.isEmpty())
                 {
                     textViewDiscovered.setVisibility(TextView.INVISIBLE);
