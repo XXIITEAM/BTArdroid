@@ -142,15 +142,14 @@ public class BluetoothCustom extends MainActivity  {
             pairedDevices = bluetoothManager.getPairedDevicesList();
             break;
         }
-        textViewBluetooth.setTextColor(Color.rgb(104,149,197));
-        textViewBluetooth.setText("Mise à jour de la liste des périphériques appairés ...");
+
         if (!pairedDevices.isEmpty()) {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
                     textViewBluetooth.setText("");
                 }
-            }, 3000);
+            }, 5000);
             textViewAppaires.setVisibility(TextView.VISIBLE);
             for (BluetoothDevice device : pairedDevices) {
                 if(!listBluetoothDevices.contains(device.getName() + " - " + device.getAddress())) {
@@ -158,6 +157,7 @@ public class BluetoothCustom extends MainActivity  {
                 }
             }
             listViewBluetoothDevices.setAdapter(listeArrayAdapter);
+            listViewBluetoothDevices.setVisibility(TextView.VISIBLE);
             listViewBluetoothDevices.setOnItemClickListener((popup, lv1, position, id) -> {
                         String selLv = listViewBluetoothDevices.getItemAtPosition(position).toString().trim();
                         String segments[] = selLv.split(" - ");
@@ -171,7 +171,7 @@ public class BluetoothCustom extends MainActivity  {
         else
         {
             textViewAppaires.setVisibility(TextView.INVISIBLE);
-
+            listViewBluetoothDevices.setVisibility(TextView.INVISIBLE);
 
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -183,7 +183,7 @@ public class BluetoothCustom extends MainActivity  {
                         public void run() {
                             textViewBluetooth.setText("");
                         }
-                    }, 1500);
+                    }, 2000);
                 }
             }, 2500);
 

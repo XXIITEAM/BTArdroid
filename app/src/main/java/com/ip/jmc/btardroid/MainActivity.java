@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         new BluetoothCustom().decouverteBluetooth();
     }
     public void BtnRafraichir(View v) {
+        textViewBluetooth.setTextColor(Color.rgb(104,149,197));
+        textViewBluetooth.setText("Mise à jour de la liste des périphériques appairés ...");
         new BluetoothCustom().listDevicesBT();
     }
     public void BtnQuitter(View v) {
