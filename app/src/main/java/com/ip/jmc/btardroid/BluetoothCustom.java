@@ -205,7 +205,7 @@ public class BluetoothCustom extends MainActivity  {
                 bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_1);
                 textViewBtnRecherche.setTextColor(Color.rgb(104,149,197));
                 textViewBtnRecherche.setText("Rechercher");
-                textViewBluetooth.setTextColor(Color.rgb(0,200,0));
+                textViewBluetooth.setTextColor(Color.rgb(200,0,0));
                 textViewBluetooth.setText("Fin de la recherche ...");
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -278,7 +278,7 @@ public class BluetoothCustom extends MainActivity  {
                 bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_1);
                 textViewBtnRecherche.setTextColor(Color.rgb(104,149,197));
                 textViewBtnRecherche.setText("Rechercher");
-                textViewBluetooth.setTextColor(Color.rgb(0,200,0));
+                textViewBluetooth.setTextColor(Color.rgb(200,0,0));
                 textViewBluetooth.setText("Fin de la recherche ...");
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
