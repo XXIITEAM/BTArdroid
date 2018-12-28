@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,7 +26,16 @@
             android:name=".ArduinoDroid"
             android:label="@string/title_activity_arduino_droid"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".OptionVehicule"
+            android:label="@string/title_activity_option_vehicule"
+            android:parentActivityName=".ArduinoDroid"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ip.jmc.btardroid.ArduinoDroid" />
+        </activity>
     </application>
 
 </manifest>

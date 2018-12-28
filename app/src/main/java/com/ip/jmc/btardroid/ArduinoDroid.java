@@ -15,11 +15,12 @@
 package com.ip.jmc.btardroid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
@@ -141,9 +142,11 @@ public class ArduinoDroid extends MainActivity {
         deviceInterface.sendMessage("3");
     }
 
-    public void btn4Click(View v) {
+    public void boutonConfigurationVhClick(View v) {
 
-        deviceInterface.sendMessage("4");
+        deviceInterface.sendMessage("C");
+        Intent intent = new Intent(ArduinoDroid.this, OptionVehicule.class);  //Lancer l'activité DisplayVue
+        startActivity(intent);    //Afficher la vue
     }
 
     public void btn5Click(View v) {
@@ -195,6 +198,8 @@ public class ArduinoDroid extends MainActivity {
 
         deviceInterface.sendMessage("S");
     }
+
+
 
     @Override
     protected void onDestroy() {
