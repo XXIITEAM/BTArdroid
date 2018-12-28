@@ -32,7 +32,7 @@ public class BluetoothCustom extends MainActivity  {
         return mContextBluetoothCustom;
     }
     public static boolean firstFound;
-    private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
+    private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a22");
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -111,6 +111,7 @@ public class BluetoothCustom extends MainActivity  {
         //bluetoothAdapter.cancelDiscovery();
         try {
             device.createRfcommSocketToServiceRecord(MY_UUID);
+            textViewBluetooth.setTextColor(Color.rgb(0,200,0));
             textViewBluetooth.setText(device.getName() + " est connecté");
         } catch (IOException e) {
             textViewBluetooth.setTextColor(Color.rgb(200,0,0));
