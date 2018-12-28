@@ -179,7 +179,7 @@ public class BluetoothCustom extends MainActivity  {
                                 String selLv = listViewBluetoothDevices.getItemAtPosition(position).toString().trim();
                                 String segments[] = selLv.split(" - ");
                                 String macItem = segments[segments.length - 1];
-                                Toast.makeText(mContextMainActivity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(mContextMainActivity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
                                 connectDevice(device);
                             }
                     );
@@ -286,7 +286,7 @@ public class BluetoothCustom extends MainActivity  {
                                     String selLv = listViewbtdiscover.getItemAtPosition(position).toString().trim();
                                     String segments[] = selLv.split(" - ");
                                     String macItem = segments[segments.length - 1];
-                                    Toast.makeText(mContextMainActivity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(mContextMainActivity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
                                     connectDevice(device);
                                 }
                         );
