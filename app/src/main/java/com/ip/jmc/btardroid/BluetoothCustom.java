@@ -106,13 +106,39 @@ public class BluetoothCustom extends MainActivity  {
             listBluetoothDevicesDiscovered.clear();
         }
     }
-
+    public boolean createBond(BluetoothDevice btDevice)
+            throws Exception
+    {
+        Class class1 = Class.forName("android.bluetooth.BluetoothDevice");
+        Method createBondMethod = class1.getMethod("createBond");
+        Boolean returnValue = (Boolean) createBondMethod.invoke(btDevice);
+        return returnValue.booleanValue();
+    }
     private void connectDevice(BluetoothDevice device) {
-        //bluetoothAdapter.cancelDiscovery();
         try {
+            try {
+                createBond(device);
+            } catch (Exception e)
+            {
+                textViewBluetooth.setTextColor(Color.rgb(200,0,0));
+                textViewBluetooth.setText("Impossible d'appairer le périphérique ...");
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        textViewBluetooth.setTextColor(Color.rgb(124,124,124));
+                        textViewBluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
+                    }
+                }, 2000);
+            }
+            /*if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
+                Toast.makeText(mContextMainActivity, "Appairé", Toast.LENGTH_LONG).show();
+            }*/
             device.createRfcommSocketToServiceRecord(MY_UUID);
             textViewBluetooth.setTextColor(Color.rgb(0,200,0));
             textViewBluetooth.setText(device.getName() + " est connecté");
+            listeArrayAdapterBTDecouverte.clear();
+            listBluetoothDevicesDiscovered.clear();
+            textViewDiscovered.setVisibility(TextView.INVISIBLE);
             bluetoothManager.openSerialDevice(device.getAddress())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -276,8 +302,14 @@ public class BluetoothCustom extends MainActivity  {
                 }
                 // Get the BluetoothDevice object from the Intent
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                // add the name and the MAC address of the object to the arrayAdapter
-                if(device != null) {
+                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            listDevicesBT();
+                        }
+                    }, 10000);
+                }
                     if(!listBluetoothDevicesDiscovered.contains(device.getName() + " - " + device.getAddress()))
                     {
                         listBluetoothDevicesDiscovered.add(device.getName() + " - " + device.getAddress());
@@ -293,7 +325,7 @@ public class BluetoothCustom extends MainActivity  {
                         listeArrayAdapterBTDecouverte.notifyDataSetChanged();
                     }
 
-                }
+
             }
             if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
                 firstFound = false;
@@ -314,7 +346,7 @@ public class BluetoothCustom extends MainActivity  {
                 {
                     textViewDiscovered.setVisibility(TextView.INVISIBLE);
                     textViewBluetooth.setTextColor(Color.rgb(200,0,0));
-                    textViewBluetooth.setText("Aucun périphérique Bluetooth à proximité ...");
+                    //textViewBluetooth.setText("Aucun périphérique Bluetooth à proximité ...");
                     handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
