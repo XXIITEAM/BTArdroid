@@ -65,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
     public void BtnRafraichir(View v) {
         new BluetoothCustom().listDevicesBT();
     }
+    public void BtnQuitter(View v) {
+        System.exit(0);
+    }
     public static Context getContext() {
         return mContextMainActivity;
     }
