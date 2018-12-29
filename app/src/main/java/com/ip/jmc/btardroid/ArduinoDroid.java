@@ -74,30 +74,34 @@ public class ArduinoDroid extends MainActivity {
 
 
     public void traitementReponse(String messageEnvoye, String messageRecu) {
-        // We received a message! Handle it here.
-        if (messageEnvoye != null && messageRecu != null) {
-            switch (messageEnvoye) {
-                case "F":
-                    break;
-                case "B":
-                    break;
-
-                case "Z":
-
-                    listParams(messageRecu);
-                    break;
-
+        String cmdRetour;
+        ArrayList<String> listParams = new ArrayList();
+        //
+        if (messageRecu != null) {
+            if(messageRecu.length() == 1) {
+                cmdRetour = messageRecu.toString();
             }
-            switch (messageRecu) {
+            else {
+                for (String mess : messageRecu.split("/")) {
+                    listParams.add(mess);
+                }
+                cmdRetour = listParams.get(0);
+                listParams.remove(0);
+            }
+            switch (cmdRetour) {
                 case "A" :
                     boutonMode.setImageResource(R.drawable.autonome);
                     break;
                 case "M" :
                     boutonMode.setImageResource(R.drawable.human);
                     break;
+                case "Z":
+                    listParams(listParams);
+                    break;
+                case "C":
+                    listParams(listParams);
+                    break;
             }
-        } else {
-
         }
     }
 
@@ -126,16 +130,13 @@ public class ArduinoDroid extends MainActivity {
 
         }
     }
-    public void listParams(String messageRecu) {
-        ArrayList<String> listParams = new ArrayList();
-        for (String mess : messageRecu.split("/")) {
-            listParams.add(mess);
-        }
+    public void listParams(ArrayList<String> listParams) {
 
         adapterParams = new ArrayAdapter(mContextArduinoDroid, android.R.layout.simple_list_item_1, listParams);
 
         listViewParams.setAdapter(adapterParams);
         boutonDonnees.setImageResource(R.drawable.empty);
+
     }
 
     public void btn3Click(View v) {
@@ -145,8 +146,8 @@ public class ArduinoDroid extends MainActivity {
     public void boutonConfigurationVhClick(View v) {
 
         deviceInterface.sendMessage("C");
-        Intent intent = new Intent(ArduinoDroid.this, OptionVehicule.class);  //Lancer l'activité DisplayVue
-        startActivity(intent);    //Afficher la vue
+        Intent intent = new Intent(this, OptionVehicule.class);
+        startActivity(intent);
     }
 
     public void btn5Click(View v) {
