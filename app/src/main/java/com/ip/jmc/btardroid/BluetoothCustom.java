@@ -196,9 +196,11 @@ public class BluetoothCustom extends MainActivity  {
             textViewAppaires.setTextColor(Color.rgb(104,149,197));
             textViewAppaires.setText("Liste des périphériques appairés :");
             textViewAppaires.setVisibility(TextView.VISIBLE);
+
             for (BluetoothDevice device : pairedDevices) {
                 if(!listBluetoothDevices.contains(device.getName() + " - " + device.getAddress())) {
-                    listBluetoothDevices.add(device.getName() + " - " + device.getAddress());
+                    //listBluetoothDevices.add(device.getName() + " - " + device.getAddress());
+                    listBluetoothDevices.add(device);
                     listViewBluetoothDevices.setAdapter(listeArrayAdapter);
                     listViewBluetoothDevices.setVisibility(TextView.VISIBLE);
                     listViewBluetoothDevices.setOnItemClickListener((popup, lv1, position, id) -> {
@@ -206,7 +208,8 @@ public class BluetoothCustom extends MainActivity  {
                                 String segments[] = selLv.split(" - ");
                                 String macItem = segments[segments.length - 1];
                                 //Toast.makeText(mContextMainActivity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
-                                connectDevice(device);
+                                 BluetoothDevice mBluetoothDevice = bluetoothAdapter.getRemoteDevice(macItem);
+                                connectDevice(mBluetoothDevice);
                             }
                     );
                 }
@@ -258,7 +261,8 @@ public class BluetoothCustom extends MainActivity  {
                                 String segments[] = selLv.split(" - ");
                                 String macItem = segments[segments.length - 1];
                                 //Toast.makeText(mContextMainActivity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
-                                connectDevice(device);
+                        BluetoothDevice mBluetoothDevice = bluetoothAdapter.getRemoteDevice(macItem);
+                                connectDevice(mBluetoothDevice);
                             }
                     );
                 }
@@ -360,7 +364,8 @@ public class BluetoothCustom extends MainActivity  {
                                     String segments[] = selLv.split(" - ");
                                     String macItem = segments[segments.length - 1];
                                     //Toast.makeText(mContextMainActivity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
-                                    connectDevice(device);
+                            BluetoothDevice mBluetoothDevice = bluetoothAdapter.getRemoteDevice(macItem);
+                                    connectDevice(mBluetoothDevice);
                                 }
                         );
                         listeArrayAdapterBTDecouverte.notifyDataSetChanged();
