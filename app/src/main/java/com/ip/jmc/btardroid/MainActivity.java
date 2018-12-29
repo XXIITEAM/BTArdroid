@@ -9,7 +9,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -27,6 +29,8 @@ import com.harrysoft.androidbluetoothserial.SimpleBluetoothDeviceInterface;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -125,6 +129,54 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.BLUETOOTH_ADMIN},
                 MY_PERMISSIONS_REQUEST);
+
+       AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                    while(true) {
+                            try {
+                                Thread.sleep(5000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                                runOnUiThread(new Runnable() {
+
+                                    @Override
+                                    public void run() {
+                                        //Toast.makeText(mContextMainActivity, "Thread ...", Toast.LENGTH_LONG).show();
+                                        new BluetoothCustom().listDevicesBTThread();
+                                    }
+                                });
+
+                    }
+            }
+       });
+
+
+
+
+
+
+
+
+       /* new Thread(new Runnable() {
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        //while (true) {
+                            try {
+                                //Stopper l'UI thread pendant 3 secondes
+                                Thread.sleep(5000);
+                            } catch (InterruptedException e) {}
+                                    new BluetoothCustom().listDevicesBT();
+                        }
+                    //}
+                });
+            }
+        }).start();*/
+               // new BluetoothCustom().listDevicesBT();
+
     }
 
     private void initInterface()

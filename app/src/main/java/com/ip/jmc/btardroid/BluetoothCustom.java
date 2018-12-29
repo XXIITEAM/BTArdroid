@@ -234,6 +234,47 @@ public class BluetoothCustom extends MainActivity  {
         }
     }
 
+    public void listDevicesBTThread() {
+        try { Thread.sleep(1800); }
+        catch (InterruptedException ex) { android.util.Log.d("BTArdroid Erreur", ex.toString()); }
+        textViewAppaires.setTextColor(Color.rgb(104,149,197));
+        textViewAppaires.setText("Liste des périphériques appairés :");
+        textViewAppaires.setVisibility(TextView.VISIBLE);
+        List<BluetoothDevice> pairedDevices = bluetoothManager.getPairedDevicesList();
+        listeArrayAdapter.clear();
+        listBluetoothDevices.clear();
+        while (pairedDevices.isEmpty()) {
+            pairedDevices = bluetoothManager.getPairedDevicesList();
+            break;
+        }
+        if (!pairedDevices.isEmpty()) {
+            for (BluetoothDevice device : pairedDevices) {
+                if(!listBluetoothDevices.contains(device.getName() + " - " + device.getAddress())) {
+                    listBluetoothDevices.add(device.getName() + " - " + device.getAddress());
+                    listViewBluetoothDevices.setAdapter(listeArrayAdapter);
+                    listViewBluetoothDevices.setVisibility(TextView.VISIBLE);
+                    listViewBluetoothDevices.setOnItemClickListener((popup, lv1, position, id) -> {
+                                String selLv = listViewBluetoothDevices.getItemAtPosition(position).toString().trim();
+                                String segments[] = selLv.split(" - ");
+                                String macItem = segments[segments.length - 1];
+                                //Toast.makeText(mContextMainActivity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
+                                connectDevice(device);
+                            }
+                    );
+                }
+            }
+
+            listeArrayAdapter.notifyDataSetChanged();
+        }
+        else {
+                    textViewAppaires.setTextColor(Color.rgb(200,0,0));
+                    textViewAppaires.setVisibility(TextView.VISIBLE);
+                    listViewBluetoothDevices.setVisibility(TextView.INVISIBLE);
+                    textViewAppaires.setText("Aucun périphérique Bluetooth appairé");
+        }
+    }
+
+
     public void deconnexion(View v) {
         bluetoothManager.closeDevice(deviceInterface); // Close by interface instance
         bluetoothManager.close();
@@ -330,6 +371,7 @@ public class BluetoothCustom extends MainActivity  {
             if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
                 firstFound = false;
                 textViewBluetooth.setText("");
+                textViewDiscovered.setVisibility(TextView.VISIBLE);
                 bouttonBluetoothRecherche.setImageResource(R.drawable.loupe_1);
                 textViewBtnRecherche.setTextColor(Color.rgb(104,149,197));
                 textViewBtnRecherche.setText("Rechercher");
