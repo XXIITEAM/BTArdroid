@@ -1,36 +1,40 @@
 package com.ip.jmc.btardroid;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import static com.ip.jmc.btardroid.MainActivity.deviceInterface;
 
-public class OptionVehicule extends AppCompatActivity {
-
+public class OptionVehicule extends MainActivity {
+    public static Context mContextOptionVehicule;
+    public static Context getContext() {
+        return mContextOptionVehicule;
+    }
+    TextInputEditText reculParam = findViewById(R.id.reculParam);
+    TextInputEditText gaucheParam = findViewById(R.id.gaucheParam);
+    TextInputEditText avancerParam = findViewById(R.id.avancerParam);
+    TextInputEditText droiteParam = findViewById(R.id.droiteParam);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mContextOptionVehicule = getBaseContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options_vehicule);
-
+        receptionParamVehicule();
 
     }
+    public void receptionParamVehicule() {
 
+    }
     public void envoyerParamVehicule(View v) {
-        TextInputLayout reculParam = findViewById(R.id.reculParam);
-        TextInputLayout gaucheParam = findViewById(R.id.gaucheParam);
-        TextInputLayout avancerParam = findViewById(R.id.avancerParam);
-        TextInputLayout droiteParam = findViewById(R.id.droiteParam);
-        String strParam = reculParam.getEditText().getText().toString() + "/" +
-                gaucheParam.getEditText().getText().toString() + "/" +
-                avancerParam.getEditText().getText().toString() + "/" +
-                droiteParam.getEditText().getText().toString();
 
-        deviceInterface.sendMessage(strParam);
+        String strParam = reculParam.getText().toString() + "/" +
+                gaucheParam.getText().toString() + "/" +
+                avancerParam.getText().toString() + "/" +
+                droiteParam.getText().toString();
+
+        deviceInterface.sendMessage("A");
 
 
     }
