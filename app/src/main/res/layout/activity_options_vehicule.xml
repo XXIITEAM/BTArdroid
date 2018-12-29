@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:text="Configuration des paramètres véhicule"
+        android:textSize="18sp"
+        android:textStyle="bold|italic" />
+
+    <TableLayout
+        android:layout_width="372dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="104dp"
+        android:padding="10dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="40dp"
+            android:padding="3dp">
+
+            <TextView
+                android:id="@+id/tvReculParam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distance de recul"
+                android:textAlignment="viewStart" />
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/reculParam"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="50dp"
+                android:inputType="numberDecimal"
+                android:textAllCaps="false"
+                android:textSize="12sp">
+
+            </android.support.design.widget.TextInputEditText>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:minHeight="40dp"
+            android:padding="3dp">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distance virage gauche" />
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/gaucheParam"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="50dp"
+                android:inputType="numberDecimal"
+                android:padding="1dp"
+                android:textSize="12sp">
+
+            </android.support.design.widget.TextInputEditText>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:minHeight="40dp"
+            android:padding="3dp">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distance virage droit" />
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/droiteParam"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="50dp"
+                android:inputType="numberDecimal"
+                android:padding="1dp"
+                android:textSize="12sp">
+
+            </android.support.design.widget.TextInputEditText>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:minHeight="40dp"
+            android:padding="3dp">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distance avancer" />
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/avancerParam"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="50dp"
+                android:inputType="numberDecimal"
+                android:padding="1dp"
+                android:textSize="12sp">
+
+            </android.support.design.widget.TextInputEditText>
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/boutonEnvoyerParam"
+        android:layout_width="267dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView7"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginBottom="95dp"
+        android:onClick="envoyerParamVehicule"
+        android:text="Envoyer" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="374dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="39dp"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>
