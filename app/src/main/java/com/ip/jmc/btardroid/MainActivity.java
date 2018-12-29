@@ -35,6 +35,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.disposables.Disposable;
+
 
 public class MainActivity extends AppCompatActivity {
     public static Context mContextMainActivity;
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     static TextView textViewBtnRafraichir;
     static TextView textViewBtnQuitter;
     static TextView textViewBtnVoiture;
-
+    public static boolean serialTest = false;
     public static void btnBTOn(View v) {
         new BluetoothCustom().btOnOff();
     }
@@ -95,8 +97,35 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void BtnVoiture(View v) {
-        Intent myIntent = new Intent(mContextMainActivity, ArduinoDroid.class);
-        startActivity(myIntent);
+        if(bluetoothAdapter.isEnabled())
+        {
+            if (serialTest == true) {
+                Intent myIntent = new Intent(mContextMainActivity, ArduinoDroid.class);
+                startActivity(myIntent);
+            } else {
+                textViewBluetooth.setTextColor(Color.rgb(200, 0, 0));
+                textViewBluetooth.setText("Vous n'êtes pas connecté à une voiture arduino ...");
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        textViewBluetooth.setTextColor(Color.rgb(124, 124, 124));
+                        textViewBluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
+                    }
+                }, 3000);
+            }
+        }
+        else
+        {
+            textViewBluetooth.setTextColor(Color.rgb(200, 0, 0));
+            textViewBluetooth.setText("Le Bluetooth doit être activé pour utiliser cette application ...");
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    textViewBluetooth.setTextColor(Color.rgb(124, 124, 124));
+                    textViewBluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
+                }
+            }, 3000);
+        }
     }
     public void BtnQuitter(View v) {
         System.exit(0);
@@ -143,6 +172,10 @@ public class MainActivity extends AppCompatActivity {
                                     public void run() {
                                         if(bluetoothAdapter.isEnabled()) {
                                             new BluetoothCustom().listDevicesBTThread();
+                                        }
+                                        else
+                                        {
+                                            new BluetoothCustom().testBluetooth();
                                         }
                                     }
                                 });

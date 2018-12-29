@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class BluetoothCustom extends MainActivity  {
@@ -32,6 +33,7 @@ public class BluetoothCustom extends MainActivity  {
         return mContextBluetoothCustom;
     }
     public static boolean firstFound;
+
     private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a22");
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,21 @@ public class BluetoothCustom extends MainActivity  {
             bouttonBluetoothConnect.setImageResource(R.drawable.bt_off);
             textViewBtnBT.setTextColor(Color.rgb(200,0,0));
             textViewBtnBT.setText("Activer");
+        }
+    }
+    public void testBluetooth() {
+        if(!bluetoothAdapter.isEnabled())
+        {
+            textViewDiscovered.setVisibility(TextView.INVISIBLE);
+            textViewAppaires.setVisibility(TextView.INVISIBLE);
+            bluetoothAdapter.disable();
+            bouttonBluetoothConnect.setImageResource(R.drawable.bt_off);
+            textViewBtnBT.setTextColor(Color.rgb(200,0,0));
+            textViewBtnBT.setText("Activer");
+            listeArrayAdapter.clear();
+            listeArrayAdapterBTDecouverte.clear();
+            listBluetoothDevices.clear();
+            listBluetoothDevicesDiscovered.clear();
         }
     }
     public void btOnOff() {
@@ -149,23 +166,16 @@ public class BluetoothCustom extends MainActivity  {
         }
     }
 
-
-        /*bluetoothManager.openSerialDevice(mac)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onConnected, this::onError);*/
-
-
-
-
     public void onConnected(BluetoothSerialDevice connectedDevice) {
-        // You are now connected to this device!
-        // Here you may want to retain an instance to your device:
-        deviceInterface = connectedDevice.toSimpleDeviceInterface();
-        // Listen to bluetooth events
-        deviceInterface.setListeners(this::onMessageReceived, this::onMessageSent, this::onError);
-        //Intent myIntent = new Intent(mContextMainActivity, ArduinoDroid.class);
-        //mContextMainActivity.startActivity(myIntent);
+            serialTest = true;
+            // You are now connected to this device!
+            // Here you may want to retain an instance to your device:
+            deviceInterface = connectedDevice.toSimpleDeviceInterface();
+            // Listen to bluetooth events
+            deviceInterface.setListeners(this::onMessageReceived, this::onMessageSent, this::onError);
+            //Intent myIntent = new Intent(mContextMainActivity, ArduinoDroid.class);
+            //mContextMainActivity.startActivity(myIntent);
+
     }
 
     public void onMessageSent(String message) {
@@ -178,6 +188,7 @@ public class BluetoothCustom extends MainActivity  {
     }
 
     public void onError(Throwable error) {
+        serialTest = false;
         // Handle the error
         //Toast.makeText(mContextMainActivity, "Erreur : " + error, Toast.LENGTH_LONG).show();
     }
