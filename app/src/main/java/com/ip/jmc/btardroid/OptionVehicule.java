@@ -12,15 +12,20 @@ public class OptionVehicule extends MainActivity {
     public static Context getContext() {
         return mContextOptionVehicule;
     }
-    TextInputEditText reculParam = findViewById(R.id.reculParam);
-    TextInputEditText gaucheParam = findViewById(R.id.gaucheParam);
-    TextInputEditText avancerParam = findViewById(R.id.avancerParam);
-    TextInputEditText droiteParam = findViewById(R.id.droiteParam);
+    TextInputEditText reculParam;
+    TextInputEditText gaucheParam;
+    TextInputEditText avancerParam;
+    TextInputEditText droiteParam;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mContextOptionVehicule = getBaseContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options_vehicule);
+        reculParam = findViewById(R.id.reculParam);
+        gaucheParam = findViewById(R.id.gaucheParam);
+        avancerParam = findViewById(R.id.avancerParam);
+        droiteParam = findViewById(R.id.droiteParam);
+        mContextOptionVehicule = getBaseContext();
+
         receptionParamVehicule();
 
     }
@@ -29,12 +34,12 @@ public class OptionVehicule extends MainActivity {
     }
     public void envoyerParamVehicule(View v) {
 
-        String strParam = reculParam.getText().toString() + "/" +
+        String strParam = "W" + "/" + reculParam.getText().toString() + "/" +
                 gaucheParam.getText().toString() + "/" +
                 avancerParam.getText().toString() + "/" +
-                droiteParam.getText().toString();
+                droiteParam.getText().toString() + "/" + "X" ;
 
-        deviceInterface.sendMessage("A");
+        deviceInterface.sendMessage(strParam);
 
 
     }

@@ -17,9 +17,7 @@ package com.ip.jmc.btardroid;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
-import android.view.View;
+import android.os.Bundle;import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 
@@ -35,7 +33,6 @@ public class ArduinoDroid extends MainActivity {
     public static Context getContext() {
         return mContextArduinoDroid;
     }
-    String strMessageRecu = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mContextArduinoDroid = getBaseContext();
@@ -146,61 +143,9 @@ public class ArduinoDroid extends MainActivity {
     public void boutonConfigurationVhClick(View v) {
 
         deviceInterface.sendMessage("C");
-        Intent intent = new Intent(this, OptionVehicule.class);
+        Intent intent = new Intent(ArduinoDroid.this, OptionVehicule.class);
         startActivity(intent);
     }
-
-    public void btn5Click(View v) {
-        deviceInterface.sendMessage("4");
-
-    }
-
-    public void btn6Click(View v) {
-
-        deviceInterface.sendMessage("6");
-    }
-
-    public void btn7Click(View v) {
-
-        deviceInterface.sendMessage("6");
-    }
-
-    public void btn8Click(View v) {
-
-        deviceInterface.sendMessage("6");
-    }
-
-    public void btnHautClick(View v) {
-
-        deviceInterface.sendMessage("F");
-    }
-
-    public void btnBasClick(View v) {
-
-        deviceInterface.sendMessage("B");
-    }
-
-    public void btnGaucheClick(View v) {
-
-        deviceInterface.sendMessage("G");
-    }
-
-    public void btnDroiteClick(View v) {
-
-        deviceInterface.sendMessage("D");
-    }
-
-    public void btnAccelClick(View v) {
-
-        deviceInterface.sendMessage("F");
-    }
-
-    public void btnFreinClick(View v) {
-
-        deviceInterface.sendMessage("S");
-    }
-
-
 
     @Override
     protected void onDestroy() {
