@@ -339,16 +339,17 @@ public class BluetoothCustom extends MainActivity  {
             String action = intent.getAction();
             // When discovery finds a device
             if(action.equals(BluetoothDevice.ACTION_FOUND)) {
-                if(firstFound == true)
-                {
-                    textViewDiscovered.setVisibility(TextView.VISIBLE);
-                    firstFound = false;
 
-                }
                 // Get the BluetoothDevice object from the Intent
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                    if(!listBluetoothDevicesDiscovered.contains(device.getName() + " - " + device.getAddress()))
+                    if(!listBluetoothDevicesDiscovered.contains(device.getName() + " - " + device.getAddress())&& !listBluetoothDevices.contains(device.getName() + " - " + device.getAddress()))
                     {
+                        if(firstFound == true)
+                        {
+                            textViewDiscovered.setVisibility(TextView.VISIBLE);
+                            firstFound = false;
+
+                        }
                         listBluetoothDevicesDiscovered.add(device.getName() + " - " + device.getAddress());
                         listViewbtdiscover.setAdapter(listeArrayAdapterBTDecouverte);
                         listViewbtdiscover.setOnItemClickListener((popup, lv1, position, id) -> {
