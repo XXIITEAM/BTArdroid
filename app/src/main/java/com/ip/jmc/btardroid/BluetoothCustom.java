@@ -199,8 +199,8 @@ public class BluetoothCustom extends MainActivity  {
 
             for (BluetoothDevice device : pairedDevices) {
                 if(!listBluetoothDevices.contains(device.getName() + " - " + device.getAddress())) {
-                    //listBluetoothDevices.add(device.getName() + " - " + device.getAddress());
-                    listBluetoothDevices.add(device);
+                    listBluetoothDevices.add(device.getName() + " - " + device.getAddress());
+                    //listBluetoothDevices.add(device);
                     listViewBluetoothDevices.setAdapter(listeArrayAdapter);
                     listViewBluetoothDevices.setVisibility(TextView.VISIBLE);
                     listViewBluetoothDevices.setOnItemClickListener((popup, lv1, position, id) -> {
@@ -347,14 +347,6 @@ public class BluetoothCustom extends MainActivity  {
                 }
                 // Get the BluetoothDevice object from the Intent
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            listDevicesBT();
-                        }
-                    }, 10000);
-                }
                     if(!listBluetoothDevicesDiscovered.contains(device.getName() + " - " + device.getAddress()))
                     {
                         listBluetoothDevicesDiscovered.add(device.getName() + " - " + device.getAddress());

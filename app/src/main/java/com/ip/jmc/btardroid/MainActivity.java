@@ -129,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.BLUETOOTH_ADMIN},
                 MY_PERMISSIONS_REQUEST);
-
        AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -139,44 +138,17 @@ public class MainActivity extends AppCompatActivity {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-
                                 runOnUiThread(new Runnable() {
-
                                     @Override
                                     public void run() {
-                                        //Toast.makeText(mContextMainActivity, "Thread ...", Toast.LENGTH_LONG).show();
-                                        new BluetoothCustom().listDevicesBTThread();
+                                        if(bluetoothAdapter.isEnabled()) {
+                                            new BluetoothCustom().listDevicesBTThread();
+                                        }
                                     }
                                 });
-
                     }
             }
        });
-
-
-
-
-
-
-
-
-       /* new Thread(new Runnable() {
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        //while (true) {
-                            try {
-                                //Stopper l'UI thread pendant 3 secondes
-                                Thread.sleep(5000);
-                            } catch (InterruptedException e) {}
-                                    new BluetoothCustom().listDevicesBT();
-                        }
-                    //}
-                });
-            }
-        }).start();*/
-               // new BluetoothCustom().listDevicesBT();
-
     }
 
     private void initInterface()
