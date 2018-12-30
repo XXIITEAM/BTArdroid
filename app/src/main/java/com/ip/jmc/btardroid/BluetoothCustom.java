@@ -33,8 +33,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BluetoothCustom extends MainActivity {
     ArduinoDroid ard;
-    public static BluetoothDevice deviceConnected;
-    public static boolean bo_first_found;
+    private BluetoothDevice deviceConnected;
+    private boolean bo_first_found;
     private static final UUID MY_UUID_SECURE =
             UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
     private static final UUID MY_UUID_INSECURE =
@@ -47,6 +47,8 @@ public class BluetoothCustom extends MainActivity {
 
     public void BluetoothCustomOnCreate() {
         if (bt_manager == null) {
+            intent_set_bluetooth.putExtra("set_bluetooth", "btPasSupporte");
+            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
             finish();
         }
         if (bt_adapter.isEnabled()) {
@@ -56,6 +58,16 @@ public class BluetoothCustom extends MainActivity {
             filter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
             con_main_activity.registerReceiver(bReceiver, filter);
             listDevicesBT();
+        }
+        else
+        {
+            if (bt_adapter.isEnabled()) {
+                intent_set_bluetooth.putExtra("set_bluetooth", "btActive");
+                LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+            } else {
+                intent_set_bluetooth.putExtra("set_bluetooth", "btPasActive");
+                LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+            }
         }
     }
 
@@ -79,47 +91,46 @@ public class BluetoothCustom extends MainActivity {
         return returnValue.booleanValue();
     }
 
-    private void connectDevice(BluetoothDevice device) {
+    public void appairage(BluetoothDevice device)
+    {
+        try {
+            createBond(device);
+            intent_set_bluetooth.putExtra("set_bluetooth", "connection");
+            intent_set_bluetooth.putExtra("set_device", device.getName());
+        } catch (Exception e) {
+            intent_set_bluetooth.putExtra("set_bluetooth", "echecConnection");
+            intent_set_bluetooth.putExtra("set_device", device.getName());
+        }
+        LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+    }
+
+    public void connectDevice(BluetoothDevice device) {
         bt_adapter.cancelDiscovery();
-        if(!al_bt_devices.contains(device.getName() + " - " + device.getAddress()))
-        {
-            try {
-                createBond(device);
-                al_bt_devices_discovered.remove(device.getName() + " - " + device.getAddress());
-            } catch (Exception e) {
-                intent_set_bluetooth.putExtra("set_bluetooth", "connection");
-                intent_set_bluetooth.putExtra("set_device", device.getName());
-                LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+        deviceConnected = device;
+        bt_manager.openSerialDevice(device.getAddress())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onConnected, this::onError);
+        /*try {
+            BluetoothSocket socket = device.createRfcommSocketToServiceRecord(MY_UUID_SECURE);
+            socket.connect();
+            if (socket.isConnected()) {
+                tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+                tv_bluetooth.setText(device.getName() + " est connecté avec un socket");
             }
-        }
-        else
-        {
-            deviceConnected = device;
-            bt_manager.openSerialDevice(device.getAddress())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::onConnected, this::onError);
-            /*try {
-                BluetoothSocket socket = device.createRfcommSocketToServiceRecord(MY_UUID_SECURE);
-                socket.connect();
-                if (socket.isConnected()) {
-                    tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
-                    tv_bluetooth.setText(device.getName() + " est connecté avec un socket");
+        } catch (IOException e) {
+            //tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+            //tv_bluetooth.setText("Erreur : " + e.toString());
+            tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+            tv_bluetooth.setText("Impossible d'établir un socket avec le périphérique ...");
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
+                    tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
                 }
-            } catch (IOException e) {
-                //tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
-                //tv_bluetooth.setText("Erreur : " + e.toString());
-                tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
-                tv_bluetooth.setText("Impossible d'établir un socket avec le périphérique ...");
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
-                        tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
-                    }
-                }, 2000);
-            }*/
-        }
+            }, 2000);
+        }*/
     }
 
     public void onConnected(BluetoothSerialDevice connectedDevice) {
@@ -157,18 +168,8 @@ public class BluetoothCustom extends MainActivity {
         if (!pairedDevices.isEmpty()) {
             for (BluetoothDevice device : pairedDevices)
             {
-                if (!al_bt_devices.contains(device.getName() + " - " + device.getAddress())) {
-                    al_bt_devices.add(device.getName() + " - " + device.getAddress());
-                    lv_bt_devices.setAdapter(aa_bt_paired);
-                    lv_bt_devices.setOnItemClickListener((popup, lv1, position, id) -> {
-                                String selLv = lv_bt_devices.getItemAtPosition(position).toString().trim();
-                                String segments[] = selLv.split(" - ");
-                                String macItem = segments[segments.length - 1];
-                                BluetoothDevice mBluetoothDevice = bt_adapter.getRemoteDevice(macItem);
-                                connectDevice(mBluetoothDevice);
-                            }
-                        );
-                    }
+                intent_set_bluetooth.putExtra("set_device", device.getName() + " - " + device.getAddress());
+
                 intent_set_bluetooth.putExtra("set_bluetooth", "appaire");
             }
         } else {
@@ -207,31 +208,18 @@ public class BluetoothCustom extends MainActivity {
 
                 // Get the BluetoothDevice object from the Intent
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if (!al_bt_devices_discovered.contains(device.getName() + " - " + device.getAddress()) && !al_bt_devices.contains(device.getName() + " - " + device.getAddress())) {
+
                     if (bo_first_found == true) {
                         intent_set_bluetooth.putExtra("set_bluetooth", "trouve");
-                        LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
                         bo_first_found = false;
-                    }
-                    al_bt_devices_discovered.add(device.getName() + " - " + device.getAddress());
-                    lv_bt_discover.setAdapter(aa_bt_decouverte);
-                    lv_bt_discover.setOnItemClickListener((popup, lv1, position, id) -> {
-                                String selLv = lv_bt_discover.getItemAtPosition(position).toString().trim();
-                                String segments[] = selLv.split(" - ");
-                                String macItem = segments[segments.length - 1];
-                                //Toast.makeText(con_main_activity, "Tentative de connexion avec l'appareil ...", Toast.LENGTH_LONG).show();
-                                BluetoothDevice mBluetoothDevice = bt_adapter.getRemoteDevice(macItem);
-                                connectDevice(mBluetoothDevice);
-                            }
-                    );
-                    aa_bt_decouverte.notifyDataSetChanged();
+                        intent_set_bluetooth.putExtra("set_device", device.getName() + " - " + device.getAddress());
                 }
             }
             if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
                 intent_set_bluetooth.putExtra("set_bluetooth", "finRecherche");
-                LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
                 bo_first_found = false;
             }
+            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
     };
 
