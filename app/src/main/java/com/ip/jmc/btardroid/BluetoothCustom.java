@@ -1,16 +1,22 @@
 package com.ip.jmc.btardroid;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,14 +33,16 @@ import io.reactivex.schedulers.Schedulers;
 public class BluetoothCustom extends MainActivity {
     ArduinoDroid ard;
     public static Context con_bluetooth_custom;
-
+    public static BluetoothDevice deviceConnected;
     public static Context getContext() {
         return con_bluetooth_custom;
     }
 
     public static boolean bo_first_found;
-
-    private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a22");
+    private static final UUID MY_UUID_SECURE =
+            UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
+    private static final UUID MY_UUID_INSECURE =
+            UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,9 +143,12 @@ public class BluetoothCustom extends MainActivity {
     }
 
     private void connectDevice(BluetoothDevice device) {
-        try {
+        bt_adapter.cancelDiscovery();
+        if(!al_bt_devices.contains(device.getName() + " - " + device.getAddress()))
+        {
             try {
                 createBond(device);
+                al_bt_devices_discovered.remove(device.getName() + " - " + device.getAddress());
             } catch (Exception e) {
                 tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                 tv_bluetooth.setText("Impossible d'appairer le périphérique ...");
@@ -149,27 +160,44 @@ public class BluetoothCustom extends MainActivity {
                     }
                 }, 2000);
             }
-            /*if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                Toast.makeText(con_main_activity, "Appairé", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            /*try {
+                BluetoothSocket socket = device.createRfcommSocketToServiceRecord(MY_UUID_SECURE);
+                socket.connect();
+                if (socket.isConnected()) {
+                    tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+                    tv_bluetooth.setText(device.getName() + " est connecté avec un socket");
+                }
+            } catch (IOException e) {
+                //tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+                //tv_bluetooth.setText("Erreur : " + e.toString());
+                tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+                tv_bluetooth.setText("Impossible d'établir un socket avec le périphérique ...");
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
+                        tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
+                    }
+                }, 2000);
             }*/
-            device.createRfcommSocketToServiceRecord(MY_UUID);
-            tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
-            tv_bluetooth.setText(device.getName() + " est connecté");
-            aa_bt_decouverte.clear();
-            al_bt_devices_discovered.clear();
-            tv_discovered.setVisibility(TextView.INVISIBLE);
+            deviceConnected = device;
             bt_manager.openSerialDevice(device.getAddress())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::onConnected, this::onError);
-        } catch (IOException e) {
-            tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
-            tv_bluetooth.setText("Erreur : " + e.toString());
         }
     }
 
     public void onConnected(BluetoothSerialDevice connectedDevice) {
         bo_serial_test = true;
+        tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+        tv_bluetooth.setText(deviceConnected.getName() + " est connecté avec un port série");
+        //aa_bt_decouverte.clear();
+        //al_bt_devices_discovered.clear();
+        //tv_discovered.setVisibility(TextView.INVISIBLE);
         // You are now connected to this device!
         // Here you may want to retain an instance to your device:
         sbt_device_interface = connectedDevice.toSimpleDeviceInterface();
@@ -177,7 +205,6 @@ public class BluetoothCustom extends MainActivity {
         sbt_device_interface.setListeners(this::onMessageReceived, this::onMessageSent, this::onError);
         //Intent myIntent = new Intent(con_main_activity, ArduinoDroid.class);
         //con_main_activity.startActivity(myIntent);
-
     }
 
     public void onMessageSent(String message) {
@@ -191,7 +218,16 @@ public class BluetoothCustom extends MainActivity {
 
     public void onError(Throwable error) {
         bo_serial_test = false;
-        // Handle the error
+        tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+        tv_bluetooth.setText("Impossible de connecter le périphérique en port série ...");
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
+                tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
+            }
+        }, 3000);
+        // Handle the error*/
         //Toast.makeText(con_main_activity, "Erreur : " + error, Toast.LENGTH_LONG).show();
     }
 
