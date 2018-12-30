@@ -72,16 +72,16 @@ public class BluetoothCustom extends MainActivity {
         }
     }
 
-    public void on() {
+    public void onOff() {
         if (!bt_adapter.isEnabled()) {
             bt_adapter.enable();
+            intent_set_bluetooth.putExtra("set_bluetooth", "on");
+        }else
+        {
+            bt_adapter.disable();
+            intent_set_bluetooth.putExtra("set_bluetooth", "off");
         }
-    }
-
-    public void off()
-    {
-        if(bt_adapter.isEnabled())
-        bt_adapter.disable();
+        LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
     }
 
     public boolean createBond(BluetoothDevice btDevice)
@@ -217,7 +217,9 @@ public class BluetoothCustom extends MainActivity {
                 }
             }
             if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
-                intent_set_bluetooth.putExtra("set_bluetooth", "finRecherche");
+                if(bt_adapter.isEnabled()) {
+                    intent_set_bluetooth.putExtra("set_bluetooth", "finRecherche");
+                }
                 bo_first_found = false;
             }
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
