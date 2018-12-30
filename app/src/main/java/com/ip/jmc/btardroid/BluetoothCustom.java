@@ -34,7 +34,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class BluetoothCustom extends MainActivity {
-    ArduinoDroid ard;
+    //ArduinoDroid ard;
     private BluetoothManager bt_manager = BluetoothManager.getInstance();
     private BluetoothAdapter bt_adapter = BluetoothAdapter.getDefaultAdapter();
     public static SimpleBluetoothDeviceInterface sbt_device_interface;
@@ -50,7 +50,7 @@ public class BluetoothCustom extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-    
+
     public void BluetoothCustomOnCreate() {
         if (bt_manager == null) {
             intent_set_bluetooth.putExtra("set_bluetooth", "btPasSupporte");
