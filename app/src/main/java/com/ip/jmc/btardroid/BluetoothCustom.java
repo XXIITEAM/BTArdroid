@@ -44,7 +44,8 @@ public class BluetoothCustom extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
+    private String str_message_envoye;
+    private String str_message_recu;
     public void BluetoothCustomOnCreate() {
         if (bt_manager == null) {
             intent_set_bluetooth.putExtra("set_bluetooth", "btPasSupporte");
