@@ -95,31 +95,6 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.BLUETOOTH_ADMIN},
                 MY_PERMISSIONS_REQUEST);
         new BluetoothCustom().BluetoothCustomOnCreate();
-        testBluetoothThread();
-        listBtThread();
-    }
-    private void testBluetoothThread()
-    {
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                while(true) {
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            new BluetoothCustom().testBluetooth();
-                        }
-                    });
-                }
-            }
-        });
-    }
-    private void listBtThread(){
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -133,12 +108,14 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             new BluetoothCustom().listDevicesBT();
+                            new BluetoothCustom().testBluetooth();
                         }
                     });
                 }
             }
         });
     }
+
     public void btnBTOn(View v) {
         new BluetoothCustom().onOff();
     }
