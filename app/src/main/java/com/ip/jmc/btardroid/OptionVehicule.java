@@ -6,10 +6,13 @@
  */
 package com.ip.jmc.btardroid;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,13 +26,13 @@ public class OptionVehicule extends MainActivity {
         return con_option_vehicule;
     }
 
-    static TextInputEditText ti_zone_max;
-    static TextInputEditText ti_zone_4;
-    static TextInputEditText ti_zone_3;
-    static TextInputEditText ti_zone_2;
-    static TextInputEditText ti_zone_1;
-    static ArrayList<String> al_list_distances;
-    static TextView tv_retour_voiture;
+    TextInputEditText ti_zone_max;
+    TextInputEditText ti_zone_4;
+    TextInputEditText ti_zone_3;
+    TextInputEditText ti_zone_2;
+    TextInputEditText ti_zone_1;
+    ArrayList<String> al_list_distances;
+    TextView tv_retour_voiture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +47,26 @@ public class OptionVehicule extends MainActivity {
 
         con_option_vehicule = getBaseContext();
         al_list_distances = getIntent().getStringArrayListExtra("al_list_distances");
+        LocalBroadcastManager.getInstance(con_option_vehicule).registerReceiver(mMessageReceiver,
+                new IntentFilter("get-param"));
 
         receptionParamVehicule();
-        Intent intent = getIntent();
-        GetData user = (GetData) intent.getParcelableExtra("user");
     }
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String s1= intent.getStringExtra("set_tv_retour_voiture");
+            getIt(s1);
+        }
+    };
+    public void getIt(String s)
+    {
 
-    public static void receptionParamVehicule() {
+        System.out.println(s);
+        tv_retour_voiture.setText(s);
+
+    }
+    public void receptionParamVehicule() {
         ti_zone_1.setText(al_list_distances.get(0));
         ti_zone_2.setText(al_list_distances.get(1));
         ti_zone_3.setText(al_list_distances.get(2));
@@ -75,5 +91,13 @@ public class OptionVehicule extends MainActivity {
         sbt_device_interface.sendMessage("Q");
 
     }
+
+    @Override
+    protected void onDestroy() {
+        // Unregister since the activity is about to be closed.
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        super.onDestroy();
+    }
+
 
 }

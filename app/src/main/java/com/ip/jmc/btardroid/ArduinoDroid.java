@@ -19,17 +19,19 @@
  */
 package com.ip.jmc.btardroid;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import java.util.ArrayList;
 import io.github.controlwear.virtual.joystick.android.JoystickView;
-import static com.ip.jmc.btardroid.OptionVehicule.tv_retour_voiture;
 
 public class ArduinoDroid extends MainActivity {
     //Définition du contexte
@@ -37,9 +39,8 @@ public class ArduinoDroid extends MainActivity {
     public static Context getContext() {
         return con_arduino_droid;
     }
-    static ImageButton bt_mode_vh, bt_donnees, bt3, bt4, bt5, bt6;
-
-
+    static ImageButton bt_mode_vh, bt_donnees, bt3, bt4;
+    Intent intent_set_tv_retour_voiture = new Intent("get-param");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +71,8 @@ public class ArduinoDroid extends MainActivity {
 
 
         });
-    }
 
+    }
 
     public void traitementReponse(String messageEnvoye, String messageRecu) {
         String cmdRetour;
@@ -103,24 +104,28 @@ public class ArduinoDroid extends MainActivity {
                     con_arduino_droid.startActivity(intent);
                     break;
                 case "W":
-                    tv_retour_voiture.setText("Application des paramètres");
+
+                    intent_set_tv_retour_voiture.putExtra("set_tv_retour_voiture", "Application des paramètres");
+                    updateTvRetourVoirute ();
                     Handler handlerW = new Handler();
                     handlerW.postDelayed(new Runnable() {
                         public void run() {
-                            tv_retour_voiture.setText("");
-
+                            intent_set_tv_retour_voiture.putExtra("set_tv_retour_voiture", "");
                         }
                     }, 3000);
+                    updateTvRetourVoirute ();
                     break;
                 case "Q":
-                    tv_retour_voiture.setText("Sauvegarde des paramètres actuels");
+                    intent_set_tv_retour_voiture.putExtra("set_tv_retour_voiture", "Sauvegarde des paramètres actuels");
+                    updateTvRetourVoirute ();
                     Handler handlerQ = new Handler();
                     handlerQ.postDelayed(new Runnable() {
                         public void run() {
-                            tv_retour_voiture.setText("");
+                            intent_set_tv_retour_voiture.putExtra("set_tv_retour_voiture", "Sauvegarde des paramètres actuels");
 
                         }
                     }, 3000);
+                    updateTvRetourVoirute ();
                     break;
             }
         }
@@ -170,18 +175,11 @@ public class ArduinoDroid extends MainActivity {
         sbt_device_interface.sendMessage("O");
 
     }
-
+    private void updateTvRetourVoirute () {
+        LocalBroadcastManager.getInstance(con_arduino_droid).sendBroadcast(intent_set_tv_retour_voiture);
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    public void newActivity(){
-        Intent intent = new Intent(con_arduino_droid, OptionVehicule.class);
-
-        GetData data = new GetData("Sebastien", "Seb");
-        intent.putExtra("user", data); // la clé, la valeur
-
-        startActivity(intent);
     }
 }

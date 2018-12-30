@@ -14,4 +14,5 @@
     <string name="strBoutonDonnees">Données</string>
     <string name="bt_recherche">Rechercher des périphériques</string>
     <string name="title_activity_option_vehicule">OptionVehicule</string>
+    <string name="donnees_capteurs">Données capteurs :</string>
 </resources>

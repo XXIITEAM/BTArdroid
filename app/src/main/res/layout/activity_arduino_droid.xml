@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/background_light"
     android:orientation="vertical">
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/holo_green_dark"
         android:gravity="bottom">
 
         <TableRow
@@ -20,6 +22,7 @@
                 android:id="@+id/boutonMode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="TODO"
                 android:onClick="boutonModeClick"
                 custom:srcCompat="@drawable/human" />
 
@@ -49,8 +52,34 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="239dp"
+        android:background="@android:color/background_light"
+        android:gravity="top"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/titre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/donnees_capteurs"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:style="@android:style/Widget.DeviceDefault.Light.TextView.SpinnerItem" />
+
+        <ListView
+            android:id="@+id/listViewParams"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
+
+        </ListView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
         android:gravity="center">
 
         <TableLayout
@@ -74,12 +103,12 @@
                     android:id="@+id/joyStick"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    custom:JV_backgroundColor="@color/colorAccent"
+                    custom:JV_backgroundColor="@android:color/darker_gray"
                     custom:JV_backgroundSizeRatio="90%"
-                    custom:JV_borderColor="@color/design_default_color_primary_dark"
+                    custom:JV_borderColor="@android:color/black"
                     custom:JV_borderWidth="4dp"
-                    custom:JV_buttonColor="#FF6E40"
-                    custom:JV_buttonSizeRatio="15%"
+                    custom:JV_buttonColor="@android:color/holo_green_dark"
+                    custom:JV_buttonSizeRatio="25%"
                     custom:JV_fixedCenter="false" />
 
             </TableRow>
@@ -93,27 +122,6 @@
 
         </TableLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="top"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/titre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Données capteurs :"
-            android:textStyle="bold"
-            tools:style="@android:style/Widget.DeviceDefault.Light.TextView.SpinnerItem" />
-
-        <ListView
-            android:id="@+id/listViewParams"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical" />
     </LinearLayout>
 
 </LinearLayout>
