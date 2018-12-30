@@ -20,7 +20,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import static com.ip.jmc.btardroid.BluetoothCustom.sbt_device_interface;
-public class OptionVehicule extends AppCompatActivity {
+public class OptionVehicule extends ArduinoDroid {
 
     TextInputEditText ti_zone_max;
     TextInputEditText ti_zone_4;
@@ -44,12 +44,12 @@ public class OptionVehicule extends AppCompatActivity {
         ti_zone_1 = findViewById(R.id.et_zone_1);
 
         al_list_distances = getIntent().getStringArrayListExtra("al_list_distances");
-        LocalBroadcastManager.getInstance(con_option_vehicule).registerReceiver(mMessageReceiver,
+        LocalBroadcastManager.getInstance(con_option_vehicule).registerReceiver(option_vehicule_message_receiver,
                 new IntentFilter("get-param"));
 
         receptionParamVehicule();
     }
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver option_vehicule_message_receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String s1= intent.getStringExtra("set_tv_retour_voiture");
@@ -91,7 +91,7 @@ public class OptionVehicule extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         // Unregister since the activity is about to be closed.
-        LocalBroadcastManager.getInstance(con_option_vehicule).unregisterReceiver(mMessageReceiver);
+        LocalBroadcastManager.getInstance(con_option_vehicule).unregisterReceiver(option_vehicule_message_receiver);
         super.onDestroy();
     }
 

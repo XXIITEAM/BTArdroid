@@ -110,9 +110,9 @@ public class ArduinoDroid extends AppCompatActivity {
                     listParams(listParams);
                     break;
                 case "O":
-                    Intent intent = new Intent(con_app, OptionVehicule.class);
-                    intent.putStringArrayListExtra("al_list_distances", listParams);
-                    con_app.startActivity(intent);
+                    Intent i_options = new Intent(con_app, OptionVehicule.class);
+                    i_options.putStringArrayListExtra("al_list_distances", listParams);
+                    con_app.startActivity(i_options);
                     break;
                 case "W":
 
