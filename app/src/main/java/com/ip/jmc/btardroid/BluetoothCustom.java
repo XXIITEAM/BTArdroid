@@ -39,7 +39,6 @@ public class BluetoothCustom extends MainActivity {
     private BluetoothAdapter bt_adapter = BluetoothAdapter.getDefaultAdapter();
     public static SimpleBluetoothDeviceInterface sbt_device_interface;
     private BluetoothDevice deviceConnected;
-    private boolean bo_first_found;
     private static final UUID MY_UUID_SECURE =
             UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
     private static final UUID MY_UUID_INSECURE =
@@ -116,11 +115,7 @@ public class BluetoothCustom extends MainActivity {
     public void appairage(BluetoothDevice device)
     {
         try {
-
-                createBond(device);
-            //intent_set_bluetooth.putExtra("set_bluetooth", "appairageDevice");
-            //intent_set_bluetooth.putExtra("set_device", device.getName() + " - " + device.getAddress());
-            //LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+            createBond(device);
         } catch (Exception e) {
             intent_set_bluetooth.putExtra("set_bluetooth", "echecConnection");
             intent_set_bluetooth.putExtra("set_device", device.getName());
@@ -224,7 +219,6 @@ public class BluetoothCustom extends MainActivity {
             if (!pairedDevices.isEmpty()) {
                 for (BluetoothDevice device : pairedDevices) {
                     intent_set_bluetooth.putExtra("set_device", device.getName() + " - " + device.getAddress());
-
                     intent_set_bluetooth.putExtra("set_bluetooth", "appaire");
                 }
             } else {
@@ -252,7 +246,6 @@ public class BluetoothCustom extends MainActivity {
                 intent_set_bluetooth.putExtra("set_bluetooth", "stopDecouverte");
             } else {
                 bt_adapter.startDiscovery();
-                bo_first_found = true;
                 intent_set_bluetooth.putExtra("set_bluetooth", "decouverte");
             }
         } else {
