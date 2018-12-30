@@ -41,19 +41,23 @@ import static com.ip.jmc.btardroid.BluetoothCustom.sbt_device_interface;
 
 public class ArduinoDroid extends AppCompatActivity {
     //Définition du contexte
-    public static Context con_arduino_droid;
-    public static Context getContext() {
-        return con_arduino_droid;
-    }
+    static public Context con_arduino_droid;
+    //public static Context getContext() {
+        //return con_arduino_droid;
+    //}
+    static public Context con_app;
+
     static ImageButton bt_mode_vh, bt_donnees, bt3, bt4;
     Intent intent_set_tv_retour_voiture = new Intent("get-param");
     static ListView lv_get_vh_data;
     static ArrayAdapter aa_vh_params;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arduino_droid);
-        con_arduino_droid = getBaseContext();
+        con_arduino_droid = this;
+        con_app = getApplicationContext();
         //ListView getData
         lv_get_vh_data = findViewById(R.id.listViewParams);
         JoystickView joystick = findViewById(R.id.joyStick);
@@ -106,9 +110,9 @@ public class ArduinoDroid extends AppCompatActivity {
                     listParams(listParams);
                     break;
                 case "O":
-                    Intent intent = new Intent(con_arduino_droid, OptionVehicule.class);
+                    Intent intent = new Intent(con_app, OptionVehicule.class);
                     intent.putStringArrayListExtra("al_list_distances", listParams);
-                    con_arduino_droid.startActivity(intent);
+                    con_app.startActivity(intent);
                     break;
                 case "W":
 
