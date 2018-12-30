@@ -80,6 +80,7 @@ public class BluetoothCustom extends MainActivity {
         BluetoothDevice device = bt_adapter.getRemoteDevice(mac);
         return device;
     }
+
     public void testBluetooth() {
         if (!bt_adapter.isEnabled()) {
             intent_set_bluetooth.putExtra("set_bluetooth", "testBluetooth");
@@ -91,6 +92,7 @@ public class BluetoothCustom extends MainActivity {
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
     }
+
     public void onOff() {
         if (!bt_adapter.isEnabled()) {
             bt_adapter.enable();
@@ -114,16 +116,17 @@ public class BluetoothCustom extends MainActivity {
     public void appairage(BluetoothDevice device)
     {
         try {
-            boolean create = createBond(device);
-                intent_set_bluetooth.putExtra("set_bluetooth", "connection");
-                intent_set_bluetooth.putExtra("set_device", device.getName());
-                LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
-                listDevicesBT();
+
+                createBond(device);
+            //intent_set_bluetooth.putExtra("set_bluetooth", "appairageDevice");
+            //intent_set_bluetooth.putExtra("set_device", device.getName() + " - " + device.getAddress());
+            //LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         } catch (Exception e) {
             intent_set_bluetooth.putExtra("set_bluetooth", "echecConnection");
             intent_set_bluetooth.putExtra("set_device", device.getName());
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
+        listDevicesBT();
     }
 
     public void connectDevice(BluetoothDevice device) {

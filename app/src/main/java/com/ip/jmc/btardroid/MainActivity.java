@@ -29,7 +29,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public static Context con_main_activity;
-    public static SimpleBluetoothDeviceInterface sbt_device_interface;
     private ListView lv_bt_devices;
     private ListView lv_bt_discover;
     private ArrayList al_bt_devices = new ArrayList();
@@ -164,47 +163,43 @@ public class MainActivity extends AppCompatActivity {
                     btn_bt_connect.setImageResource(R.drawable.bt_off);
                     tv_btn_bt.setTextColor(Color.rgb(200, 0, 0));
                     tv_btn_bt.setText("Activer");
-                    aa_bt_paired.clear();
-                    aa_bt_decouverte.clear();
-                    al_bt_devices.clear();
-                    al_bt_devices_discovered.clear();
+                    clearIHM();
                     handlerHome();
                     break;
                 case "testBluetoothActive":
                     tv_appaires.setVisibility(TextView.VISIBLE);
-                    btn_bt_connect.setImageResource(R.drawable.bt_on);
+                    btn_bt_connect.setImageResource(R.drawable.bt_on_2);
                     tv_btn_bt.setTextColor(Color.rgb(104, 149, 197));
                     tv_btn_bt.setText("Désactiver");
                     break;
                 case"btPasSupporte":
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     tv_bluetooth.setText("Le Bluetooth n'est pas supporté ...");
+                    clearIHM();
                     break;
                 case "on":
                     tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
                     tv_bluetooth.setText("Activation du Bluetooth ...");
-                    handlerHome();
                     btn_bt_connect.setImageResource(R.drawable.bt_on_2);
                     tv_btn_bt.setTextColor(Color.rgb(104, 149, 197));
                     tv_btn_bt.setText("Désactiver");
+                    handlerHome();
                     break;
-                    case "off":
+                case "off":
                     tv_discovered.setVisibility(TextView.INVISIBLE);
                     tv_appaires.setVisibility(TextView.INVISIBLE);
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     tv_bluetooth.setText("Déconnexion du Bluetooth ...");
-                    handlerHome();
                     btn_bt_connect.setImageResource(R.drawable.bt_off);
                     tv_btn_bt.setTextColor(Color.rgb(200, 0, 0));
                     tv_btn_bt.setText("Activer");
-                    aa_bt_paired.clear();
-                    aa_bt_decouverte.clear();
-                    al_bt_devices.clear();
-                    al_bt_devices_discovered.clear();
+                    clearIHM();
+                    handlerHome();
                     break;
                 case "btDesactive":
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     tv_bluetooth.setText("Veuiller activer le Bluetooth en cliquant sur l'icône ...");
+                    clearIHM();
                     handlerHome();
                     break;
                 case "btPasActive":
@@ -219,8 +214,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "decouverte":
                     btn_bt_recherche.setImageResource(R.drawable.loupe_2);
-                    al_bt_devices_discovered.clear();
                     aa_bt_decouverte.clear();
+                    lv_bt_discover.setAdapter(aa_bt_decouverte);
+                    aa_bt_decouverte.notifyDataSetChanged();
                     tv_btn_recherche.setTextColor(Color.rgb(255, 127, 80));
                     tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
                     tv_bluetooth.setText("Recherche en cours ...");
@@ -239,7 +235,6 @@ public class MainActivity extends AppCompatActivity {
                     tv_appaires.setTextColor(Color.rgb(104, 149, 197));
                     tv_appaires.setText("Liste des périphériques appairés :");
                     tv_appaires.setVisibility(TextView.VISIBLE);
-                    aa_bt_paired.notifyDataSetChanged();
                     lv_bt_devices.setVisibility(TextView.VISIBLE);
                     if (!al_bt_devices.contains(device)) {
                         al_bt_devices.add(device);
@@ -252,6 +247,10 @@ public class MainActivity extends AppCompatActivity {
                                     new BluetoothCustom().connectDevice(mBluetoothDevice);
                                 }
                         );
+                        aa_bt_paired.notifyDataSetChanged();
+                        al_bt_devices_discovered.remove(device);
+                        lv_bt_discover.setAdapter(aa_bt_decouverte);
+                        aa_bt_decouverte.notifyDataSetChanged();
                     }
                     break;
                 case "nonappaire":
@@ -276,10 +275,6 @@ public class MainActivity extends AppCompatActivity {
                     tv_bluetooth.setText("Impossible d'appairer le périphérique "+device);
                     handlerHome();
                     break;
-                case "connection":
-                    device= intent.getStringExtra("set_device");
-                    al_bt_devices_discovered.remove(device);
-                    break;
                 case "erreurSerie":
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     tv_bluetooth.setText("Impossible de connecter le périphérique en port série ...");
@@ -287,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "trouve":
                     device = intent.getStringExtra("set_device");
-                    if (!al_bt_devices_discovered.contains(device) && !al_bt_devices.contains(device)) {
+                    if (!al_bt_devices_discovered.contains(device) || !al_bt_devices.contains(device)) {
                         tv_discovered.setVisibility(TextView.VISIBLE);
                         al_bt_devices_discovered.add(device);
                         lv_bt_discover.setAdapter(aa_bt_decouverte);
@@ -322,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
                     handlerHome();
                     tv_appaires.setText("");
                     aa_bt_paired.clear();
-                    al_bt_devices.clear();
+                    aa_bt_paired.notifyDataSetChanged();
                     break;
                 case "iconeBt":
                     tv_bluetooth.setTextColor(Color.rgb(200,0,0));
@@ -346,6 +341,21 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+    private void clearIHM()
+    {
+        tv_discovered.setVisibility(TextView.INVISIBLE);
+        tv_appaires.setVisibility(TextView.INVISIBLE);
+        al_bt_devices.clear();
+        al_bt_devices_discovered.clear();
+        aa_bt_paired.clear();
+        aa_bt_decouverte.clear();
+        aa_bt_decouverte.notifyDataSetChanged();
+        lv_bt_discover.setAdapter(aa_bt_decouverte);
+        lv_bt_devices.setAdapter(aa_bt_paired);
+        aa_bt_paired.notifyDataSetChanged();
+    }
+
 
     @Override
     protected void onDestroy() {
