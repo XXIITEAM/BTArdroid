@@ -171,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
                     handlerHome();
                     break;
                 case "testBluetoothActive":
-                    tv_discovered.setVisibility(TextView.VISIBLE);
                     tv_appaires.setVisibility(TextView.VISIBLE);
                     btn_bt_connect.setImageResource(R.drawable.bt_on);
                     tv_btn_bt.setTextColor(Color.rgb(104, 149, 197));
