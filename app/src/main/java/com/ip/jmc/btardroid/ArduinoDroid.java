@@ -17,13 +17,16 @@ package com.ip.jmc.btardroid;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;import android.view.View;
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
-
 import io.github.controlwear.virtual.joystick.android.JoystickView;
+
+import static com.ip.jmc.btardroid.OptionVehicule.tvRetour;
 
 public class ArduinoDroid extends MainActivity {
     static ImageButton boutonMode, boutonDonnees, bt3, bt4, bt5, bt6;
@@ -76,7 +79,7 @@ public class ArduinoDroid extends MainActivity {
         //
         if (messageRecu != null) {
             if(messageRecu.length() == 1) {
-                cmdRetour = messageRecu.toString();
+                cmdRetour = messageRecu;
             }
             else {
                 for (String mess : messageRecu.split("/")) {
@@ -95,8 +98,30 @@ public class ArduinoDroid extends MainActivity {
                 case "Z":
                     listParams(listParams);
                     break;
-                case "C":
-                    listParams(listParams);
+                case "O":
+                    Intent intent = new Intent(mContextArduinoDroid, OptionVehicule.class);
+                    intent.putStringArrayListExtra("listDistances", listParams);
+                    mContextArduinoDroid.startActivity(intent);
+                    break;
+                case "W":
+                    tvRetour.setText("Application des paramètres");
+                    Handler handlerW = new Handler();
+                    handlerW.postDelayed(new Runnable() {
+                        public void run() {
+                            tvRetour.setText("");
+
+                        }
+                    },3000);
+                    break;
+                case "Q":
+                    tvRetour.setText("Sauvegarde des paramètres actuels");
+                    Handler handlerQ = new Handler();
+                    handlerQ.postDelayed(new Runnable() {
+                        public void run() {
+                            tvRetour.setText("");
+
+                        }
+                                        },3000);
                     break;
             }
         }
@@ -142,9 +167,8 @@ public class ArduinoDroid extends MainActivity {
 
     public void boutonConfigurationVhClick(View v) {
 
-        deviceInterface.sendMessage("C");
-        Intent intent = new Intent(ArduinoDroid.this, OptionVehicule.class);
-        startActivity(intent);
+        deviceInterface.sendMessage("O");
+
     }
 
     @Override
