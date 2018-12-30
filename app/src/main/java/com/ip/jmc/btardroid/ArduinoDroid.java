@@ -11,7 +11,12 @@
 #define CMD_STOP			'S'
 #define CMD_DIST			'Z'
  */
-
+/**
+ * @desc Activity Arduino CAR View
+ * Gestion du véhicule autonome Arduino
+ * @author XXIITEAM xxiiteam@gmail.com
+ * @package com.ip.jmc.btardroid.ArduinoDroid.class
+ */
 package com.ip.jmc.btardroid;
 
 import android.content.Context;
@@ -24,18 +29,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
+
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 import static com.ip.jmc.btardroid.OptionVehicule.tvRetour;
 
 public class ArduinoDroid extends MainActivity {
-    static ImageButton boutonMode, boutonDonnees, bt3, bt4, bt5, bt6;
-
     public static Context mContextArduinoDroid;
+    static ImageButton boutonMode, boutonDonnees, bt3, bt4, bt5, bt6;
 
     public static Context getContext() {
         return mContextArduinoDroid;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mContextArduinoDroid = getBaseContext();
@@ -48,19 +54,15 @@ public class ArduinoDroid extends MainActivity {
         joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
-                if(angle >= 46 && angle <= 135 && strength >= 40) {
+                if (angle >= 46 && angle <= 135 && strength >= 40) {
                     deviceInterface.sendMessage("F");
-                }
-                else if(angle >= 136 && angle <= 225 && strength >= 40) {
+                } else if (angle >= 136 && angle <= 225 && strength >= 40) {
                     deviceInterface.sendMessage("L");
-                }
-                else if(angle >= 226 && angle <= 315 && strength >= 40) {
+                } else if (angle >= 226 && angle <= 315 && strength >= 40) {
                     deviceInterface.sendMessage("B");
-                }
-                else if(angle >= 316 && angle <= 360  && strength >= 40) {
+                } else if (angle >= 316 && angle <= 360 && strength >= 40) {
                     deviceInterface.sendMessage("R");
-                }
-                else if(angle >= 0 && angle <= 45  && strength >= 40) {
+                } else if (angle >= 0 && angle <= 45 && strength >= 40) {
                     deviceInterface.sendMessage("R");
                 }
                 if (angle == 0 && strength <= 39) {
@@ -78,10 +80,9 @@ public class ArduinoDroid extends MainActivity {
         ArrayList<String> listParams = new ArrayList();
         //
         if (messageRecu != null) {
-            if(messageRecu.length() == 1) {
+            if (messageRecu.length() == 1) {
                 cmdRetour = messageRecu;
-            }
-            else {
+            } else {
                 for (String mess : messageRecu.split("/")) {
                     listParams.add(mess);
                 }
@@ -89,10 +90,10 @@ public class ArduinoDroid extends MainActivity {
                 listParams.remove(0);
             }
             switch (cmdRetour) {
-                case "A" :
+                case "A":
                     boutonMode.setImageResource(R.drawable.autonome);
                     break;
-                case "M" :
+                case "M":
                     boutonMode.setImageResource(R.drawable.human);
                     break;
                 case "Z":
@@ -111,7 +112,7 @@ public class ArduinoDroid extends MainActivity {
                             tvRetour.setText("");
 
                         }
-                    },3000);
+                    }, 3000);
                     break;
                 case "Q":
                     tvRetour.setText("Sauvegarde des paramètres actuels");
@@ -121,7 +122,7 @@ public class ArduinoDroid extends MainActivity {
                             tvRetour.setText("");
 
                         }
-                                        },3000);
+                    }, 3000);
                     break;
             }
         }
@@ -152,6 +153,7 @@ public class ArduinoDroid extends MainActivity {
 
         }
     }
+
     public void listParams(ArrayList<String> listParams) {
 
         adapterParams = new ArrayAdapter(mContextArduinoDroid, android.R.layout.simple_list_item_1, listParams);
