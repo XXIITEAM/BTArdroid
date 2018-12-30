@@ -2,14 +2,18 @@ package com.ip.jmc.btardroid;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -25,8 +29,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public static Context con_main_activity;
-    public final static String EXTRA_MESSAGE = "com.ip.jmc.MESSAGE";
-    public final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
+    //public final static String EXTRA_MESSAGE = "com.ip.jmc.MESSAGE";
+    //public final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
     public static SimpleBluetoothDeviceInterface sbt_device_interface;
     public static String str_message_envoye = "";
     public static String str_message_recu = "";
@@ -40,91 +44,63 @@ public class MainActivity extends AppCompatActivity {
     static ArrayAdapter aa_bt_paired;
     static ArrayAdapter aa_bt_decouverte;
     static ArrayAdapter aa_vh_params;
-    static ImageButton btn_bt_connect;
-    static ImageButton btn_bt_recherche;
-    static TextView tv_bluetooth;
-    static TextView tv_btn_recherche;
-    static TextView tv_btn_bt;
-    static TextView tv_discovered;
-    static TextView tv_appaires;
-    static TextView tv_btn_rafraichir;
-    static TextView tv_btn_quitter;
-    static TextView tv_btn_voiture;
+    private ImageButton btn_bt_connect;
+    private ImageButton btn_bt_recherche;
+    private TextView tv_bluetooth;
+    private TextView tv_btn_recherche;
+    private TextView tv_btn_bt;
+    private TextView tv_discovered;
+    private TextView tv_appaires;
+    private TextView tv_btn_rafraichir;
+    private TextView tv_btn_quitter;
+    private TextView tv_btn_voiture;
     public static boolean bo_serial_test = false;
-    public static void btnBTOn(View v) {
-        new BluetoothCustom().btOnOff();
-    }
-    public void BtnRecherche(View v) {
-        new BluetoothCustom().decouverteBluetooth();
-    }
-    public void BtnRafraichir(View v) {
-        if(bt_adapter.isEnabled())
-        {
-            tv_bluetooth.setTextColor(Color.rgb(0,200,0));
-            tv_bluetooth.setText("Mise à jour de la liste des périphériques appairés ...");
-            tv_appaires.setText("");
-            new BluetoothCustom().listDevicesBT();
 
-        }
-        else
-        {
-            tv_bluetooth.setTextColor(Color.rgb(200,0,0));
-            tv_bluetooth.setText("Veuiller activer le Bluetooth en cliquant sur l'icône ...");
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    tv_bluetooth.setTextColor(Color.rgb(124,124,124));
-                    tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
-                }
-            }, 3000);
-        }
-
-    }
-    public void BtnVoiture(View v) {
-        if(bt_adapter.isEnabled())
-        {
-            if (bo_serial_test == true) {
-                Intent myIntent = new Intent(con_main_activity, ArduinoDroid.class);
-                startActivity(myIntent);
-            } else {
-                tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
-                tv_bluetooth.setText("Vous n'êtes pas connecté à une voiture arduino ...");
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
-                        tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
-                    }
-                }, 3000);
-            }
-        }
-        else
-        {
-            tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
-            tv_bluetooth.setText("Le Bluetooth doit être activé pour utiliser cette application ...");
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
-                    tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
-                }
-            }, 3000);
-        }
-    }
-    public void BtnQuitter(View v) {
-        System.exit(0);
-    }
     public static Context getContext() {
         return con_main_activity;
     }
 
-    public void btnSuivant(View v) {
-        Intent intent = new Intent(con_main_activity, ArduinoDroid.class);
-        startActivity(intent);
+    private void initInterface()
+    {
+        lv_bt_devices = findViewById(R.id.listviewbt);
+        lv_bt_discover = findViewById(R.id.listviewbtdiscover);
+        btn_bt_connect = findViewById(R.id.BtnBT);
+        btn_bt_recherche = findViewById(R.id.BtnRecherche);
+        tv_bluetooth = findViewById(R.id.textViewBT);
+        tv_btn_recherche = findViewById(R.id.textViewBtnRecherche);
+        tv_btn_bt = findViewById(R.id.textViewBtnBt);
+        tv_appaires = findViewById(R.id.textViewAppaires);
+        tv_discovered = findViewById(R.id.textViewDiscovered);
+        tv_btn_rafraichir = findViewById(R.id.textViewBtnRafraichir);
+        tv_btn_voiture = findViewById(R.id.textViewBtnVoiture);
+        tv_btn_quitter = findViewById(R.id.textViewBtnQuitter);
+        tv_btn_quitter.setTextColor(Color.rgb(104,149,197));
+        tv_btn_voiture.setTextColor(Color.rgb(104,149,197));
+        tv_btn_rafraichir.setTextColor(Color.rgb(104, 149, 197));
+        tv_btn_recherche.setTextColor(Color.rgb(104, 149, 197));
+        aa_bt_decouverte = new ArrayAdapter(con_main_activity, android.R.layout.simple_list_item_1, al_bt_devices_discovered);
+        aa_bt_paired = new ArrayAdapter(con_main_activity, android.R.layout.simple_list_item_1, al_bt_devices);
+        if (bt_manager == null) {
+            tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+            tv_bluetooth.setText("Le Bluetooth n'est pas supporté ...");
+        }
+        else
+        {
+            if (bt_adapter.isEnabled()) {
+                btn_bt_connect.setImageResource(R.drawable.bt_on_2);
+                tv_btn_bt.setTextColor(Color.rgb(104, 149, 197));
+                tv_btn_bt.setText("Désactiver");
+            } else {
+                btn_bt_connect.setImageResource(R.drawable.bt_off);
+                tv_btn_bt.setTextColor(Color.rgb(200, 0, 0));
+                tv_btn_bt.setText("Activer");
+            }
+        }
     }
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mainMessageReceiver,
+                new IntentFilter("get-param"));
         setContentView(R.layout.activity_main);
         con_main_activity = getBaseContext();
         initInterface();
@@ -155,11 +131,11 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         if(bt_adapter.isEnabled()) {
-                                            new BluetoothCustom().listDevicesBTThread();
+                                            new BluetoothCustom().listDevicesBT();
                                         }
                                         else
                                         {
-                                            new BluetoothCustom().testBluetooth();
+                                            testBluetooth();
                                         }
                                     }
                                 });
@@ -167,23 +143,201 @@ public class MainActivity extends AppCompatActivity {
             }
        });
     }
+    public void btnBTOn(View v) {
+        if (!bt_adapter.isEnabled()) {
+            new BluetoothCustom().on();
+            tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+            tv_bluetooth.setText("Activation du Bluetooth ...");
+            handlerHome();
+            btn_bt_connect.setImageResource(R.drawable.bt_on_2);
+            tv_btn_bt.setTextColor(Color.rgb(104, 149, 197));
+            tv_btn_bt.setText("Désactiver");
+        }
+        else {
+            new BluetoothCustom().off();
+            tv_discovered.setVisibility(TextView.INVISIBLE);
+            tv_appaires.setVisibility(TextView.INVISIBLE);
+            tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+            tv_bluetooth.setText("Déconnexion du Bluetooth ...");
+            handlerHome();
+            btn_bt_connect.setImageResource(R.drawable.bt_off);
+            tv_btn_bt.setTextColor(Color.rgb(200, 0, 0));
+            tv_btn_bt.setText("Activer");
+            aa_bt_paired.clear();
+            aa_bt_decouverte.clear();
+            al_bt_devices.clear();
+            al_bt_devices_discovered.clear();
+        }
 
-    private void initInterface()
+    }
+
+    public void BtnRecherche(View v) {
+        if (bt_adapter.isEnabled()) {
+            if (bt_adapter.isDiscovering()) {
+                btn_bt_recherche.setImageResource(R.drawable.loupe_1);
+                tv_btn_recherche.setTextColor(Color.rgb(104, 149, 197));
+                tv_btn_recherche.setText("Rechercher");
+                tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+                tv_bluetooth.setText("Fin de la recherche ...");
+                handlerHome();
+            } else {
+                btn_bt_recherche.setImageResource(R.drawable.loupe_2);
+                al_bt_devices_discovered.clear();
+                aa_bt_decouverte.clear();
+                tv_btn_recherche.setTextColor(Color.rgb(255, 127, 80));
+                tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+                tv_bluetooth.setText("Recherche en cours ...");
+                tv_btn_recherche.setText("Arrêter");
+            }
+        } else {
+            tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+            tv_bluetooth.setText("Veuiller activer le Bluetooth en cliquant sur l'icône ...");
+            handlerHome();
+        }
+        new BluetoothCustom().decouverteBluetooth();
+    }
+
+    public void BtnRafraichir(View v) {
+        if(bt_adapter.isEnabled())
+        {
+            tv_bluetooth.setTextColor(Color.rgb(0,200,0));
+            tv_bluetooth.setText("Mise à jour de la liste des périphériques appairés ...");
+            handlerHome();
+            tv_appaires.setText("");
+            aa_bt_paired.clear();
+            al_bt_devices.clear();
+            new BluetoothCustom().listDevicesBT();
+        }
+        else
+        {
+            tv_bluetooth.setTextColor(Color.rgb(200,0,0));
+            tv_bluetooth.setText("Veuiller activer le Bluetooth en cliquant sur l'icône ...");
+            handlerHome();
+        }
+
+    }
+
+    public void BtnVoiture(View v) {
+        if(bt_adapter.isEnabled())
+        {
+            if (bo_serial_test == true) {
+                Intent myIntent = new Intent(con_main_activity, ArduinoDroid.class);
+                startActivity(myIntent);
+            } else {
+                tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+                tv_bluetooth.setText("Vous n'êtes pas connecté à une voiture arduino ...");
+                handlerHome();
+            }
+        }
+        else
+        {
+            tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+            tv_bluetooth.setText("Le Bluetooth doit être activé pour utiliser cette application ...");
+            handlerHome();
+        }
+    }
+
+    public void btnSuivant(View v) {
+        Intent intent = new Intent(con_main_activity, ArduinoDroid.class);
+        startActivity(intent);
+    }
+
+    public void BtnQuitter(View v) {
+        System.exit(0);
+    }
+
+    private void handlerHome()
     {
-        lv_bt_devices = findViewById(R.id.listviewbt);
-        lv_bt_discover = findViewById(R.id.listviewbtdiscover);
-        btn_bt_connect = findViewById(R.id.BtnBT);
-        btn_bt_recherche = findViewById(R.id.BtnRecherche);
-        tv_bluetooth = findViewById(R.id.textViewBT);
-        tv_btn_recherche = findViewById(R.id.textViewBtnRecherche);
-        tv_btn_bt = findViewById(R.id.textViewBtnBt);
-        tv_appaires = findViewById(R.id.textViewAppaires);
-        tv_discovered = findViewById(R.id.textViewDiscovered);
-        tv_btn_rafraichir = findViewById(R.id.textViewBtnRafraichir);
-        tv_btn_voiture = findViewById(R.id.textViewBtnVoiture);
-        tv_btn_quitter = findViewById(R.id.textViewBtnQuitter);
-        tv_btn_quitter.setTextColor(Color.rgb(104,149,197));
-        tv_btn_voiture.setTextColor(Color.rgb(104,149,197));
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
+                tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
+            }
+        }, 2500);
+    }
+
+    public void testBluetooth() {
+        if (!bt_adapter.isEnabled()) {
+            tv_discovered.setVisibility(TextView.INVISIBLE);
+            tv_appaires.setVisibility(TextView.INVISIBLE);
+            bt_adapter.disable();
+            btn_bt_connect.setImageResource(R.drawable.bt_off);
+            tv_btn_bt.setTextColor(Color.rgb(200, 0, 0));
+            tv_btn_bt.setText("Activer");
+            aa_bt_paired.clear();
+            aa_bt_decouverte.clear();
+            al_bt_devices.clear();
+            al_bt_devices_discovered.clear();
+            handlerHome();
+        }
+    }
+
+    private BroadcastReceiver mainMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String s1= intent.getStringExtra("set_bluetooth");
+            String device;
+            switch (s1) {
+                case "appaire":
+                    tv_appaires.setTextColor(Color.rgb(104, 149, 197));
+                    tv_appaires.setText("Liste des périphériques appairés :");
+                    tv_appaires.setVisibility(TextView.VISIBLE);
+                    aa_bt_paired.notifyDataSetChanged();
+                    lv_bt_devices.setVisibility(TextView.VISIBLE);
+                    break;
+                case "nonappaire":
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            tv_appaires.setTextColor(Color.rgb(200, 0, 0));
+                            tv_appaires.setVisibility(TextView.VISIBLE);
+                            lv_bt_devices.setVisibility(TextView.INVISIBLE);
+                            tv_appaires.setText("Aucun périphérique Bluetooth appairé");
+                        }
+                    }, 4000);
+                    break;
+                case "connecte":
+                    device= intent.getStringExtra("set_device");
+                    tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+                    tv_bluetooth.setText(device + " est connecté avec un port série");
+                    break;
+                case"connection":
+                    device= intent.getStringExtra("set_device");
+                    tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+                    tv_bluetooth.setText("Impossible d'appairer le périphérique "+device);
+                    handlerHome();
+                    break;
+                case "erreurSerie":
+                    tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+                    tv_bluetooth.setText("Impossible de connecter le périphérique en port série ...");
+                    handlerHome();
+                    break;
+                case "trouve":
+                    tv_discovered.setVisibility(TextView.VISIBLE);
+                    break;
+                case "finRecherche":
+                    tv_bluetooth.setText("");
+                    tv_discovered.setVisibility(TextView.VISIBLE);
+                    btn_bt_recherche.setImageResource(R.drawable.loupe_1);
+                    tv_btn_recherche.setTextColor(Color.rgb(104, 149, 197));
+                    tv_btn_recherche.setText("Rechercher");
+                    tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+                    tv_bluetooth.setText("Fin de la recherche ...");
+                    if (al_bt_devices_discovered.isEmpty()) {
+                        tv_discovered.setVisibility(TextView.INVISIBLE);
+                        tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+                    }
+                    handlerHome();
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        // Unregister since the activity is about to be closed.
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mainMessageReceiver);
+        super.onDestroy();
     }
 
 }
