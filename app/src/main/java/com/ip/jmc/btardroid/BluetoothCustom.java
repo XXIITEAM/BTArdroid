@@ -9,12 +9,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,13 +33,12 @@ import io.reactivex.schedulers.Schedulers;
 public class BluetoothCustom extends MainActivity {
     ArduinoDroid ard;
     public static Context con_bluetooth_custom;
-
+    public static BluetoothDevice deviceConnected;
     public static Context getContext() {
         return con_bluetooth_custom;
     }
 
     public static boolean bo_first_found;
-
     private static final UUID MY_UUID_SECURE =
             UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
     private static final UUID MY_UUID_INSECURE =
@@ -142,8 +143,12 @@ public class BluetoothCustom extends MainActivity {
     }
 
     private void connectDevice(BluetoothDevice device) {
+        bt_adapter.cancelDiscovery();
+        if(!al_bt_devices.contains(device.getName() + " - " + device.getAddress()))
+        {
             try {
                 createBond(device);
+                al_bt_devices_discovered.remove(device.getName() + " - " + device.getAddress());
             } catch (Exception e) {
                 tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                 tv_bluetooth.setText("Impossible d'appairer le périphérique ...");
@@ -155,17 +160,19 @@ public class BluetoothCustom extends MainActivity {
                     }
                 }, 2000);
             }
-        try {
-            bt_adapter.cancelDiscovery();
-            BluetoothSocket socket = device.createRfcommSocketToServiceRecord(MY_UUID_SECURE);
-            socket.connect();
-            if(socket.isConnected())
-            {
-                tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
-                tv_bluetooth.setText(device.getName() + " est connecté avec un socket");
-            }
-            else
-            {
+        }
+        else
+        {
+            /*try {
+                BluetoothSocket socket = device.createRfcommSocketToServiceRecord(MY_UUID_SECURE);
+                socket.connect();
+                if (socket.isConnected()) {
+                    tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+                    tv_bluetooth.setText(device.getName() + " est connecté avec un socket");
+                }
+            } catch (IOException e) {
+                //tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+                //tv_bluetooth.setText("Erreur : " + e.toString());
                 tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                 tv_bluetooth.setText("Impossible d'établir un socket avec le périphérique ...");
                 Handler handler = new Handler();
@@ -175,22 +182,22 @@ public class BluetoothCustom extends MainActivity {
                         tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
                     }
                 }, 2000);
-            }
-        } catch (IOException e) {
-            tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
-            tv_bluetooth.setText("Erreur : "+e.toString());
-        }
+            }*/
+            deviceConnected = device;
             bt_manager.openSerialDevice(device.getAddress())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::onConnected, this::onError);
+        }
     }
 
     public void onConnected(BluetoothSerialDevice connectedDevice) {
         bo_serial_test = true;
-        aa_bt_decouverte.clear();
-        al_bt_devices_discovered.clear();
-        tv_discovered.setVisibility(TextView.INVISIBLE);
+        tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+        tv_bluetooth.setText(deviceConnected.getName() + " est connecté avec un port série");
+        //aa_bt_decouverte.clear();
+        //al_bt_devices_discovered.clear();
+        //tv_discovered.setVisibility(TextView.INVISIBLE);
         // You are now connected to this device!
         // Here you may want to retain an instance to your device:
         sbt_device_interface = connectedDevice.toSimpleDeviceInterface();
@@ -211,7 +218,7 @@ public class BluetoothCustom extends MainActivity {
 
     public void onError(Throwable error) {
         bo_serial_test = false;
-        /*tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+        tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
         tv_bluetooth.setText("Impossible de connecter le périphérique en port série ...");
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
