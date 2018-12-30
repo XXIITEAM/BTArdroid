@@ -13,13 +13,14 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-
-public class OptionVehicule extends MainActivity {
+import static com.ip.jmc.btardroid.BluetoothCustom.sbt_device_interface;
+public class OptionVehicule extends AppCompatActivity {
     public static Context con_option_vehicule;
 
     public static Context getContext() {

@@ -28,7 +28,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.ip.jmc.btardroid.ArduinoDroid" />
+            android:value="com.ip.jmc.btardroid.MainActivity" />
         </activity>
         <activity
             android:name=".OptionVehicule"

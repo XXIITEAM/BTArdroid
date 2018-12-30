@@ -19,6 +19,7 @@
  */
 package com.ip.jmc.btardroid;
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -35,7 +37,9 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
-public class ArduinoDroid extends MainActivity {
+import static com.ip.jmc.btardroid.BluetoothCustom.sbt_device_interface;
+
+public class ArduinoDroid extends AppCompatActivity {
     //Définition du contexte
     public static Context con_arduino_droid;
     public static Context getContext() {
