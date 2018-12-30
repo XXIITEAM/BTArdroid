@@ -112,7 +112,6 @@ public class BluetoothCustom extends MainActivity {
             createBond(device);
             intent_set_bluetooth.putExtra("set_bluetooth", "connection");
             intent_set_bluetooth.putExtra("set_device", device.getName());
-            listDevicesBT();
         } catch (Exception e) {
             intent_set_bluetooth.putExtra("set_bluetooth", "echecConnection");
             intent_set_bluetooth.putExtra("set_device", device.getName());
@@ -249,6 +248,7 @@ public class BluetoothCustom extends MainActivity {
         } else {
             intent_set_bluetooth.putExtra("set_bluetooth", "btDesactive");
         }
+
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
     }
 
@@ -256,17 +256,23 @@ public class BluetoothCustom extends MainActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(BluetoothDevice.ACTION_FOUND)) {
+
+                // Get the BluetoothDevice object from the Intent
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                intent_set_bluetooth.putExtra("set_bluetooth", "trouve");
-                intent_set_bluetooth.putExtra("set_device", device.getName() + " - " + device.getAddress());
-                LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+
+                    if (bo_first_found == true) {
+                        intent_set_bluetooth.putExtra("set_bluetooth", "trouve");
+                        bo_first_found = false;
+                        intent_set_bluetooth.putExtra("set_device", device.getName() + " - " + device.getAddress());
+                }
             }
             if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
                 if(bt_adapter.isEnabled()) {
                     intent_set_bluetooth.putExtra("set_bluetooth", "finRecherche");
-                    LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
                 }
+                bo_first_found = false;
             }
+            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
     };
 

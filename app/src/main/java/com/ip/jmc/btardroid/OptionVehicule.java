@@ -89,7 +89,6 @@ public class OptionVehicule extends MainActivity {
 
     public void sauvegarderParametres(View v) {
         sbt_device_interface.sendMessage("Q");
-
     }
 
     @Override
