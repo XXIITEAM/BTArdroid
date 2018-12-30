@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     public static Context con_main_activity;
     public final static String EXTRA_MESSAGE = "com.ip.jmc.MESSAGE";
     public final static int REQUEST_CODE_ENABLE_BLUETOOTH = 0;
-    public static SimpleBluetoothDeviceInterface s_bt_device_interface;
+    public static SimpleBluetoothDeviceInterface sbt_device_interface;
     public static String str_message_envoye = "";
     public static String str_message_recu = "";
     public static BluetoothManager bt_manager = BluetoothManager.getInstance();

@@ -64,13 +64,13 @@ public class OptionVehicule extends MainActivity {
                 ti_zone_4.getText().toString() + "/" +
                 ti_zone_max.getText().toString() + "/" + "X";
 
-        s_bt_device_interface.sendMessage(strParam);
+        sbt_device_interface.sendMessage(strParam);
 
 
     }
 
     public void sauvegarderParametres(View v) {
-        s_bt_device_interface.sendMessage("Q");
+        sbt_device_interface.sendMessage("Q");
 
     }
 
