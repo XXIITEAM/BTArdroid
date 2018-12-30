@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                         else
                                         {
-                                            testBluetooth();
+                                            new BluetoothCustom().testBluetooth();
                                         }
                                     }
                                 });
@@ -127,30 +127,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void BtnRecherche(View v) {
-        if (bt_adapter.isEnabled()) {
-            new BluetoothCustom().decouverteBluetooth();
-            if (bt_adapter.isDiscovering()) {
-                btn_bt_recherche.setImageResource(R.drawable.loupe_1);
-                tv_btn_recherche.setTextColor(Color.rgb(104, 149, 197));
-                tv_btn_recherche.setText("Rechercher");
-                tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
-                tv_bluetooth.setText("Fin de la recherche ...");
-                handlerHome();
-            } else {
-                btn_bt_recherche.setImageResource(R.drawable.loupe_2);
-                al_bt_devices_discovered.clear();
-                aa_bt_decouverte.clear();
-                tv_btn_recherche.setTextColor(Color.rgb(255, 127, 80));
-                tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
-                tv_bluetooth.setText("Recherche en cours ...");
-                tv_btn_recherche.setText("Arrêter");
-            }
-        } else {
-            tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
-            tv_bluetooth.setText("Veuiller activer le Bluetooth en cliquant sur l'icône ...");
-            handlerHome();
-        }
-
+        new BluetoothCustom().decouverteBluetooth();
     }
 
     public void BtnRafraichir(View v) {
@@ -174,23 +151,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void BtnVoiture(View v) {
-        if(bt_adapter.isEnabled())
-        {
-            if (bo_serial_test == true) {
-                Intent myIntent = new Intent(con_main_activity, ArduinoDroid.class);
-                startActivity(myIntent);
-            } else {
-                tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
-                tv_bluetooth.setText("Vous n'êtes pas connecté à une voiture arduino ...");
-                handlerHome();
-            }
-        }
-        else
-        {
-            tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
-            tv_bluetooth.setText("Le Bluetooth doit être activé pour utiliser cette application ...");
-            handlerHome();
-        }
+        new BluetoothCustom().lancementVoiture();
     }
 
     public void btnSuivant(View v) {
@@ -213,28 +174,25 @@ public class MainActivity extends AppCompatActivity {
         }, 2500);
     }
 
-    public void testBluetooth() {
-        if (!bt_adapter.isEnabled()) {
-            tv_discovered.setVisibility(TextView.INVISIBLE);
-            tv_appaires.setVisibility(TextView.INVISIBLE);
-            bt_adapter.disable();
-            btn_bt_connect.setImageResource(R.drawable.bt_off);
-            tv_btn_bt.setTextColor(Color.rgb(200, 0, 0));
-            tv_btn_bt.setText("Activer");
-            aa_bt_paired.clear();
-            aa_bt_decouverte.clear();
-            al_bt_devices.clear();
-            al_bt_devices_discovered.clear();
-            handlerHome();
-        }
-    }
-
     private BroadcastReceiver mainMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String s1= intent.getStringExtra("set_bluetooth");
             String device;
             switch (s1) {
+                case "testBluetooth":
+                    tv_discovered.setVisibility(TextView.INVISIBLE);
+                    tv_appaires.setVisibility(TextView.INVISIBLE);
+                    bt_adapter.disable();
+                    btn_bt_connect.setImageResource(R.drawable.bt_off);
+                    tv_btn_bt.setTextColor(Color.rgb(200, 0, 0));
+                    tv_btn_bt.setText("Activer");
+                    aa_bt_paired.clear();
+                    aa_bt_decouverte.clear();
+                    al_bt_devices.clear();
+                    al_bt_devices_discovered.clear();
+                    handlerHome();
+                    break;
                 case"btPasSupporte":
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     tv_bluetooth.setText("Le Bluetooth n'est pas supporté ...");
@@ -261,6 +219,11 @@ public class MainActivity extends AppCompatActivity {
                     al_bt_devices.clear();
                     al_bt_devices_discovered.clear();
                     break;
+                case "btDesactive":
+                    tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+                    tv_bluetooth.setText("Veuiller activer le Bluetooth en cliquant sur l'icône ...");
+                    handlerHome();
+                    break;
                 case "btPasActive":
                     btn_bt_connect.setImageResource(R.drawable.bt_off);
                     tv_btn_bt.setTextColor(Color.rgb(200, 0, 0));
@@ -270,6 +233,23 @@ public class MainActivity extends AppCompatActivity {
                     btn_bt_connect.setImageResource(R.drawable.bt_on_2);
                     tv_btn_bt.setTextColor(Color.rgb(104, 149, 197));
                     tv_btn_bt.setText("Désactiver");
+                    break;
+                case "decouverte":
+                    btn_bt_recherche.setImageResource(R.drawable.loupe_2);
+                    al_bt_devices_discovered.clear();
+                    aa_bt_decouverte.clear();
+                    tv_btn_recherche.setTextColor(Color.rgb(255, 127, 80));
+                    tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+                    tv_bluetooth.setText("Recherche en cours ...");
+                    tv_btn_recherche.setText("Arrêter");
+                    break;
+                case "stopDecouverte":
+                    btn_bt_recherche.setImageResource(R.drawable.loupe_1);
+                    tv_btn_recherche.setTextColor(Color.rgb(104, 149, 197));
+                    tv_btn_recherche.setText("Rechercher");
+                    tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+                    tv_bluetooth.setText("Fin de la recherche ...");
+                    handlerHome();
                     break;
                 case "appaire":
                     device = intent.getStringExtra("set_device");
@@ -352,6 +332,17 @@ public class MainActivity extends AppCompatActivity {
                         tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     }
                     handlerHome();
+                    break;
+                case "nonVoiture":
+                    tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+                    tv_bluetooth.setText("Vous n'êtes pas connecté à une voiture arduino ...");
+                    handlerHome();
+                    break;
+                case "btVoiture":
+                    tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
+                    tv_bluetooth.setText("Le Bluetooth doit être activé pour utiliser cette application ...");
+                    handlerHome();
+                    break;
             }
         }
     };
