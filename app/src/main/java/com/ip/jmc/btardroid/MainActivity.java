@@ -175,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
                     btn_bt_connect.setImageResource(R.drawable.bt_on);
                     tv_btn_bt.setTextColor(Color.rgb(104, 149, 197));
                     tv_btn_bt.setText("Désactiver");
-                    handlerHome();
                     break;
                 case"btPasSupporte":
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
