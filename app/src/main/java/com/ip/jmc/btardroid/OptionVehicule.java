@@ -21,11 +21,6 @@ import java.util.ArrayList;
 
 import static com.ip.jmc.btardroid.BluetoothCustom.sbt_device_interface;
 public class OptionVehicule extends AppCompatActivity {
-    public static Context con_option_vehicule;
-
-    public static Context getContext() {
-        return con_option_vehicule;
-    }
 
     TextInputEditText ti_zone_max;
     TextInputEditText ti_zone_4;
@@ -34,11 +29,13 @@ public class OptionVehicule extends AppCompatActivity {
     TextInputEditText ti_zone_1;
     ArrayList<String> al_list_distances;
     TextView tv_retour_voiture;
-
+    static public Context con_option_vehicule;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options_vehicule);
+        con_option_vehicule = this;
+
         tv_retour_voiture = findViewById(R.id.tvRetour);
         ti_zone_max = findViewById(R.id.et_zone_max);
         ti_zone_4 = findViewById(R.id.et_zone_4);
@@ -46,7 +43,6 @@ public class OptionVehicule extends AppCompatActivity {
         ti_zone_2 = findViewById(R.id.et_zone_2);
         ti_zone_1 = findViewById(R.id.et_zone_1);
 
-        con_option_vehicule = getBaseContext();
         al_list_distances = getIntent().getStringArrayListExtra("al_list_distances");
         LocalBroadcastManager.getInstance(con_option_vehicule).registerReceiver(mMessageReceiver,
                 new IntentFilter("get-param"));
