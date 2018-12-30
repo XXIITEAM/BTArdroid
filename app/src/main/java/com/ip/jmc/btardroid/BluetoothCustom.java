@@ -21,7 +21,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.harrysoft.androidbluetoothserial.BluetoothManager;
 import com.harrysoft.androidbluetoothserial.BluetoothSerialDevice;
+import com.harrysoft.androidbluetoothserial.SimpleBluetoothDeviceInterface;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -33,6 +35,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BluetoothCustom extends MainActivity {
     ArduinoDroid ard;
+    private BluetoothManager bt_manager = BluetoothManager.getInstance();
+    private BluetoothAdapter bt_adapter = BluetoothAdapter.getDefaultAdapter();
+    public static SimpleBluetoothDeviceInterface sbt_device_interface;
     private BluetoothDevice deviceConnected;
     private boolean bo_first_found;
     private static final UUID MY_UUID_SECURE =
@@ -47,11 +52,11 @@ public class BluetoothCustom extends MainActivity {
     private String str_message_envoye;
     private String str_message_recu;
     public void BluetoothCustomOnCreate() {
-        /*if (bt_manager == null) {
+        if (bt_manager == null) {
             intent_set_bluetooth.putExtra("set_bluetooth", "btPasSupporte");
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
             finish();
-        }*/
+        }
         if (bt_adapter.isEnabled()) {
             IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
             filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
@@ -70,6 +75,10 @@ public class BluetoothCustom extends MainActivity {
                 LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
             }
         }
+    }
+    public BluetoothDevice device(String mac){
+        BluetoothDevice device = bt_adapter.getRemoteDevice(mac);
+        return device;
     }
     public void testBluetooth() {
         if (!bt_adapter.isEnabled()) {
@@ -180,7 +189,20 @@ public class BluetoothCustom extends MainActivity {
         intent_set_bluetooth.putExtra("set_device", deviceConnected.getName());
         LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
     }
-
+    public void refreshBT()
+    {
+        if(bt_adapter.isEnabled())
+        {
+            intent_set_bluetooth.putExtra("set_bluetooth", "majBT");
+            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+            listDevicesBT();
+        }
+        else
+        {
+            intent_set_bluetooth.putExtra("set_bluetooth", "iconeBt");
+            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+        }
+    }
     public void listDevicesBT() {
         if(bt_adapter.isEnabled()) {
             intent_set_bluetooth.putExtra("set_bluetooth", "appaire");
