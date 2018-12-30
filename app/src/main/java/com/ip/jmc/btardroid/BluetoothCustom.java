@@ -44,12 +44,13 @@ public class BluetoothCustom extends MainActivity {
     private static final UUID MY_UUID_INSECURE =
             UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
     private Intent intent_set_bluetooth = new Intent("get-param");
+    private String str_message_envoye;
+    private String str_message_recu;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-    private String str_message_envoye;
-    private String str_message_recu;
+    
     public void BluetoothCustomOnCreate() {
         if (bt_manager == null) {
             intent_set_bluetooth.putExtra("set_bluetooth", "btPasSupporte");
@@ -161,6 +162,7 @@ public class BluetoothCustom extends MainActivity {
         sbt_device_interface = connectedDevice.toSimpleDeviceInterface();
         sbt_device_interface.setListeners(this::onMessageReceived, this::onMessageSent, this::onError);
     }
+
     public void lancementVoiture()
     {
         if(bt_adapter.isEnabled())
@@ -179,6 +181,7 @@ public class BluetoothCustom extends MainActivity {
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
     }
+
     public void onMessageSent(String message) {
         str_message_envoye = message;
     }
@@ -194,6 +197,7 @@ public class BluetoothCustom extends MainActivity {
         intent_set_bluetooth.putExtra("set_device", deviceConnected.getName());
         LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
     }
+
     public void refreshBT()
     {
         if(bt_adapter.isEnabled())
@@ -208,6 +212,7 @@ public class BluetoothCustom extends MainActivity {
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
     }
+
     public void listDevicesBT() {
         if(bt_adapter.isEnabled()) {
             intent_set_bluetooth.putExtra("set_bluetooth", "appaire");
