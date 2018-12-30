@@ -43,14 +43,15 @@ public class ArduinoDroid extends MainActivity {
     }
     static ImageButton bt_mode_vh, bt_donnees, bt3, bt4;
     Intent intent_set_tv_retour_voiture = new Intent("get-param");
-
+    static ListView lv_get_vh_data;
+    ArrayAdapter aa_vh_params;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        con_arduino_droid = getBaseContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arduino_droid);
+        con_arduino_droid = getBaseContext();
         //ListView getData
-
+        lv_get_vh_data = findViewById(R.id.listViewParams);
         JoystickView joystick = findViewById(R.id.joyStick);
         joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
@@ -161,8 +162,10 @@ public class ArduinoDroid extends MainActivity {
 
     public void listParams(ArrayList<String> listParams) {
 
-        ArrayAdapter aa_vh_params = new ArrayAdapter(con_arduino_droid, android.R.layout.simple_list_item_1, listParams);
-        ListView lv_get_vh_data = findViewById(R.id.listViewParams);
+        //lv_get_vh_data = findViewById(R.id.listViewParams);
+
+        aa_vh_params = new ArrayAdapter(con_arduino_droid, android.R.layout.simple_list_item_1, listParams);
+
         lv_get_vh_data.setAdapter(aa_vh_params);
         bt_donnees.setImageResource(R.drawable.empty);
 
