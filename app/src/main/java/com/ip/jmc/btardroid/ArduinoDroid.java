@@ -30,6 +30,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
+
 import java.util.ArrayList;
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
@@ -48,7 +50,7 @@ public class ArduinoDroid extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arduino_droid);
         //ListView getData
-        lv_get_vh_data = findViewById(R.id.listViewParams);
+
         JoystickView joystick = findViewById(R.id.joyStick);
         joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
@@ -159,8 +161,8 @@ public class ArduinoDroid extends MainActivity {
 
     public void listParams(ArrayList<String> listParams) {
 
-        aa_vh_params = new ArrayAdapter(con_arduino_droid, android.R.layout.simple_list_item_1, listParams);
-
+        ArrayAdapter aa_vh_params = new ArrayAdapter(con_arduino_droid, android.R.layout.simple_list_item_1, listParams);
+        ListView lv_get_vh_data = findViewById(R.id.listViewParams);
         lv_get_vh_data.setAdapter(aa_vh_params);
         bt_donnees.setImageResource(R.drawable.empty);
 
