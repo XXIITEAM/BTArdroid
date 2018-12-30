@@ -48,7 +48,6 @@ public class ArduinoDroid extends MainActivity {
         setContentView(R.layout.activity_arduino_droid);
         //ListView getData
         lv_get_vh_data = findViewById(R.id.listViewParams);
-
         JoystickView joystick = findViewById(R.id.joyStick);
         joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
@@ -175,5 +174,14 @@ public class ArduinoDroid extends MainActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    public void newActivity(){
+        Intent intent = new Intent(con_arduino_droid, OptionVehicule.class);
+
+        GetData data = new GetData("Sebastien", "Seb");
+        intent.putExtra("user", data); // la clé, la valeur
+
+        startActivity(intent);
     }
 }
