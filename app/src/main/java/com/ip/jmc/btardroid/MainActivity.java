@@ -52,27 +52,6 @@ public class MainActivity extends AppCompatActivity {
         return con_main_activity;
     }
 
-    private void initInterface()
-    {
-        lv_bt_devices = findViewById(R.id.listviewbt);
-        lv_bt_discover = findViewById(R.id.listviewbtdiscover);
-        btn_bt_connect = findViewById(R.id.BtnBT);
-        btn_bt_recherche = findViewById(R.id.BtnRecherche);
-        tv_bluetooth = findViewById(R.id.textViewBT);
-        tv_btn_recherche = findViewById(R.id.textViewBtnRecherche);
-        tv_btn_bt = findViewById(R.id.textViewBtnBt);
-        tv_appaires = findViewById(R.id.textViewAppaires);
-        tv_discovered = findViewById(R.id.textViewDiscovered);
-        tv_btn_rafraichir = findViewById(R.id.textViewBtnRafraichir);
-        tv_btn_voiture = findViewById(R.id.textViewBtnVoiture);
-        tv_btn_quitter = findViewById(R.id.textViewBtnQuitter);
-        tv_btn_quitter.setTextColor(Color.rgb(104,149,197));
-        tv_btn_voiture.setTextColor(Color.rgb(104,149,197));
-        tv_btn_rafraichir.setTextColor(Color.rgb(104, 149, 197));
-        tv_btn_recherche.setTextColor(Color.rgb(104, 149, 197));
-        aa_bt_decouverte = new ArrayAdapter(con_main_activity, android.R.layout.simple_list_item_1, al_bt_devices_discovered);
-        aa_bt_paired = new ArrayAdapter(con_main_activity, android.R.layout.simple_list_item_1, al_bt_devices);
-    }
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LocalBroadcastManager.getInstance(this).registerReceiver(mainMessageReceiver,
@@ -94,6 +73,11 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.BLUETOOTH_ADMIN},
                 MY_PERMISSIONS_REQUEST);
         new BluetoothCustom().BluetoothCustomOnCreate();
+        asyncTask();
+    }
+
+    private void asyncTask()
+    {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -113,6 +97,28 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void initInterface()
+    {
+        lv_bt_devices = findViewById(R.id.listviewbt);
+        lv_bt_discover = findViewById(R.id.listviewbtdiscover);
+        btn_bt_connect = findViewById(R.id.BtnBT);
+        btn_bt_recherche = findViewById(R.id.BtnRecherche);
+        tv_bluetooth = findViewById(R.id.textViewBT);
+        tv_btn_recherche = findViewById(R.id.textViewBtnRecherche);
+        tv_btn_bt = findViewById(R.id.textViewBtnBt);
+        tv_appaires = findViewById(R.id.textViewAppaires);
+        tv_discovered = findViewById(R.id.textViewDiscovered);
+        tv_btn_rafraichir = findViewById(R.id.textViewBtnRafraichir);
+        tv_btn_voiture = findViewById(R.id.textViewBtnVoiture);
+        tv_btn_quitter = findViewById(R.id.textViewBtnQuitter);
+        tv_btn_quitter.setTextColor(Color.rgb(104,149,197));
+        tv_btn_voiture.setTextColor(Color.rgb(104,149,197));
+        tv_btn_rafraichir.setTextColor(Color.rgb(104, 149, 197));
+        tv_btn_recherche.setTextColor(Color.rgb(104, 149, 197));
+        aa_bt_decouverte = new ArrayAdapter(con_main_activity, android.R.layout.simple_list_item_1, al_bt_devices_discovered);
+        aa_bt_paired = new ArrayAdapter(con_main_activity, android.R.layout.simple_list_item_1, al_bt_devices);
     }
 
     public void btnBTOn(View v) {
@@ -355,7 +361,6 @@ public class MainActivity extends AppCompatActivity {
         lv_bt_devices.setAdapter(aa_bt_paired);
         aa_bt_paired.notifyDataSetChanged();
     }
-
 
     @Override
     protected void onDestroy() {
