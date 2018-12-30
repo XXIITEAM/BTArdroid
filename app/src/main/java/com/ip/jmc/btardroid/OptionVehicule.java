@@ -95,7 +95,7 @@ public class OptionVehicule extends MainActivity {
     @Override
     protected void onDestroy() {
         // Unregister since the activity is about to be closed.
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        LocalBroadcastManager.getInstance(con_option_vehicule).unregisterReceiver(mMessageReceiver);
         super.onDestroy();
     }
 

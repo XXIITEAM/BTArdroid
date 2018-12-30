@@ -44,7 +44,7 @@ public class ArduinoDroid extends MainActivity {
     static ImageButton bt_mode_vh, bt_donnees, bt3, bt4;
     Intent intent_set_tv_retour_voiture = new Intent("get-param");
     static ListView lv_get_vh_data;
-    ArrayAdapter aa_vh_params;
+    static ArrayAdapter aa_vh_params;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
