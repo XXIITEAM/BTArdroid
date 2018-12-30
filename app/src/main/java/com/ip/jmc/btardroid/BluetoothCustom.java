@@ -85,6 +85,11 @@ public class BluetoothCustom extends MainActivity {
             intent_set_bluetooth.putExtra("set_bluetooth", "testBluetooth");
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
+        else
+        {
+            intent_set_bluetooth.putExtra("set_bluetooth", "testBluetoothActive");
+            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+        }
     }
     public void onOff() {
         if (!bt_adapter.isEnabled()) {
