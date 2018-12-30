@@ -48,24 +48,23 @@ public class ArduinoDroid extends MainActivity {
         setContentView(R.layout.activity_arduino_droid);
         //ListView getData
         lv_get_vh_data = findViewById(R.id.listViewParams);
-
         JoystickView joystick = findViewById(R.id.joyStick);
         joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
                 if (angle >= 46 && angle <= 135 && strength >= 40) {
-                    s_bt_device_interface.sendMessage("F");
+                    sbt_device_interface.sendMessage("F");
                 } else if (angle >= 136 && angle <= 225 && strength >= 40) {
-                    s_bt_device_interface.sendMessage("L");
+                    sbt_device_interface.sendMessage("L");
                 } else if (angle >= 226 && angle <= 315 && strength >= 40) {
-                    s_bt_device_interface.sendMessage("B");
+                    sbt_device_interface.sendMessage("B");
                 } else if (angle >= 316 && angle <= 360 && strength >= 40) {
-                    s_bt_device_interface.sendMessage("R");
+                    sbt_device_interface.sendMessage("R");
                 } else if (angle >= 0 && angle <= 45 && strength >= 40) {
-                    s_bt_device_interface.sendMessage("R");
+                    sbt_device_interface.sendMessage("R");
                 }
                 if (angle == 0 && strength <= 39) {
-                    s_bt_device_interface.sendMessage("S");
+                    sbt_device_interface.sendMessage("S");
                 }
             }
 
@@ -132,10 +131,10 @@ public class ArduinoDroid extends MainActivity {
         Drawable drawable = bt_mode_vh.getDrawable();
         if (!drawable.getConstantState().equals(getResources().getDrawable(R.drawable.autonome).getConstantState())) {
 
-            s_bt_device_interface.sendMessage("A");
+            sbt_device_interface.sendMessage("A");
         } else {
 
-            s_bt_device_interface.sendMessage("M");
+            sbt_device_interface.sendMessage("M");
         }
     }
 
@@ -143,7 +142,7 @@ public class ArduinoDroid extends MainActivity {
     public void boutonDonneesClick(View v) {
         bt_donnees = findViewById(R.id.boutonDonnees);
         Drawable drawableBtDonnees = bt_donnees.getDrawable();
-        s_bt_device_interface.sendMessage("Z");
+        sbt_device_interface.sendMessage("Z");
         if (!drawableBtDonnees.getConstantState().equals(getResources().getDrawable(R.drawable.empty).getConstantState())) {
             bt_donnees.setImageResource(R.drawable.empty);
 
@@ -163,17 +162,26 @@ public class ArduinoDroid extends MainActivity {
     }
 
     public void btn3Click(View v) {
-        s_bt_device_interface.sendMessage("3");
+        sbt_device_interface.sendMessage("3");
     }
 
     public void boutonConfigurationVhClick(View v) {
 
-        s_bt_device_interface.sendMessage("O");
+        sbt_device_interface.sendMessage("O");
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    public void newActivity(){
+        Intent intent = new Intent(con_arduino_droid, OptionVehicule.class);
+
+        GetData data = new GetData("Sebastien", "Seb");
+        intent.putExtra("user", data); // la clé, la valeur
+
+        startActivity(intent);
     }
 }

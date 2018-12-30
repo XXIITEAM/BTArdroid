@@ -7,6 +7,7 @@
 package com.ip.jmc.btardroid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.view.View;
@@ -45,7 +46,8 @@ public class OptionVehicule extends MainActivity {
         al_list_distances = getIntent().getStringArrayListExtra("al_list_distances");
 
         receptionParamVehicule();
-
+        Intent intent = getIntent();
+        GetData user = (GetData) intent.getParcelableExtra("user");
     }
 
     public static void receptionParamVehicule() {
@@ -64,13 +66,13 @@ public class OptionVehicule extends MainActivity {
                 ti_zone_4.getText().toString() + "/" +
                 ti_zone_max.getText().toString() + "/" + "X";
 
-        s_bt_device_interface.sendMessage(strParam);
+        sbt_device_interface.sendMessage(strParam);
 
 
     }
 
     public void sauvegarderParametres(View v) {
-        s_bt_device_interface.sendMessage("Q");
+        sbt_device_interface.sendMessage("Q");
 
     }
 

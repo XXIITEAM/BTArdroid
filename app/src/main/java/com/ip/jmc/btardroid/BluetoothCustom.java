@@ -193,9 +193,9 @@ public class BluetoothCustom extends MainActivity {
         tv_discovered.setVisibility(TextView.INVISIBLE);
         // You are now connected to this device!
         // Here you may want to retain an instance to your device:
-        s_bt_device_interface = connectedDevice.toSimpleDeviceInterface();
+        sbt_device_interface = connectedDevice.toSimpleDeviceInterface();
         // Listen to bluetooth events
-        s_bt_device_interface.setListeners(this::onMessageReceived, this::onMessageSent, this::onError);
+        sbt_device_interface.setListeners(this::onMessageReceived, this::onMessageSent, this::onError);
         //Intent myIntent = new Intent(con_main_activity, ArduinoDroid.class);
         //con_main_activity.startActivity(myIntent);
     }
@@ -325,7 +325,7 @@ public class BluetoothCustom extends MainActivity {
 
 
     public void deconnexion(View v) {
-        bt_manager.closeDevice(s_bt_device_interface); // Close by interface instance
+        bt_manager.closeDevice(sbt_device_interface); // Close by interface instance
         bt_manager.close();
     }
 
