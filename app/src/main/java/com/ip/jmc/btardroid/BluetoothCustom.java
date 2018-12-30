@@ -260,19 +260,21 @@ public class BluetoothCustom extends MainActivity {
                 // Get the BluetoothDevice object from the Intent
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
-                    if (bo_first_found == true) {
+                    //if (bo_first_found == true) {
                         intent_set_bluetooth.putExtra("set_bluetooth", "trouve");
-                        bo_first_found = false;
+                        //bo_first_found = false;
                         intent_set_bluetooth.putExtra("set_device", device.getName() + " - " + device.getAddress());
-                }
+                        LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+               // }
             }
             if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
                 if(bt_adapter.isEnabled()) {
                     intent_set_bluetooth.putExtra("set_bluetooth", "finRecherche");
+                    LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
                 }
-                bo_first_found = false;
+                //bo_first_found = false;
             }
-            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+
         }
     };
 
