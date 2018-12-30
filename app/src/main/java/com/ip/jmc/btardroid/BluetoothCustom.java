@@ -114,15 +114,16 @@ public class BluetoothCustom extends MainActivity {
     public void appairage(BluetoothDevice device)
     {
         try {
-            createBond(device);
-            intent_set_bluetooth.putExtra("set_bluetooth", "connection");
-            intent_set_bluetooth.putExtra("set_device", device.getName());
-            listDevicesBT();
+            boolean create = createBond(device);
+                intent_set_bluetooth.putExtra("set_bluetooth", "connection");
+                intent_set_bluetooth.putExtra("set_device", device.getName());
+                LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+                listDevicesBT();
         } catch (Exception e) {
             intent_set_bluetooth.putExtra("set_bluetooth", "echecConnection");
             intent_set_bluetooth.putExtra("set_device", device.getName());
+            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
-        LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
     }
 
     public void connectDevice(BluetoothDevice device) {
@@ -167,8 +168,8 @@ public class BluetoothCustom extends MainActivity {
         if(bt_adapter.isEnabled())
         {
             if (bo_serial_test == true) {
-                Intent myIntent = new Intent(con_main_activity, ArduinoDroid.class);
-                startActivity(myIntent);
+                intent_set_bluetooth.putExtra("set_bluetooth", "voiture");
+                LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
             } else {
                 intent_set_bluetooth.putExtra("set_bluetooth", "nonVoiture");
                 LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);

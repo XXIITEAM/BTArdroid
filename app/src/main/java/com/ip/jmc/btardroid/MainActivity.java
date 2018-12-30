@@ -339,6 +339,10 @@ public class MainActivity extends AppCompatActivity {
                     tv_bluetooth.setText("Le Bluetooth doit être activé pour utiliser cette application ...");
                     handlerHome();
                     break;
+                case "voiture":
+                    Intent myIntent = new Intent(con_main_activity, ArduinoDroid.class);
+                    startActivity(myIntent);
+                    break;
             }
         }
     };
