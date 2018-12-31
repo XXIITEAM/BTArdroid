@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
                 case "connecte":
                     device= intent.getStringExtra("set_device");
                     tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
-                    tv_bluetooth.setText(device + " est connecté avec un port série");
+                    tv_bluetooth.setText(device+" est connecté");
                     break;
                 case"echecConnection":
                     device= intent.getStringExtra("set_device");
@@ -362,7 +362,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mainMessageReceiver);
         super.onDestroy();
     }
