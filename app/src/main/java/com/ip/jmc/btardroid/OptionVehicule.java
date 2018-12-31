@@ -20,7 +20,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import static com.ip.jmc.btardroid.BluetoothCustom.sbt_device_interface;
-public class OptionVehicule extends ArduinoDroid {
+public class OptionVehicule extends MainActivity {
 
     TextInputEditText ti_zone_max;
     TextInputEditText ti_zone_4;

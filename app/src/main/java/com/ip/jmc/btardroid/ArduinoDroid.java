@@ -39,7 +39,7 @@ import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 import static com.ip.jmc.btardroid.BluetoothCustom.sbt_device_interface;
 
-public class ArduinoDroid extends AppCompatActivity {
+public class ArduinoDroid extends MainActivity {
     //Définition du contexte
     static public Context con_arduino_droid;
     //public static Context getContext() {
