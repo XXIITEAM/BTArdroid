@@ -48,7 +48,7 @@ public class ArduinoDroid extends MainActivity {
     static public Context con_app;
 
     static ImageButton bt_mode_vh, bt_donnees, bt3, bt4;
-    Intent intent_set_tv_retour_voiture = new Intent("get-param");
+    Intent intent_set_tv_retour_voiture = new Intent("get-param-opt");
     static ListView lv_get_vh_data;
     static ArrayAdapter aa_vh_params;
 
@@ -122,9 +122,10 @@ public class ArduinoDroid extends MainActivity {
                     handlerW.postDelayed(new Runnable() {
                         public void run() {
                             intent_set_tv_retour_voiture.putExtra("set_tv_retour_voiture", "");
+                            updateTvRetourVoirute ();
                         }
                     }, 3000);
-                    updateTvRetourVoirute ();
+
                     break;
                 case "Q":
                     intent_set_tv_retour_voiture.putExtra("set_tv_retour_voiture", "Sauvegarde des paramètres actuels");
@@ -132,11 +133,11 @@ public class ArduinoDroid extends MainActivity {
                     Handler handlerQ = new Handler();
                     handlerQ.postDelayed(new Runnable() {
                         public void run() {
-                            intent_set_tv_retour_voiture.putExtra("set_tv_retour_voiture", "Sauvegarde des paramètres actuels");
-
+                            intent_set_tv_retour_voiture.putExtra("set_tv_retour_voiture", "");
+                            updateTvRetourVoirute ();
                         }
                     }, 3000);
-                    updateTvRetourVoirute ();
+
                     break;
             }
         }

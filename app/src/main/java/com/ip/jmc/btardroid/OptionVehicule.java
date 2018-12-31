@@ -45,7 +45,7 @@ public class OptionVehicule extends MainActivity {
 
         al_list_distances = getIntent().getStringArrayListExtra("al_list_distances");
         LocalBroadcastManager.getInstance(con_option_vehicule).registerReceiver(option_vehicule_message_receiver,
-                new IntentFilter("get-param"));
+                new IntentFilter("get-param-opt"));
 
         receptionParamVehicule();
     }
