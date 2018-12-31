@@ -34,7 +34,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class BluetoothCustom extends MainActivity {
-    //ArduinoDroid ard;
     private BluetoothManager bt_manager = BluetoothManager.getInstance();
     private BluetoothAdapter bt_adapter = BluetoothAdapter.getDefaultAdapter();
     public static SimpleBluetoothDeviceInterface sbt_device_interface;
@@ -158,7 +157,6 @@ public class BluetoothCustom extends MainActivity {
         intent_set_bluetooth.putExtra("set_bluetooth", "connecte");
         intent_set_bluetooth.putExtra("set_device", deviceConnected.getName());
         LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
-        bo_serial_test = true;
         sbt_device_interface = connectedDevice.toSimpleDeviceInterface();
         sbt_device_interface.setListeners(this::onMessageReceived, this::onMessageSent, this::onError);
     }
@@ -194,7 +192,6 @@ public class BluetoothCustom extends MainActivity {
     }
 
     public void onError(Throwable error) {
-        bo_serial_test = false;
         intent_set_bluetooth.putExtra("set_bluetooth", "erreurSerie");
         intent_set_bluetooth.putExtra("set_device", deviceConnected.getName());
         LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
@@ -239,13 +236,6 @@ public class BluetoothCustom extends MainActivity {
         bt_manager.closeDevice(sbt_device_interface);
         bt_manager.close();
     }
-
-
-
-    @Override
-    public void onBackPressed() {
-    }
-
 
     public void decouverteBluetooth() {
         if (bt_adapter.isEnabled()) {

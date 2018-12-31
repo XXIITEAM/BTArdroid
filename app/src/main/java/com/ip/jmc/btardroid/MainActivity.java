@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_btn_quitter;
     private TextView tv_btn_voiture;
 
-    public static boolean bo_serial_test = false;
-
     public static Context getContext() {
         return con_main_activity;
     }
