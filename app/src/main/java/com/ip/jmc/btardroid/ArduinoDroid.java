@@ -35,6 +35,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 import static com.ip.jmc.btardroid.BluetoothCustom.sbt_device_interface;
@@ -184,7 +186,16 @@ public class ArduinoDroid extends MainActivity {
     }
 
     public void btn3Click(View v) {
-        sbt_device_interface.sendMessage("3");
+
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("10");
+        list.add("30");
+        list.add("50");
+        list.add("80");
+        list.add("100");
+        Intent i_options = new Intent(con_app, OptionVehicule.class);
+        i_options.putStringArrayListExtra("al_list_distances", list);
+        con_app.startActivity(i_options);
     }
 
     public void boutonConfigurationVhClick(View v) {
