@@ -165,7 +165,9 @@ public class BluetoothCustom extends MainActivity {
 
     public void lancementVoiture()
     {
-        if(bt_adapter.isEnabled())
+        intent_set_bluetooth.putExtra("set_bluetooth", "voiture");
+        LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+        /*if(bt_adapter.isEnabled())
         {
             if (bo_serial_test == true) {
                 intent_set_bluetooth.putExtra("set_bluetooth", "voiture");
@@ -179,7 +181,7 @@ public class BluetoothCustom extends MainActivity {
         {
             intent_set_bluetooth.putExtra("set_bluetooth", "btVoiture");
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
-        }
+        }*/
     }
 
     public void onMessageSent(String message) {
@@ -238,11 +240,12 @@ public class BluetoothCustom extends MainActivity {
         bt_manager.close();
     }
 
+
+
     @Override
     public void onBackPressed() {
-        //getApplicationContext();
-        //super.onBackPressed();
     }
+
 
     public void decouverteBluetooth() {
         if (bt_adapter.isEnabled()) {

@@ -95,5 +95,8 @@ public class OptionVehicule extends ArduinoDroid {
         super.onDestroy();
     }
 
-
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

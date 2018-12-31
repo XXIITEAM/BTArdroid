@@ -141,7 +141,10 @@ public class ArduinoDroid extends AppCompatActivity {
             }
         }
     }
-
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
     public void boutonModeClick(View v) {
         bt_mode_vh = findViewById(R.id.boutonMode);
         Drawable drawable = bt_mode_vh.getDrawable();
