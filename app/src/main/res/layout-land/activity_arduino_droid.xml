@@ -4,27 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
-    android:orientation="vertical">
+    android:background="@android:color/background_light">
 
     <TableLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_green_dark"
         android:gravity="bottom">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal">
+            android:layout_height="match_parent">
 
             <ImageButton
                 android:id="@+id/boutonMode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="TODO"
                 android:onClick="boutonModeClick"
                 custom:srcCompat="@drawable/human" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <ImageButton
                 android:id="@+id/boutonDonnees"
@@ -33,16 +36,28 @@
                 android:onClick="boutonDonneesClick"
                 custom:srcCompat="@drawable/empty" />
 
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <ImageButton
                 android:id="@+id/bt3"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="btn3Click"
                 android:src="@drawable/vh" />
 
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <ImageButton
                 android:id="@+id/bt4"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="boutonConfigurationVhClick"
                 android:src="@drawable/opt" />
@@ -51,10 +66,11 @@
     </TableLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="239dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@android:color/background_light"
         android:gravity="top"
+        android:minWidth="300dp"
         android:orientation="vertical">
 
         <TextView
@@ -77,52 +93,22 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@android:color/transparent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|left"
+        android:gravity="right">
 
-        <TableLayout
-            android:layout_width="wrap_content"
+        <io.github.controlwear.virtual.joystick.android.JoystickView
+            android:id="@+id/joyStick"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:gravity="left">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <io.github.controlwear.virtual.joystick.android.JoystickView
-                    android:id="@+id/joyStick"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    custom:JV_backgroundColor="@android:color/darker_gray"
-                    custom:JV_backgroundSizeRatio="90%"
-                    custom:JV_borderColor="@android:color/black"
-                    custom:JV_borderWidth="4dp"
-                    custom:JV_buttonColor="@android:color/holo_green_dark"
-                    custom:JV_buttonSizeRatio="25%"
-                    custom:JV_fixedCenter="false" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-            </TableRow>
-
-        </TableLayout>
-
+            android:layout_gravity="bottom"
+            custom:JV_backgroundColor="@android:color/darker_gray"
+            custom:JV_backgroundSizeRatio="90%"
+            custom:JV_borderColor="@android:color/black"
+            custom:JV_borderWidth="4dp"
+            custom:JV_buttonColor="@android:color/holo_green_dark"
+            custom:JV_buttonSizeRatio="25%"
+            custom:JV_fixedCenter="false" />
     </LinearLayout>
 
 </LinearLayout>
