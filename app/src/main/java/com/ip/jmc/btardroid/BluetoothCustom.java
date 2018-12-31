@@ -45,6 +45,7 @@ public class BluetoothCustom extends MainActivity {
     private Intent intent_set_bluetooth = new Intent("get-param");
     private String str_message_envoye;
     private String str_message_recu;
+    private boolean bo_serial_test;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,29 +132,10 @@ public class BluetoothCustom extends MainActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onConnected, this::onError);
-        /*try {
-            BluetoothSocket socket = device.createRfcommSocketToServiceRecord(MY_UUID_SECURE);
-            socket.connect();
-            if (socket.isConnected()) {
-                tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
-                tv_bluetooth.setText(device.getName() + " est connecté avec un socket");
-            }
-        } catch (IOException e) {
-            //tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
-            //tv_bluetooth.setText("Erreur : " + e.toString());
-            tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
-            tv_bluetooth.setText("Impossible d'établir un socket avec le périphérique ...");
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
-                    tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
-                }
-            }, 2000);
-        }*/
     }
 
     public void onConnected(BluetoothSerialDevice connectedDevice) {
+        bo_serial_test = true;
         intent_set_bluetooth.putExtra("set_bluetooth", "connecte");
         intent_set_bluetooth.putExtra("set_device", deviceConnected.getName());
         LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
@@ -163,9 +145,7 @@ public class BluetoothCustom extends MainActivity {
 
     public void lancementVoiture()
     {
-        intent_set_bluetooth.putExtra("set_bluetooth", "voiture");
-        LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
-        /*if(bt_adapter.isEnabled())
+        if(bt_adapter.isEnabled())
         {
             if (bo_serial_test == true) {
                 intent_set_bluetooth.putExtra("set_bluetooth", "voiture");
@@ -179,7 +159,7 @@ public class BluetoothCustom extends MainActivity {
         {
             intent_set_bluetooth.putExtra("set_bluetooth", "btVoiture");
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
-        }*/
+        }
     }
 
     public void onMessageSent(String message) {
