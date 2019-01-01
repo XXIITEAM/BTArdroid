@@ -71,7 +71,25 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.BLUETOOTH_ADMIN},
                 MY_PERMISSIONS_REQUEST);
         new BluetoothCustom().BluetoothCustomOnCreate();
-       // asyncTask();
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                while(true) {
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new BluetoothCustom().listDevicesBT();
+                            new BluetoothCustom().testBluetooth();
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private void asyncTask()
@@ -234,28 +252,32 @@ public class MainActivity extends AppCompatActivity {
                     tv_bluetooth.setText("Fin de la recherche ...");
                     handlerHome();
                     break;
-                case "appaire":
-                    device = intent.getStringExtra("set_device");
+                case "listeDeviceAppaire":
                     tv_appaires.setTextColor(Color.rgb(104, 149, 197));
                     tv_appaires.setText("Liste des périphériques appairés :");
                     tv_appaires.setVisibility(TextView.VISIBLE);
                     lv_bt_devices.setVisibility(TextView.VISIBLE);
+                    break;
+                case "appaireDevice":
+                    device = intent.getStringExtra("set_device");
                     if (!al_bt_devices.contains(device)) {
                         al_bt_devices.add(device);
-                        lv_bt_devices.setAdapter(aa_bt_paired);
-                        lv_bt_devices.setOnItemClickListener((popup, lv1, position, id) -> {
-                                    String selLv = lv_bt_devices.getItemAtPosition(position).toString().trim();
-                                    String segments[] = selLv.split(" - ");
-                                    String macItem = segments[segments.length - 1];
-                                    BluetoothDevice mBluetoothDevice = new BluetoothCustom().device(macItem);
-                                    new BluetoothCustom().connectDevice(mBluetoothDevice);
-                                }
-                        );
-                        aa_bt_paired.notifyDataSetChanged();
                         al_bt_devices_discovered.remove(device);
-                        lv_bt_discover.setAdapter(aa_bt_decouverte);
-                        aa_bt_decouverte.notifyDataSetChanged();
                     }
+                    break;
+                case "finAppaire":
+                    lv_bt_devices.setAdapter(aa_bt_paired);
+                    lv_bt_devices.setOnItemClickListener((popup, lv1, position, id) -> {
+                                String selLv = lv_bt_devices.getItemAtPosition(position).toString().trim();
+                                String segments[] = selLv.split(" - ");
+                                String macItem = segments[segments.length - 1];
+                                BluetoothDevice mBluetoothDevice = new BluetoothCustom().device(macItem);
+                                new BluetoothCustom().connectDevice(mBluetoothDevice);
+                            }
+                    );
+                    aa_bt_paired.notifyDataSetChanged();
+                    lv_bt_discover.setAdapter(aa_bt_decouverte);
+                    aa_bt_decouverte.notifyDataSetChanged();
                     break;
                 case "nonappaire":
                     Handler handler = new Handler();
