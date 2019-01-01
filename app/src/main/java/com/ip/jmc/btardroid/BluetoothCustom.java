@@ -169,11 +169,6 @@ public class BluetoothCustom extends MainActivity {
                     bt_adapter.enable();
                 }
             }, 2000);
-            //Fermeture de l'interface avec le périphérique Blutooth
-            //bt_manager.closeDevice(sbt_device_interface);
-            //bt_manager.closeDevice(device.getAddress());
-            //bt_manager.close();
-            //portSerie.dispose();
             intent_set_bluetooth.putExtra("set_bluetooth", "handlerHomeDeconnexion");
             intent_set_bluetooth.putExtra("set_device", device.getName());
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
