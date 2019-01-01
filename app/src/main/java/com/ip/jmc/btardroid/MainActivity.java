@@ -47,17 +47,21 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_btn_quitter;
     private TextView tv_btn_voiture;
 
+    //Récupération du contexte MainActivity
     public static Context getContext() {
         return con_main_activity;
     }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Local Receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(mainMessageReceiver,
                 new IntentFilter("get-param"));
         setContentView(R.layout.activity_main);
         con_main_activity = getBaseContext();
+        //Initialisation de l'interface
         initInterface();
+        //Demande des permissions
         int MY_PERMISSIONS_REQUEST = 200;
         int permissions=ContextCompat.checkSelfPermission (this,Manifest.permission.ACCESS_FINE_LOCATION);
         ActivityCompat.requestPermissions(this,
@@ -72,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.BLUETOOTH_ADMIN},
                 MY_PERMISSIONS_REQUEST);
         new BluetoothCustom().BluetoothCustomOnCreate();
+        //Tâche asynchrone toutes les 5 secondes pour tester la connectivité Bluetooth et la liste des devices appairés
         asyncTask();
     }
 
@@ -89,7 +94,9 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            //Mise à jour de la liste des devices appairés
                             new BluetoothCustom().listDevicesBT();
+                            //Test de la connectivité bluetooth
                             new BluetoothCustom().testBluetooth();
                         }
                     });
@@ -100,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initInterface()
     {
+        //Initialisation de l'interface
         lv_bt_devices = findViewById(R.id.listviewbt);
         lv_bt_discover = findViewById(R.id.listviewbtdiscover);
         btn_bt_connect = findViewById(R.id.BtnBT);
@@ -116,35 +124,40 @@ public class MainActivity extends AppCompatActivity {
         tv_btn_voiture.setTextColor(Color.rgb(104,149,197));
         tv_btn_rafraichir.setTextColor(Color.rgb(104, 149, 197));
         tv_btn_recherche.setTextColor(Color.rgb(104, 149, 197));
+        //Nouvels ArrayAdapter pour les listes devices découverts et devices appairés
         aa_bt_decouverte = new ArrayAdapter(con_main_activity, android.R.layout.simple_list_item_1, al_bt_devices_discovered);
         aa_bt_paired = new ArrayAdapter(con_main_activity, android.R.layout.simple_list_item_1, al_bt_devices);
     }
 
+    //Bouton Bluetooth (icone Bluetooth)
     public void btnBTOn(View v) {
+        //Activation ou désactivation du Bluetooth
         new BluetoothCustom().onOff();
     }
 
+    //Bouton recherche (icone loupe)
     public void BtnRecherche(View v) {
+        //Découverte des périphériques Bluetooth à proximité
         new BluetoothCustom().decouverteBluetooth();
     }
 
+    //Bouton rafraichir
     public void BtnRafraichir(View v) {
+        //On rafraichit la liste des devices appairés
         new BluetoothCustom().refreshBT();
     }
 
     public void BtnVoiture(View v) {
+        //Lancement de l'activité ArduinoDroid
         new BluetoothCustom().lancementVoiture();
     }
 
-    public void btnSuivant(View v) {
-        Intent intent = new Intent(con_main_activity, ArduinoDroid.class);
-        startActivity(intent);
-    }
-
     public void BtnQuitter(View v) {
+        //Quitte l'application
         System.exit(0);
     }
 
+    //Handler pour réafficher le message d'accueil après 2500 millisecondes
     private void handlerHome()
     {
         Handler handler = new Handler();
@@ -156,13 +169,19 @@ public class MainActivity extends AppCompatActivity {
         }, 2500);
     }
 
+    //Receiver local pour traiter la partie affichage dynamique. Il est utilisé dans les méthodes de BluetoothCustom.
     private BroadcastReceiver mainMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            //Variable principale pour switcher dans les cas
             String s1= intent.getStringExtra("set_bluetooth");
+            //Variable pour récupérer le device passé en paramètre
             String device;
+            //Variable pour récupérer la liste des devices appairés
             ArrayList<String> deviceList;
+            //Switch sur la variable principale
             switch (s1) {
+                //Si le Blue tooth est inactif
                 case "testBluetooth":
                     tv_discovered.setVisibility(TextView.INVISIBLE);
                     tv_appaires.setVisibility(TextView.INVISIBLE);
@@ -172,17 +191,20 @@ public class MainActivity extends AppCompatActivity {
                     clearIHM();
                     handlerHome();
                     break;
+                //Si le Bluetooth est actif
                 case "testBluetoothActive":
                     tv_appaires.setVisibility(TextView.VISIBLE);
                     btn_bt_connect.setImageResource(R.drawable.bt_on_2);
                     tv_btn_bt.setTextColor(Color.rgb(104, 149, 197));
                     tv_btn_bt.setText("Désactiver");
                     break;
+                 //Si le Bluetooth n'est aps supporté
                 case"btPasSupporte":
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     tv_bluetooth.setText("Le Bluetooth n'est pas supporté ...");
                     clearIHM();
                     break;
+                //Si on active le Bluetooth en cliquant sur l'icone Bluetooth
                 case "on":
                     tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
                     tv_bluetooth.setText("Activation du Bluetooth ...");
@@ -191,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
                     tv_btn_bt.setText("Désactiver");
                     handlerHome();
                     break;
+                //Si on désactive le Bluetooth en cliquant sur l'icone Bluetooth
                 case "off":
                     tv_discovered.setVisibility(TextView.INVISIBLE);
                     tv_appaires.setVisibility(TextView.INVISIBLE);
@@ -202,12 +225,14 @@ public class MainActivity extends AppCompatActivity {
                     clearIHM();
                     handlerHome();
                     break;
+                //Si on utilise l'application mais que le Bluetooth est désactivé
                 case "btDesactive":
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     tv_bluetooth.setText("Veuiller activer le Bluetooth en cliquant sur l'icône ...");
                     clearIHM();
                     handlerHome();
                     break;
+                //Changement de l'icone Bluetooth selon si il est actif ou inactif
                 case "btPasActive":
                     btn_bt_connect.setImageResource(R.drawable.bt_off);
                     tv_btn_bt.setTextColor(Color.rgb(200, 0, 0));
@@ -218,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
                     tv_btn_bt.setTextColor(Color.rgb(104, 149, 197));
                     tv_btn_bt.setText("Désactiver");
                     break;
+                //Si on lance une découverte de périphériques à proximité
                 case "decouverte":
                     btn_bt_recherche.setImageResource(R.drawable.loupe_2);
                     aa_bt_decouverte.clear();
@@ -225,9 +251,10 @@ public class MainActivity extends AppCompatActivity {
                     aa_bt_decouverte.notifyDataSetChanged();
                     tv_btn_recherche.setTextColor(Color.rgb(255, 127, 80));
                     tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
-                    tv_bluetooth.setText("Recherche en cours ...");
+                    tv_bluetooth.setText("Découverte des périphériques à proximité ...");
                     tv_btn_recherche.setText("Arrêter");
                     break;
+                 //Si on arrête la découverte de périphériques à proximité en cliquant sur l'icone loupe
                 case "stopDecouverte":
                     btn_bt_recherche.setImageResource(R.drawable.loupe_1);
                     tv_btn_recherche.setTextColor(Color.rgb(104, 149, 197));
@@ -236,6 +263,7 @@ public class MainActivity extends AppCompatActivity {
                     tv_bluetooth.setText("Fin de la recherche ...");
                     handlerHome();
                     break;
+                //Liste des périphériques appairés
                 case "appaireDevice":
                     deviceList = intent.getStringArrayListExtra("set_deviceList");
                     al_bt_devices.clear();
@@ -266,6 +294,7 @@ public class MainActivity extends AppCompatActivity {
                     lv_bt_discover.setAdapter(aa_bt_decouverte);
                     aa_bt_decouverte.notifyDataSetChanged();
                     break;
+                //S'il n'y a pas de périphériques appairés
                 case "nonappaire":
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
@@ -277,22 +306,26 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }, 4000);
                     break;
+                 //Si on se connecte à un périphérique en port série
                 case "connecte":
                     device= intent.getStringExtra("set_device");
                     tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
                     tv_bluetooth.setText(device+" est connecté");
                     break;
+                //Si l'application ne peut pas appairer le périphérique
                 case"echecConnection":
                     device= intent.getStringExtra("set_device");
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     tv_bluetooth.setText("Impossible d'appairer le périphérique "+device);
                     handlerHome();
                     break;
+                //Si le périphérique ne peut pas être connecté en port série
                 case "erreurSerie":
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     tv_bluetooth.setText("Impossible de connecter le périphérique en port série ...");
                     handlerHome();
                     break;
+                //Si un périphérique à proximité est découvert
                 case "trouve":
                     device = intent.getStringExtra("set_device");
                     if(!al_bt_devices.contains(device)) {
@@ -312,6 +345,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     break;
+                //Lorsque la découverte des périphériques à proximité est terminé
                 case "finRecherche":
                     tv_bluetooth.setText("");
                     tv_discovered.setVisibility(TextView.VISIBLE);
@@ -326,6 +360,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     handlerHome();
                     break;
+                //Si on rafraichit la liste des périphériques appairés
                 case "majBt":
                     tv_bluetooth.setTextColor(Color.rgb(0,200,0));
                     tv_bluetooth.setText("Mise à jour de la liste des périphériques appairés ...");
@@ -334,21 +369,19 @@ public class MainActivity extends AppCompatActivity {
                     aa_bt_paired.clear();
                     aa_bt_paired.notifyDataSetChanged();
                     break;
-                case "iconeBt":
-                    tv_bluetooth.setTextColor(Color.rgb(200,0,0));
-                    tv_bluetooth.setText("Veuiller activer le Bluetooth en cliquant sur l'icône ...");
-                    handlerHome();
-                    break;
+                 //Si on n'est aps connecté en port série à un périphérique
                 case "nonVoiture":
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     tv_bluetooth.setText("Vous n'êtes pas connecté à une voiture arduino ...");
                     handlerHome();
                     break;
+                //Si on n'est aps connecté en Bluetooth et qu'on veut lancer l'application ArduinoDroid
                 case "btVoiture":
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     tv_bluetooth.setText("Le Bluetooth doit être activé pour utiliser cette application ...");
                     handlerHome();
                     break;
+                //Lancement de l'activité ArduinoDroid en cliquant sur l'icone voiture
                 case "voiture":
                     Intent myIntent = new Intent(con_main_activity, ArduinoDroid.class);
                     startActivity(myIntent);
@@ -357,6 +390,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    //On vide les listes des périphériques appairés et découverts
     private void clearIHM()
     {
         tv_discovered.setVisibility(TextView.INVISIBLE);
@@ -373,6 +407,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        //Suppression du receiver local
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mainMessageReceiver);
         super.onDestroy();
     }

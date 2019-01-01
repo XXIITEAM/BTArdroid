@@ -188,7 +188,7 @@ public class BluetoothCustom extends MainActivity {
         }
         else
         {
-            intent_set_bluetooth.putExtra("set_bluetooth", "iconeBt");
+            intent_set_bluetooth.putExtra("set_bluetooth", "btDesactive");
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
     }
