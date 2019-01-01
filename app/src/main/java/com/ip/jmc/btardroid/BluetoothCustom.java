@@ -27,6 +27,7 @@ import com.harrysoft.androidbluetoothserial.SimpleBluetoothDeviceInterface;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,6 +47,8 @@ public class BluetoothCustom extends MainActivity {
     private String str_message_envoye;
     private String str_message_recu;
     private boolean bo_serial_test;
+    private List<BluetoothDevice> pairedDevices;
+    private ArrayList<String> deviceList = new ArrayList<>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -196,27 +199,22 @@ public class BluetoothCustom extends MainActivity {
 
     public void listDevicesBT() {
         if(bt_adapter.isEnabled()) {
-            intent_set_bluetooth.putExtra("set_bluetooth", "listeDeviceAppaire");
-            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
-            /*intent_set_bluetooth.putExtra("set_bluetooth", "appaire");
-            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);*/
-            List<BluetoothDevice> pairedDevices = bt_manager.getPairedDevicesList();
-            while (pairedDevices.isEmpty()) {
+            pairedDevices = bt_manager.getPairedDevicesList();
+            deviceList.clear();
+            /*while (pairedDevices.isEmpty()) {
                 pairedDevices = bt_manager.getPairedDevicesList();
-                break;
-            }
+            }*/
             if (!pairedDevices.isEmpty()) {
                 for (BluetoothDevice device : pairedDevices) {
-                    intent_set_bluetooth.putExtra("set_bluetooth", "appaireDevice");
-                    intent_set_bluetooth.putExtra("set_device", device.getName() + " - " + device.getAddress());
-                    LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+                    deviceList.add(device.getName() + " - " + device.getAddress());
                 }
+                intent_set_bluetooth.putStringArrayListExtra("set_deviceList", deviceList);
+                intent_set_bluetooth.putExtra("set_bluetooth", "appaireDevice");
+                LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
             } else {
                 intent_set_bluetooth.putExtra("set_bluetooth", "nonappaire");
                 LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
             }
-            intent_set_bluetooth.putExtra("set_bluetooth", "finAppaire");
-            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
     }
 

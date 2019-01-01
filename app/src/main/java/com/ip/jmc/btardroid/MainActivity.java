@@ -25,6 +25,7 @@ import com.harrysoft.androidbluetoothserial.BluetoothManager;
 import com.harrysoft.androidbluetoothserial.SimpleBluetoothDeviceInterface;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -71,25 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.BLUETOOTH_ADMIN},
                 MY_PERMISSIONS_REQUEST);
         new BluetoothCustom().BluetoothCustomOnCreate();
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                while(true) {
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            new BluetoothCustom().listDevicesBT();
-                            new BluetoothCustom().testBluetooth();
-                        }
-                    });
-                }
-            }
-        });
+        asyncTask();
     }
 
     private void asyncTask()
@@ -178,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String s1= intent.getStringExtra("set_bluetooth");
             String device;
+            ArrayList<String> deviceList;
             switch (s1) {
                 case "testBluetooth":
                     tv_discovered.setVisibility(TextView.INVISIBLE);
@@ -252,20 +236,22 @@ public class MainActivity extends AppCompatActivity {
                     tv_bluetooth.setText("Fin de la recherche ...");
                     handlerHome();
                     break;
-                case "listeDeviceAppaire":
+                case "appaireDevice":
+                    deviceList = intent.getStringArrayListExtra("set_deviceList");
+                    al_bt_devices.clear();
+                    aa_bt_paired.clear();
+                    lv_bt_devices.setAdapter(aa_bt_paired);
+                    aa_bt_paired.notifyDataSetChanged();
                     tv_appaires.setTextColor(Color.rgb(104, 149, 197));
                     tv_appaires.setText("Liste des périphériques appairés :");
                     tv_appaires.setVisibility(TextView.VISIBLE);
                     lv_bt_devices.setVisibility(TextView.VISIBLE);
-                    break;
-                case "appaireDevice":
-                    device = intent.getStringExtra("set_device");
-                    if (!al_bt_devices.contains(device)) {
-                        al_bt_devices.add(device);
-                        al_bt_devices_discovered.remove(device);
+                    for (String pairedDevices : deviceList) {
+                        if (!al_bt_devices.contains(pairedDevices)) {
+                            al_bt_devices.add(pairedDevices);
+                            al_bt_devices_discovered.remove(pairedDevices);
+                        }
                     }
-                    break;
-                case "finAppaire":
                     lv_bt_devices.setAdapter(aa_bt_paired);
                     lv_bt_devices.setOnItemClickListener((popup, lv1, position, id) -> {
                                 String selLv = lv_bt_devices.getItemAtPosition(position).toString().trim();
