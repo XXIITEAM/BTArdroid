@@ -144,16 +144,26 @@ public class BluetoothCustom extends MainActivity {
 
     //Fonction appelée lors du clique sur un périphérique appairé
     public void connectDevice(BluetoothDevice device) {
-        intent_set_bluetooth.putExtra("set_bluetooth", "connexion");
-        intent_set_bluetooth.putExtra("set_device", device.getName());
-        LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
-        //bt_adapter.cancelDiscovery();
-        deviceConnected = device;
-        //Connection en port série
-        bt_manager.openSerialDevice(device.getAddress())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onConnected, this::onError);
+        if(bo_serial_test != true) {
+            intent_set_bluetooth.putExtra("set_bluetooth", "connexion");
+            intent_set_bluetooth.putExtra("set_device", device.getName());
+            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+            //bt_adapter.cancelDiscovery();
+            deviceConnected = device;
+            //Connection en port série
+            bt_manager.openSerialDevice(device.getAddress())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::onConnected, this::onError);
+        }
+        else
+        {
+            bo_serial_test = false;
+            //Fermeture de l'interface avec le périphérique Blutooth
+            bt_manager.closeDevice(sbt_device_interface);
+            intent_set_bluetooth.putExtra("set_bluetooth", "handlerHome");
+            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+        }
     }
 
     //Une fois connecté en port série
@@ -203,6 +213,7 @@ public class BluetoothCustom extends MainActivity {
 
     //S'il y a une erreur de connexion en port série
     public void onError(Throwable error) {
+        bo_serial_test = false;
         intent_set_bluetooth.putExtra("set_bluetooth", "erreurSerie");
         intent_set_bluetooth.putExtra("set_device", deviceConnected.getName());
         LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);

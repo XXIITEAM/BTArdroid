@@ -181,6 +181,10 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<String> deviceList;
             //Switch sur la variable principale
             switch (s1) {
+                //Si on veut remettre le message d'accueil
+                case "handlerHome":
+                    handlerHome();
+                    break;
                 //Si le Blue tooth est inactif
                 case "testBluetooth":
                     tv_discovered.setVisibility(TextView.INVISIBLE);
