@@ -160,13 +160,26 @@ public class MainActivity extends AppCompatActivity {
     //Handler pour réafficher le message d'accueil après 2500 millisecondes
     private void handlerHome()
     {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
-                tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
-            }
-        }, 2500);
+        BluetoothDevice deviceConnected = new BluetoothCustom().deviceConnected();
+        if(deviceConnected == null) {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
+                    tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
+                }
+            }, 2500);
+        }
+        else
+        {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
+                    tv_bluetooth.setText(deviceConnected.getName()+ " est connecté");
+                }
+            }, 2500);
+        }
     }
 
     //Receiver local pour traiter la partie affichage dynamique. Il est utilisé dans les méthodes de BluetoothCustom.
@@ -181,13 +194,6 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<String> deviceList;
             //Switch sur la variable principale
             switch (s1) {
-                //Après une déconnexiona vec un périphérique Bluetooth
-                case "handlerHomeDeconnexion":
-                    device= intent.getStringExtra("set_device");
-                    tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
-                    tv_bluetooth.setText("Déconnexion du périphérique : "+device);
-                    handlerHome();
-                    break;
                 //Si le Blue tooth est inactif
                 case "testBluetooth":
                     tv_discovered.setVisibility(TextView.INVISIBLE);
@@ -319,6 +325,13 @@ public class MainActivity extends AppCompatActivity {
                     tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
                     tv_bluetooth.setText(device+" est connecté");
                     break;
+                //Après une déconnexiona vec un périphérique Bluetooth
+                case "handlerHomeDeconnexion":
+                    device= intent.getStringExtra("set_device");
+                    tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+                    tv_bluetooth.setText("Déconnexion du périphérique : "+device);
+                    handlerHome();
+                    break;
                 //Si on essai de se connecter à un périphérique en port série
                 case "connexion":
                     device= intent.getStringExtra("set_device");
@@ -378,10 +391,10 @@ public class MainActivity extends AppCompatActivity {
                 case "majBt":
                     tv_bluetooth.setTextColor(Color.rgb(0,200,0));
                     tv_bluetooth.setText("Mise à jour de la liste des périphériques appairés ...");
-                    handlerHome();
                     tv_appaires.setText("");
                     aa_bt_paired.clear();
                     aa_bt_paired.notifyDataSetChanged();
+                    handlerHome();
                     break;
                  //Si on n'est aps connecté en port série à un périphérique
                 case "nonVoiture":

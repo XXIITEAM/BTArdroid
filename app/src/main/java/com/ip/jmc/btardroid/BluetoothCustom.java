@@ -38,15 +38,14 @@ import io.reactivex.schedulers.Schedulers;
 
 //Classe boite à outils Bluetooth pour le MainActivity
 public class BluetoothCustom extends MainActivity {
+    public static SimpleBluetoothDeviceInterface sbt_device_interface;
+    private static boolean bo_serial_test;
+    private static BluetoothDevice deviceConnected;
     private BluetoothManager bt_manager = BluetoothManager.getInstance();
     private BluetoothAdapter bt_adapter = BluetoothAdapter.getDefaultAdapter();
-    public static SimpleBluetoothDeviceInterface sbt_device_interface;
-    private BluetoothDevice deviceConnected;
     private Intent intent_set_bluetooth = new Intent("get-param");
     private String str_message_envoye;
     private String str_message_recu;
-    private static boolean bo_serial_test;
-    private static Disposable portSerie = new CompositeDisposable();
     private List<BluetoothDevice> pairedDevices;
     private ArrayList<String> deviceList = new ArrayList<>();
 
@@ -96,7 +95,14 @@ public class BluetoothCustom extends MainActivity {
         BluetoothDevice device = bt_adapter.getRemoteDevice(mac);
         return device;
     }
-
+public BluetoothDevice deviceConnected(){
+        if(deviceConnected != null ) {
+            return deviceConnected;
+        }
+        else {
+            return null;
+        }
+}
     //Fonction pour tester le Bluetooth en asynchrone
     public void testBluetooth() {
         if (!bt_adapter.isEnabled()) {
@@ -118,6 +124,7 @@ public class BluetoothCustom extends MainActivity {
         }else
         {
             bt_adapter.disable();
+            deviceConnected = null;
             intent_set_bluetooth.putExtra("set_bluetooth", "off");
         }
         LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
@@ -153,7 +160,7 @@ public class BluetoothCustom extends MainActivity {
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
             deviceConnected = device;
             //Connection en port série
-             portSerie = bt_manager.openSerialDevice(device.getAddress())
+             bt_manager.openSerialDevice(device.getAddress())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::onConnected, this::onError);
@@ -189,8 +196,6 @@ public class BluetoothCustom extends MainActivity {
     //Lorsqu'on lance l'application ArduinoDroid lorsqu'on clique sur l'icone voiture
     public void lancementVoiture()
     {
-        //intent_set_bluetooth.putExtra("set_bluetooth", "voiture");
-        //LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         if(bt_adapter.isEnabled())
         {
             intent_set_bluetooth.putExtra("set_bluetooth", "voiture");
@@ -225,6 +230,7 @@ public class BluetoothCustom extends MainActivity {
     //S'il y a une erreur de connexion en port série
     public void onError(Throwable error) {
         bo_serial_test = false;
+        deviceConnected = null;
         intent_set_bluetooth.putExtra("set_bluetooth", "erreurSerie");
         intent_set_bluetooth.putExtra("set_device", deviceConnected.getName());
         LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
@@ -240,9 +246,9 @@ public class BluetoothCustom extends MainActivity {
     {
         if(bt_adapter.isEnabled())
         {
-            intent_set_bluetooth.putExtra("set_bluetooth", "majBT");
-            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
             listDevicesBT();
+            intent_set_bluetooth.putExtra("set_bluetooth", "majBt");
+            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
         else
         {
