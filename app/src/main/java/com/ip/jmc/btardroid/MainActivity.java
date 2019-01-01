@@ -239,9 +239,6 @@ public class MainActivity extends AppCompatActivity {
                 case "appaireDevice":
                     deviceList = intent.getStringArrayListExtra("set_deviceList");
                     al_bt_devices.clear();
-                    aa_bt_paired.clear();
-                    lv_bt_devices.setAdapter(aa_bt_paired);
-                    aa_bt_paired.notifyDataSetChanged();
                     tv_appaires.setTextColor(Color.rgb(104, 149, 197));
                     tv_appaires.setText("Liste des périphériques appairés :");
                     tv_appaires.setVisibility(TextView.VISIBLE);
@@ -250,6 +247,10 @@ public class MainActivity extends AppCompatActivity {
                         if (!al_bt_devices.contains(pairedDevices)) {
                             al_bt_devices.add(pairedDevices);
                             al_bt_devices_discovered.remove(pairedDevices);
+                            if(al_bt_devices_discovered.isEmpty())
+                            {
+                                tv_discovered.setVisibility(TextView.INVISIBLE);
+                            }
                         }
                     }
                     lv_bt_devices.setAdapter(aa_bt_paired);
