@@ -198,14 +198,16 @@ public BluetoothDevice deviceConnected(){
     {
         if(bt_adapter.isEnabled())
         {
-            //Si on est connecté en port série on lance l'application
+            intent_set_bluetooth.putExtra("set_bluetooth", "voiture");
+            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+            /*//Si on est connecté en port série on lance l'application
             if (bo_serial_test == true) {
                 intent_set_bluetooth.putExtra("set_bluetooth", "voiture");
                 LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
             } else {
                 intent_set_bluetooth.putExtra("set_bluetooth", "nonVoiture");
                 LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
-            }
+            }*/
         }
         else
         {
