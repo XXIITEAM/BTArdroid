@@ -39,10 +39,6 @@ public class BluetoothCustom extends MainActivity {
     private BluetoothAdapter bt_adapter = BluetoothAdapter.getDefaultAdapter();
     public static SimpleBluetoothDeviceInterface sbt_device_interface;
     private BluetoothDevice deviceConnected;
-    private static final UUID MY_UUID_SECURE =
-            UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
-    private static final UUID MY_UUID_INSECURE =
-            UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
     private Intent intent_set_bluetooth = new Intent("get-param");
     private String str_message_envoye;
     private String str_message_recu;
@@ -125,7 +121,7 @@ public class BluetoothCustom extends MainActivity {
             intent_set_bluetooth.putExtra("set_device", device.getName());
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
-        //listDevicesBT();
+        listDevicesBT();
     }
 
     public void connectDevice(BluetoothDevice device) {
@@ -201,9 +197,6 @@ public class BluetoothCustom extends MainActivity {
         if(bt_adapter.isEnabled()) {
             pairedDevices = bt_manager.getPairedDevicesList();
             deviceList.clear();
-            /*while (pairedDevices.isEmpty()) {
-                pairedDevices = bt_manager.getPairedDevicesList();
-            }*/
             if (!pairedDevices.isEmpty()) {
                 for (BluetoothDevice device : pairedDevices) {
                     deviceList.add(device.getName() + " - " + device.getAddress());
@@ -218,10 +211,10 @@ public class BluetoothCustom extends MainActivity {
         }
     }
 
-    public void deconnexion(View v) {
+    /*public void deconnexion(View v) {
         bt_manager.closeDevice(sbt_device_interface);
         bt_manager.close();
-    }
+    }*/
 
     public void decouverteBluetooth() {
         if (bt_adapter.isEnabled()) {
@@ -260,5 +253,7 @@ public class BluetoothCustom extends MainActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(bReceiver);
+        bt_manager.closeDevice(sbt_device_interface);
+        bt_manager.close();
     }
 }
