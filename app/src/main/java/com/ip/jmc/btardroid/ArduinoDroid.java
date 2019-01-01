@@ -51,6 +51,7 @@ public class ArduinoDroid extends MainActivity {
 
     static ImageButton bt_mode_vh, bt_donnees, bt3, bt4;
     Intent intent_set_tv_retour_voiture = new Intent("get-param-opt");
+    Intent intent_list_distance = new Intent("get-param-dist");
     static ListView lv_get_vh_data;
     static ArrayAdapter aa_vh_params;
 
@@ -112,31 +113,31 @@ public class ArduinoDroid extends MainActivity {
                     listParams(listParams);
                     break;
                 case "O":
-                    Intent i_options = new Intent(con_app, OptionVehicule.class);
-                    i_options.putStringArrayListExtra("al_list_distances", listParams);
-                    con_app.startActivity(i_options);
+                    intent_list_distance.putStringArrayListExtra("al_list_distances", listParams);
+                    LocalBroadcastManager.getInstance(con_arduino_droid).sendBroadcast(intent_list_distance);
                     break;
                 case "W":
 
                     intent_set_tv_retour_voiture.putExtra("set_tv_retour_voiture", "Application des paramètres");
-                    updateTvRetourVoirute ();
+                    LocalBroadcastManager.getInstance(con_arduino_droid).sendBroadcast(intent_set_tv_retour_voiture);
                     Handler handlerW = new Handler();
                     handlerW.postDelayed(new Runnable() {
                         public void run() {
                             intent_set_tv_retour_voiture.putExtra("set_tv_retour_voiture", "");
-                            updateTvRetourVoirute ();
+                            LocalBroadcastManager.getInstance(con_arduino_droid).sendBroadcast(intent_set_tv_retour_voiture);
+
                         }
                     }, 3000);
 
                     break;
                 case "Q":
                     intent_set_tv_retour_voiture.putExtra("set_tv_retour_voiture", "Sauvegarde des paramètres actuels");
-                    updateTvRetourVoirute ();
+                    LocalBroadcastManager.getInstance(con_arduino_droid).sendBroadcast(intent_set_tv_retour_voiture);
                     Handler handlerQ = new Handler();
                     handlerQ.postDelayed(new Runnable() {
                         public void run() {
                             intent_set_tv_retour_voiture.putExtra("set_tv_retour_voiture", "");
-                            updateTvRetourVoirute ();
+                            LocalBroadcastManager.getInstance(con_arduino_droid).sendBroadcast(intent_set_tv_retour_voiture);
                         }
                     }, 3000);
 
@@ -201,10 +202,9 @@ public class ArduinoDroid extends MainActivity {
     public void boutonConfigurationVhClick(View v) {
 
         sbt_device_interface.sendMessage("O");
+        Intent i_options = new Intent(con_app, OptionVehicule.class);
+        con_app.startActivity(i_options);
 
-    }
-    private void updateTvRetourVoirute () {
-        LocalBroadcastManager.getInstance(con_arduino_droid).sendBroadcast(intent_set_tv_retour_voiture);
     }
     @Override
     protected void onDestroy() {

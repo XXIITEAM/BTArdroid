@@ -13,7 +13,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -43,17 +42,27 @@ public class OptionVehicule extends MainActivity {
         ti_zone_2 = findViewById(R.id.et_zone_2);
         ti_zone_1 = findViewById(R.id.et_zone_1);
 
-        al_list_distances = getIntent().getStringArrayListExtra("al_list_distances");
+        //al_list_distances = getIntent().getStringArrayListExtra("al_list_distances");
         LocalBroadcastManager.getInstance(con_option_vehicule).registerReceiver(option_vehicule_message_receiver,
                 new IntentFilter("get-param-opt"));
+        LocalBroadcastManager.getInstance(con_option_vehicule).registerReceiver(option_vehicule_param_receiver,
+                new IntentFilter("get-param-dist"));
 
-        receptionParamVehicule();
+        updateListParamVehicule();
     }
     private BroadcastReceiver option_vehicule_message_receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String s1= intent.getStringExtra("set_tv_retour_voiture");
+            al_list_distances = intent.getStringArrayListExtra("al_list_distances");
             getIt(s1);
+        }
+    };
+    private BroadcastReceiver option_vehicule_param_receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            al_list_distances = intent.getStringArrayListExtra("al_list_distances");
+            updateListParamVehicule();
         }
     };
     public void getIt(String s)
@@ -63,7 +72,7 @@ public class OptionVehicule extends MainActivity {
         tv_retour_voiture.setText(s);
 
     }
-    public void receptionParamVehicule() {
+    public void updateListParamVehicule() {
         ti_zone_1.setText(al_list_distances.get(0));
         ti_zone_2.setText(al_list_distances.get(1));
         ti_zone_3.setText(al_list_distances.get(2));
@@ -71,7 +80,7 @@ public class OptionVehicule extends MainActivity {
         ti_zone_max.setText(al_list_distances.get(4));
     }
 
-    public void envoyerParamVehicule(View v) {
+    public void envoiParamVehicule(View v) {
 
         String strParam = "W" + "/" + ti_zone_1.getText().toString() + "/" +
                 ti_zone_2.getText().toString() + "/" +
@@ -84,7 +93,7 @@ public class OptionVehicule extends MainActivity {
 
     }
 
-    public void sauvegarderParametres(View v) {
+    public void sauvegardeParametres(View v) {
         sbt_device_interface.sendMessage("Q");
     }
 
@@ -92,6 +101,8 @@ public class OptionVehicule extends MainActivity {
     protected void onDestroy() {
         // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(con_option_vehicule).unregisterReceiver(option_vehicule_message_receiver);
+        LocalBroadcastManager.getInstance(con_option_vehicule).unregisterReceiver(option_vehicule_param_receiver);
+
         super.onDestroy();
     }
 
