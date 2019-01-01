@@ -264,29 +264,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="395dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="8dp"
-            android:gravity="bottom"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="456dp">
-
-            <Button
-                android:id="@+id/btTest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:baselineAligned="false"
-                android:onClick="btnSuivant"
-                android:text="Suivant"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-        </LinearLayout>
-
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
