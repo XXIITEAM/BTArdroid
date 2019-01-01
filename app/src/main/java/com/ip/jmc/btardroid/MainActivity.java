@@ -181,8 +181,11 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<String> deviceList;
             //Switch sur la variable principale
             switch (s1) {
-                //Si on veut remettre le message d'accueil
-                case "handlerHome":
+                //Après une déconnexiona vec un périphérique Bluetooth
+                case "handlerHomeDeconnexion":
+                    device= intent.getStringExtra("set_device");
+                    tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+                    tv_bluetooth.setText("Déconnexion du périphérique : "+device);
                     handlerHome();
                     break;
                 //Si le Blue tooth est inactif
@@ -331,8 +334,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 //Si le périphérique ne peut pas être connecté en port série
                 case "erreurSerie":
+                    device= intent.getStringExtra("set_device");
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
-                    tv_bluetooth.setText("Impossible de connecter le périphérique en port série ...");
+                    tv_bluetooth.setText("Impossible de connecter le périphérique "+device+" en port série ...");
                     handlerHome();
                     break;
                 //Si un périphérique à proximité est découvert

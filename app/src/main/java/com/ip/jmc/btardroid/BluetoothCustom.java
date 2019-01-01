@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.UUID;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 //Classe boite à outils Bluetooth pour le MainActivity
@@ -43,7 +45,8 @@ public class BluetoothCustom extends MainActivity {
     private Intent intent_set_bluetooth = new Intent("get-param");
     private String str_message_envoye;
     private String str_message_recu;
-    private boolean bo_serial_test;
+    private static boolean bo_serial_test;
+    private static Disposable portSerie = new CompositeDisposable();
     private List<BluetoothDevice> pairedDevices;
     private ArrayList<String> deviceList = new ArrayList<>();
 
@@ -144,24 +147,35 @@ public class BluetoothCustom extends MainActivity {
 
     //Fonction appelée lors du clique sur un périphérique appairé
     public void connectDevice(BluetoothDevice device) {
-        if(bo_serial_test != true) {
+        if(bo_serial_test == false) {
             intent_set_bluetooth.putExtra("set_bluetooth", "connexion");
             intent_set_bluetooth.putExtra("set_device", device.getName());
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
-            //bt_adapter.cancelDiscovery();
             deviceConnected = device;
             //Connection en port série
-            bt_manager.openSerialDevice(device.getAddress())
+             portSerie = bt_manager.openSerialDevice(device.getAddress())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::onConnected, this::onError);
         }
         else
         {
+            deviceConnected = null;
             bo_serial_test = false;
+            bt_adapter.disable();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    bt_adapter.enable();
+                }
+            }, 2000);
             //Fermeture de l'interface avec le périphérique Blutooth
-            bt_manager.closeDevice(sbt_device_interface);
-            intent_set_bluetooth.putExtra("set_bluetooth", "handlerHome");
+            //bt_manager.closeDevice(sbt_device_interface);
+            //bt_manager.closeDevice(device.getAddress());
+            //bt_manager.close();
+            //portSerie.dispose();
+            intent_set_bluetooth.putExtra("set_bluetooth", "handlerHomeDeconnexion");
+            intent_set_bluetooth.putExtra("set_device", device.getName());
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
     }
@@ -174,7 +188,7 @@ public class BluetoothCustom extends MainActivity {
         LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         sbt_device_interface = connectedDevice.toSimpleDeviceInterface();
         //On écoute le périphérique
-        sbt_device_interface.setListeners(this::onMessageReceived, this::onMessageSent, this::onError);
+        sbt_device_interface.setListeners(this::onMessageReceived, this::onMessageSent, this::onErrorMessage);
     }
 
     //Lorsqu'on lance l'application ArduinoDroid lorsqu'on clique sur l'icone voiture
@@ -184,6 +198,8 @@ public class BluetoothCustom extends MainActivity {
         //LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         if(bt_adapter.isEnabled())
         {
+            intent_set_bluetooth.putExtra("set_bluetooth", "voiture");
+            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
             //Si on est connecté en port série on lance l'application
             if (bo_serial_test == true) {
                 intent_set_bluetooth.putExtra("set_bluetooth", "voiture");
@@ -217,6 +233,11 @@ public class BluetoothCustom extends MainActivity {
         intent_set_bluetooth.putExtra("set_bluetooth", "erreurSerie");
         intent_set_bluetooth.putExtra("set_device", deviceConnected.getName());
         LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+    }
+
+    //S'il y a une erreur de connexion en port série
+    public void onErrorMessage(Throwable error) {
+
     }
 
     //Fonction pour rafraichir la liste des périphériques appairés
