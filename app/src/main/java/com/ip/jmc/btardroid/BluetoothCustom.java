@@ -122,7 +122,7 @@ public class BluetoothCustom extends MainActivity {
             intent_set_bluetooth.putExtra("set_device", device.getName());
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
-        listDevicesBT();
+        //listDevicesBT();
     }
 
     public void connectDevice(BluetoothDevice device) {
@@ -145,6 +145,8 @@ public class BluetoothCustom extends MainActivity {
 
     public void lancementVoiture()
     {
+        intent_set_bluetooth.putExtra("set_bluetooth", "voiture");
+        LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         if(bt_adapter.isEnabled())
         {
             if (bo_serial_test == true) {
@@ -202,8 +204,8 @@ public class BluetoothCustom extends MainActivity {
             }
             if (!pairedDevices.isEmpty()) {
                 for (BluetoothDevice device : pairedDevices) {
-                    intent_set_bluetooth.putExtra("set_device", device.getName() + " - " + device.getAddress());
                     intent_set_bluetooth.putExtra("set_bluetooth", "appaire");
+                    intent_set_bluetooth.putExtra("set_device", device.getName() + " - " + device.getAddress());
                 }
             } else {
                 intent_set_bluetooth.putExtra("set_bluetooth", "nonappaire");

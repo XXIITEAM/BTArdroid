@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.BLUETOOTH_ADMIN},
                 MY_PERMISSIONS_REQUEST);
         new BluetoothCustom().BluetoothCustomOnCreate();
-        asyncTask();
+       // asyncTask();
     }
 
     private void asyncTask()
@@ -286,19 +286,21 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "trouve":
                     device = intent.getStringExtra("set_device");
-                    if (!al_bt_devices_discovered.contains(device) || !al_bt_devices.contains(device)) {
+                    if(!al_bt_devices.contains(device)) {
                         tv_discovered.setVisibility(TextView.VISIBLE);
-                        al_bt_devices_discovered.add(device);
-                        lv_bt_discover.setAdapter(aa_bt_decouverte);
-                        lv_bt_discover.setOnItemClickListener((popup, lv1, position, id) -> {
-                                    String selLv = lv_bt_discover.getItemAtPosition(position).toString().trim();
-                                    String segments[] = selLv.split(" - ");
-                                    String macItem = segments[segments.length - 1];
-                                    BluetoothDevice mBluetoothDevice = new BluetoothCustom().device(macItem);
-                                    new BluetoothCustom().appairage(mBluetoothDevice);
-                                }
-                        );
-                        aa_bt_decouverte.notifyDataSetChanged();
+                        if (!al_bt_devices_discovered.contains(device)) {
+                            al_bt_devices_discovered.add(device);
+                            lv_bt_discover.setAdapter(aa_bt_decouverte);
+                            lv_bt_discover.setOnItemClickListener((popup, lv1, position, id) -> {
+                                        String selLv = lv_bt_discover.getItemAtPosition(position).toString().trim();
+                                        String segments[] = selLv.split(" - ");
+                                        String macItem = segments[segments.length - 1];
+                                        BluetoothDevice mBluetoothDevice = new BluetoothCustom().device(macItem);
+                                        new BluetoothCustom().appairage(mBluetoothDevice);
+                                    }
+                            );
+                            aa_bt_decouverte.notifyDataSetChanged();
+                        }
                     }
                     break;
                 case "finRecherche":
