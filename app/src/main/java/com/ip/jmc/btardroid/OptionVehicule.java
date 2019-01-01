@@ -26,7 +26,7 @@ public class OptionVehicule extends MainActivity {
     TextInputEditText ti_zone_3;
     TextInputEditText ti_zone_2;
     TextInputEditText ti_zone_1;
-    ArrayList<String> al_list_distances;
+    ArrayList<String> al_list_distances = new ArrayList<>();
     TextView tv_retour_voiture;
     static public Context con_option_vehicule;
     @Override
@@ -34,7 +34,7 @@ public class OptionVehicule extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options_vehicule);
         con_option_vehicule = this;
-
+        //al_list_distances.isEmpty();
         tv_retour_voiture = findViewById(R.id.tvRetour);
         ti_zone_max = findViewById(R.id.et_zone_max);
         ti_zone_4 = findViewById(R.id.et_zone_4);
@@ -47,15 +47,23 @@ public class OptionVehicule extends MainActivity {
                 new IntentFilter("get-param-opt"));
         LocalBroadcastManager.getInstance(con_option_vehicule).registerReceiver(option_vehicule_param_receiver,
                 new IntentFilter("get-param-dist"));
+        if(al_list_distances.isEmpty()) {
 
+            al_list_distances.add("10");
+            al_list_distances.add("30");
+            al_list_distances.add("50");
+            al_list_distances.add("80");
+            al_list_distances.add("100");
+        }
         updateListParamVehicule();
+
     }
     private BroadcastReceiver option_vehicule_message_receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String s1= intent.getStringExtra("set_tv_retour_voiture");
-            al_list_distances = intent.getStringArrayListExtra("al_list_distances");
-            getIt(s1);
+            //al_list_distances = intent.getStringArrayListExtra("al_list_distances");
+            tv_retour_voiture.setText(s1);
         }
     };
     private BroadcastReceiver option_vehicule_param_receiver = new BroadcastReceiver() {
@@ -65,19 +73,14 @@ public class OptionVehicule extends MainActivity {
             updateListParamVehicule();
         }
     };
-    public void getIt(String s)
-    {
 
-        System.out.println(s);
-        tv_retour_voiture.setText(s);
-
-    }
     public void updateListParamVehicule() {
         ti_zone_1.setText(al_list_distances.get(0));
         ti_zone_2.setText(al_list_distances.get(1));
         ti_zone_3.setText(al_list_distances.get(2));
         ti_zone_4.setText(al_list_distances.get(3));
         ti_zone_max.setText(al_list_distances.get(4));
+        al_list_distances.clear();
     }
 
     public void envoiParamVehicule(View v) {

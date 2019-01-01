@@ -187,15 +187,7 @@ public class ArduinoDroid extends MainActivity {
     }
 
     public void btn3Click(View v) {
-
-        ArrayList<String> list = new ArrayList<String>();
-        list.add("10");
-        list.add("30");
-        list.add("50");
-        list.add("80");
-        list.add("100");
         Intent i_options = new Intent(con_app, OptionVehicule.class);
-        i_options.putStringArrayListExtra("al_list_distances", list);
         con_app.startActivity(i_options);
     }
 
