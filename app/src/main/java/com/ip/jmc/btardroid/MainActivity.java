@@ -306,11 +306,17 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }, 4000);
                     break;
-                 //Si on se connecte à un périphérique en port série
+                 //Si on parvient à se connecter à un périphérique en port série
                 case "connecte":
                     device= intent.getStringExtra("set_device");
-                    tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+                    tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
                     tv_bluetooth.setText(device+" est connecté");
+                    break;
+                //Si on essai de se connecter à un périphérique en port série
+                case "connexion":
+                    device= intent.getStringExtra("set_device");
+                    tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+                    tv_bluetooth.setText("Connexion en port série avec le périphérique : "+device);
                     break;
                 //Si l'application ne peut pas appairer le périphérique
                 case"echecConnection":
