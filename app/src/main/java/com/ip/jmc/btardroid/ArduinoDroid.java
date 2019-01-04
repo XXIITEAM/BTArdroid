@@ -163,7 +163,7 @@ public class ArduinoDroid extends MainActivity {
     }
 
     public void boutonDonneesClick(View v) {
-        bt_donnees = findViewById(R.id.boutonDonnees);
+        /*bt_donnees = findViewById(R.id.boutonDonnees);
         Drawable drawableBtDonnees = bt_donnees.getDrawable();
         sbt_device_interface.sendMessage("Z");
         if (!drawableBtDonnees.getConstantState().equals(getResources().getDrawable(R.drawable.empty).getConstantState())) {
@@ -172,7 +172,9 @@ public class ArduinoDroid extends MainActivity {
         } else {
             bt_donnees.setImageResource(R.drawable.req_data);
 
-        }
+        }*/
+            sbt_device_interface.sendMessage("T");
+
     }
 
     public void listCapteurs(ArrayList<String> listCapteurs) {
