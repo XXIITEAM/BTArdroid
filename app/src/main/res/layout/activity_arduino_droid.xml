@@ -67,7 +67,7 @@
             tools:style="@android:style/Widget.DeviceDefault.Light.TextView.SpinnerItem" />
 
         <ListView
-            android:id="@+id/listViewParams"
+            android:id="@+id/listViewCapteurs"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical">

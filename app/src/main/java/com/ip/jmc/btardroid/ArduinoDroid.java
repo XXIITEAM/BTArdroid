@@ -53,7 +53,9 @@ public class ArduinoDroid extends MainActivity {
     Intent intent_set_tv_retour_voiture = new Intent("get-param-opt");
     Intent intent_list_distance = new Intent("get-param-dist");
     static ListView lv_get_vh_data;
+    static ListView lv_capteurs;
     static ArrayAdapter aa_vh_params;
+    static  ArrayAdapter aa_capteurs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,8 @@ public class ArduinoDroid extends MainActivity {
         con_arduino_droid = this;
         con_app = getApplicationContext();
         //ListView getData
-        lv_get_vh_data = findViewById(R.id.listViewParams);
+        //lv_get_vh_data = findViewById(R.id.listViewParams);
+        lv_capteurs = findViewById(R.id.listViewCapteurs);
         JoystickView joystick = findViewById(R.id.joyStick);
         joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
@@ -82,10 +85,8 @@ public class ArduinoDroid extends MainActivity {
                     sbt_device_interface.sendMessage("S");
                 }
             }
-
-
         });
-
+        sbt_device_interface.sendMessage("T");
     }
 
     public void traitementReponse(String messageEnvoye, String messageRecu) {
@@ -116,6 +117,9 @@ public class ArduinoDroid extends MainActivity {
                     intent_list_distance.putStringArrayListExtra("al_list_distances", listParams);
                     LocalBroadcastManager.getInstance(con_arduino_droid).sendBroadcast(intent_list_distance);
                     break;
+                case"T" :
+                    listCapteurs(listParams);
+                    break;
                 case "W":
 
                     intent_set_tv_retour_voiture.putExtra("set_tv_retour_voiture", "Application des paramètres");
@@ -145,10 +149,7 @@ public class ArduinoDroid extends MainActivity {
             }
         }
     }
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
+
     public void boutonModeClick(View v) {
         bt_mode_vh = findViewById(R.id.boutonMode);
         Drawable drawable = bt_mode_vh.getDrawable();
@@ -160,7 +161,6 @@ public class ArduinoDroid extends MainActivity {
             sbt_device_interface.sendMessage("M");
         }
     }
-
 
     public void boutonDonneesClick(View v) {
         bt_donnees = findViewById(R.id.boutonDonnees);
@@ -175,6 +175,10 @@ public class ArduinoDroid extends MainActivity {
         }
     }
 
+    public void listCapteurs(ArrayList<String> listCapteurs) {
+        aa_capteurs = new ArrayAdapter(con_arduino_droid, android.R.layout.simple_list_item_1, listCapteurs);
+        lv_capteurs.setAdapter(aa_capteurs);
+    }
     public void listParams(ArrayList<String> listParams) {
 
         //lv_get_vh_data = findViewById(R.id.listViewParams);
@@ -201,5 +205,9 @@ public class ArduinoDroid extends MainActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

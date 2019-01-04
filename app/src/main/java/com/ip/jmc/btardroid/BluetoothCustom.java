@@ -121,6 +121,7 @@ public BluetoothDevice deviceConnected(){
         if (!bt_adapter.isEnabled()) {
             bt_adapter.enable();
             intent_set_bluetooth.putExtra("set_bluetooth", "on");
+            listDevicesBT();
         }else
         {
             bt_adapter.disable();
@@ -149,7 +150,12 @@ public BluetoothDevice deviceConnected(){
             intent_set_bluetooth.putExtra("set_device", device.getName());
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
-        listDevicesBT();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                listDevicesBT();
+            }
+        }, 2000);
     }
 
     //Fonction appelée lors du clique sur un périphérique appairé
@@ -246,12 +252,12 @@ public BluetoothDevice deviceConnected(){
     {
         if(bt_adapter.isEnabled())
         {
-            listDevicesBT();
             intent_set_bluetooth.putExtra("set_bluetooth", "majBt");
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
         else
         {
+            listDevicesBT();
             intent_set_bluetooth.putExtra("set_bluetooth", "btDesactive");
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
