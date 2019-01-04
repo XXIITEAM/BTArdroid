@@ -87,19 +87,39 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 while(true) {
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(2000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            //Mise à jour de la liste des devices appairés
-                            new BluetoothCustom().listDevicesBT();
+                            if(ArduinoDroid.testCenter == true)
+                            {
+                                new BluetoothCustom().capteurs();
+                            }
+                            else
+                            {   //Liste des périphériques appairés
+                                new BluetoothCustom().listDevicesBT();
+
+                            }
                             //Test de la connectivité bluetooth
                             new BluetoothCustom().testBluetooth();
                         }
                     });
+                }
+            }
+        });
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                while(true) {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    new BluetoothCustom().capteurs();
                 }
             }
         });

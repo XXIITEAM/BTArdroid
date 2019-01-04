@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
@@ -48,7 +49,6 @@ public class ArduinoDroid extends MainActivity {
         //return con_arduino_droid;
     //}
     static public Context con_app;
-
     static ImageButton bt_mode_vh, bt_donnees, bt3, bt4;
     Intent intent_set_tv_retour_voiture = new Intent("get-param-opt");
     Intent intent_list_distance = new Intent("get-param-dist");
@@ -56,10 +56,11 @@ public class ArduinoDroid extends MainActivity {
     static ListView lv_capteurs;
     static ArrayAdapter aa_vh_params;
     static  ArrayAdapter aa_capteurs;
-
+    static public boolean testCenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        testCenter = true;
         setContentView(R.layout.activity_arduino_droid);
         con_arduino_droid = this;
         con_app = getApplicationContext();
@@ -70,29 +71,33 @@ public class ArduinoDroid extends MainActivity {
         joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
+                testCenter = true;
                 if (angle >= 46 && angle <= 135 && strength >= 40) {
                     sbt_device_interface.sendMessage("F");
+                    testCenter = false;
                 } else if (angle >= 136 && angle <= 225 && strength >= 40) {
                     sbt_device_interface.sendMessage("L");
+                    testCenter = false;
                 } else if (angle >= 226 && angle <= 315 && strength >= 40) {
                     sbt_device_interface.sendMessage("B");
+                    testCenter = false;
                 } else if (angle >= 316 && angle <= 360 && strength >= 40) {
                     sbt_device_interface.sendMessage("R");
+                    testCenter = false;
                 } else if (angle >= 0 && angle <= 45 && strength >= 40) {
                     sbt_device_interface.sendMessage("R");
+                    testCenter = false;
                 }
                 if (angle == 0 && strength <= 39) {
                     sbt_device_interface.sendMessage("S");
+                    testCenter = true;
                 }
             }
         });
-        sbt_device_interface.sendMessage("T");
     }
-
     public void traitementReponse(String messageEnvoye, String messageRecu) {
         String cmdRetour;
         ArrayList<String> listParams = new ArrayList();
-        //
         if (messageRecu != null) {
             if (messageRecu.length() == 1) {
                 cmdRetour = messageRecu;
@@ -161,7 +166,6 @@ public class ArduinoDroid extends MainActivity {
             sbt_device_interface.sendMessage("M");
         }
     }
-
     public void boutonDonneesClick(View v) {
         /*bt_donnees = findViewById(R.id.boutonDonnees);
         Drawable drawableBtDonnees = bt_donnees.getDrawable();
