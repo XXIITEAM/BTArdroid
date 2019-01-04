@@ -161,9 +161,11 @@ public class ArduinoDroid extends MainActivity {
         if (!drawable.getConstantState().equals(getResources().getDrawable(R.drawable.autonome).getConstantState())) {
 
             sbt_device_interface.sendMessage("A");
+            testCenter = true;
         } else {
 
             sbt_device_interface.sendMessage("M");
+            testCenter = false;
         }
     }
     public void boutonDonneesClick(View v) {
