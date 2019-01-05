@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -43,9 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_btn_bt;
     private TextView tv_discovered;
     private TextView tv_appaires;
-    private TextView tv_btn_rafraichir;
-    private TextView tv_btn_quitter;
-    private TextView tv_btn_voiture;
+    private TextView tv_bas;
 
     //Récupération du contexte MainActivity
     public static Context getContext() {
@@ -124,9 +123,8 @@ public class MainActivity extends AppCompatActivity {
         tv_btn_bt = findViewById(R.id.textViewBtnBt);
         tv_appaires = findViewById(R.id.textViewAppaires);
         tv_discovered = findViewById(R.id.textViewDiscovered);
-        tv_btn_rafraichir = findViewById(R.id.textViewBtnRafraichir);
-        tv_btn_voiture = findViewById(R.id.textViewBtnVoiture);
-        tv_btn_quitter = findViewById(R.id.textViewBtnQuitter);
+        tv_bas = findViewById(R.id.textViewBas);
+        tv_bas.setMovementMethod(LinkMovementMethod.getInstance());
         //Nouvels ArrayAdapter pour les listes devices découverts et devices appairés
         aa_bt_decouverte = new ArrayAdapter(con_main_activity, android.R.layout.simple_list_item_1, al_bt_devices_discovered);
         aa_bt_paired = new ArrayAdapter(con_main_activity, android.R.layout.simple_list_item_1, al_bt_devices);
