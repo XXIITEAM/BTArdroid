@@ -20,7 +20,7 @@
     <string name="donnees_capteurs">Données capteurs :</string>
     <string name="TV_desactive">Désactiver</string>
     <string name="rechercher">Rechercher</string>
-    <string name="title">¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤\n\nBT Ardroid\nBy XXII Team\n\n¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤</string>
+    <string name="title">¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤\nBT Ardroid\nBy XXII Team\n¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤</string>
     <string name="lienSites">Liens utiles : | <a href="https://github.com/XXIITEAM">GitHub XXIITEAM</a> | <a href="https://www.arduino.cc">Site Arduino</a> | <a href="https://www.cdiscount.com/informatique/composants-informatiques/yier-4wd-bluetooth-controle-smart-voiture-kit-pour/f-1071311-yie0799085469979.html#mpos=3|mp">Voiture autonome</a> | </string>
     <string name="listDevice">Liste des périphériques découverts :</string>
     <string name="Text_accueil">L\'équipe XXII Team vous souhaite la bienvenue sur l\'application BTArdroid Cette application nécessite une carte Arduino avec un module Bluetooth. Pour ce projet nous utilisons une voiture autonome avec une carte Arduino Mega 2650. Le Buetooth de votre téléphone doit être activé.</string>
