@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 public void run() {
                     tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
-                    tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid\nCette application nécessite une carte Arduino avec un module Bluetooth. Pour ce projet nous utilisons une voiture autonome avec une carte Arduino Mega 2650. Le Buetooth de votre téléphone doit être activé.");
+                    tv_bluetooth.setText("L'équipe XXII Team vous souhaite la bienvenue sur l'application BTArdroid\nCette application nécessite une carte Arduino avec un module Bluetooth. Pour ce projet nous utilisons une voiture autonome avec une carte Arduino Mega 2650. Le Buetooth de votre téléphone doit être activé.");
                 }
             }, 3000);
         }
@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                 //Si le Blue tooth est inactif
                 case "testBluetooth":
                     tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
-                    tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid\nCette application nécessite une carte Arduino avec un module Bluetooth. Pour ce projet nous utilisons une voiture autonome avec une carte Arduino Mega 2650. Le Buetooth de votre téléphone doit être activé.");
+                    tv_bluetooth.setText("L'équipe XXII Team vous souhaite la bienvenue sur l'application BTArdroid\nCette application nécessite une carte Arduino avec un module Bluetooth. Pour ce projet nous utilisons une voiture autonome avec une carte Arduino Mega 2650. Le Buetooth de votre téléphone doit être activé.");
                     tv_discovered.setVisibility(TextView.INVISIBLE);
                     tv_appaires.setVisibility(TextView.INVISIBLE);
                     btn_bt_connect.setImageResource(R.drawable.bt_off);
