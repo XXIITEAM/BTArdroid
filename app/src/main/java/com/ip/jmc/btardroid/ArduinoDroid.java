@@ -165,7 +165,6 @@ public class ArduinoDroid extends MainActivity {
         } else {
 
             sbt_device_interface.sendMessage("M");
-            testCenter = false;
         }
     }
     public void boutonDonneesClick(View v) {

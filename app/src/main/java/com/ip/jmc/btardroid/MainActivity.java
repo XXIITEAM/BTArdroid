@@ -87,39 +87,26 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 while(true) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(1500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if(ArduinoDroid.testCenter == true)
+                            BluetoothDevice bd = new BluetoothCustom().deviceConnected();
+                            if(bd != null && ArduinoDroid.testCenter == true)
                             {
                                 new BluetoothCustom().capteurs();
                             }
                             else
                             {   //Liste des périphériques appairés
                                 new BluetoothCustom().listDevicesBT();
-
                             }
                             //Test de la connectivité bluetooth
                             new BluetoothCustom().testBluetooth();
                         }
                     });
-                }
-            }
-        });
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                while(true) {
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    new BluetoothCustom().capteurs();
                 }
             }
         });
@@ -188,17 +175,17 @@ public class MainActivity extends AppCompatActivity {
                     tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
                     tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
                 }
-            }, 2500);
+            }, 3000);
         }
         else
         {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
-                    tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
-                    tv_bluetooth.setText(deviceConnected.getName()+ " est connecté");
+                        tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
+                        tv_bluetooth.setText(deviceConnected.getName() + " est connecté");
                 }
-            }, 2500);
+            }, 3000);
         }
     }
 
@@ -216,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
             switch (s1) {
                 //Si le Blue tooth est inactif
                 case "testBluetooth":
+                    tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
                     tv_discovered.setVisibility(TextView.INVISIBLE);
                     tv_appaires.setVisibility(TextView.INVISIBLE);
                     btn_bt_connect.setImageResource(R.drawable.bt_off);
@@ -241,9 +229,9 @@ public class MainActivity extends AppCompatActivity {
                 case "on":
                     tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
                     tv_bluetooth.setText("Activation du Bluetooth ...");
-                    btn_bt_connect.setImageResource(R.drawable.bt_on_2);
-                    tv_btn_bt.setTextColor(Color.rgb(104, 149, 197));
-                    tv_btn_bt.setText("Désactiver");
+                    //btn_bt_connect.setImageResource(R.drawable.bt_on_2);
+                    //tv_btn_bt.setTextColor(Color.rgb(104, 149, 197));
+                    //tv_btn_bt.setText("Désactiver");
                     handlerHome();
                     break;
                 //Si on désactive le Bluetooth en cliquant sur l'icone Bluetooth
@@ -253,8 +241,8 @@ public class MainActivity extends AppCompatActivity {
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     tv_bluetooth.setText("Déconnexion du Bluetooth ...");
                     btn_bt_connect.setImageResource(R.drawable.bt_off);
-                    tv_btn_bt.setTextColor(Color.rgb(200, 0, 0));
-                    tv_btn_bt.setText("Activer");
+                    //tv_btn_bt.setTextColor(Color.rgb(200, 0, 0));
+                    //tv_btn_bt.setText("Activer");
                     clearIHM();
                     handlerHome();
                     break;
