@@ -80,23 +80,11 @@ public class BluetoothCustom extends MainActivity {
         //Si le Bluetooth est inactif
         else
         {
-            //Revérifie s'il est inactif
-            if (bt_adapter.isEnabled()) {
-                //S'il est actif on envoi un message au receiver pour mettre à jour l'icône
-                intent_set_bluetooth.putExtra("set_bluetooth", "btActive");
-                LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
-                //On lance la mise à jour des devices appairés
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        listDevicesBT();
-                    }
-                }, 1500);
-            } else {
+                deviceConnected = null;
+                bo_serial_test = false;
                 //Sinon on met à jour l'interface pour afficher l'icone Bluetooth inactif et vider les listes
                 intent_set_bluetooth.putExtra("set_bluetooth", "btPasActive");
                 LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
-            }
         }
     }
 
@@ -261,9 +249,10 @@ public BluetoothDevice deviceConnected(){
         deviceConnected = null;
     }
 
-    //S'il y a une erreur de connexion en port série
+    //S'il y a une erreur de message
     public void onErrorMessage(Throwable error) {
         deviceConnected = null;
+        bo_serial_test = false;
     }
 
     //Fonction pour rafraichir la liste des périphériques appairés

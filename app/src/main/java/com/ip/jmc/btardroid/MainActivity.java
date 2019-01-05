@@ -203,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
             switch (s1) {
                 //Si le Blue tooth est inactif
                 case "testBluetooth":
+                    tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
                     tv_bluetooth.setText("L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid");
                     tv_discovered.setVisibility(TextView.INVISIBLE);
                     tv_appaires.setVisibility(TextView.INVISIBLE);
@@ -236,13 +237,11 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 //Si on désactive le Bluetooth en cliquant sur l'icone Bluetooth
                 case "off":
-                    tv_discovered.setVisibility(TextView.INVISIBLE);
-                    tv_appaires.setVisibility(TextView.INVISIBLE);
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     tv_bluetooth.setText("Déconnexion du Bluetooth ...");
                     btn_bt_connect.setImageResource(R.drawable.bt_off);
-                    //tv_btn_bt.setTextColor(Color.rgb(200, 0, 0));
-                    //tv_btn_bt.setText("Activer");
+                    tv_btn_bt.setTextColor(Color.rgb(200, 0, 0));
+                    tv_btn_bt.setText("Activer");
                     clearIHM();
                     handlerHome();
                     break;
