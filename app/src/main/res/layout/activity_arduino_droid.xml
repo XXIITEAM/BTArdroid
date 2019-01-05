@@ -10,7 +10,7 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_green_dark"
+        android:background="@color/BlueXXII"
         android:gravity="bottom">
 
         <TableRow
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/donnees_capteurs"
-            android:textSize="24sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             tools:style="@android:style/Widget.DeviceDefault.Light.TextView.SpinnerItem" />
 
@@ -108,7 +108,7 @@
                     custom:JV_backgroundSizeRatio="90%"
                     custom:JV_borderColor="@android:color/black"
                     custom:JV_borderWidth="4dp"
-                    custom:JV_buttonColor="@android:color/holo_green_dark"
+                    custom:JV_buttonColor="@color/BlueXXII"
                     custom:JV_buttonSizeRatio="25%"
                     custom:JV_fixedCenter="false" />
 

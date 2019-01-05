@@ -20,6 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:background="@color/BlueXXII"
             android:gravity="top"
             android:orientation="horizontal">
 
@@ -93,6 +94,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/BlueXXII"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -108,6 +110,7 @@
                     android:layout_weight="1"
                     android:text="Désactiver"
                     android:textAlignment="center"
+                    android:textColor="@android:color/white"
                     android:textSize="8sp"
                     android:textStyle="bold" />
 
@@ -118,6 +121,7 @@
                     android:layout_weight="1"
                     android:text="Rechercher"
                     android:textAlignment="center"
+                    android:textColor="@android:color/white"
                     android:textSize="8sp"
                     android:textStyle="bold" />
 
@@ -128,6 +132,7 @@
                     android:layout_weight="1"
                     android:text="Rafraichir"
                     android:textAlignment="center"
+                    android:textColor="@android:color/white"
                     android:textSize="8sp"
                     android:textStyle="bold" />
 
@@ -138,6 +143,7 @@
                     android:layout_weight="1"
                     android:text="Voiture"
                     android:textAlignment="center"
+                    android:textColor="@android:color/white"
                     android:textSize="8sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -156,6 +162,7 @@
                     android:paddingRight="13dp"
                     android:text="Quitter"
                     android:textAlignment="textEnd"
+                    android:textColor="@android:color/white"
                     android:textSize="8sp"
                     android:textStyle="bold" />
             </LinearLayout>

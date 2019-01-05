@@ -127,10 +127,6 @@ public class MainActivity extends AppCompatActivity {
         tv_btn_rafraichir = findViewById(R.id.textViewBtnRafraichir);
         tv_btn_voiture = findViewById(R.id.textViewBtnVoiture);
         tv_btn_quitter = findViewById(R.id.textViewBtnQuitter);
-        tv_btn_quitter.setTextColor(Color.rgb(104,149,197));
-        tv_btn_voiture.setTextColor(Color.rgb(104,149,197));
-        tv_btn_rafraichir.setTextColor(Color.rgb(104, 149, 197));
-        tv_btn_recherche.setTextColor(Color.rgb(104, 149, 197));
         //Nouvels ArrayAdapter pour les listes devices découverts et devices appairés
         aa_bt_decouverte = new ArrayAdapter(con_main_activity, android.R.layout.simple_list_item_1, al_bt_devices_discovered);
         aa_bt_paired = new ArrayAdapter(con_main_activity, android.R.layout.simple_list_item_1, al_bt_devices);
@@ -217,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
                 case "testBluetoothActive":
                     tv_appaires.setVisibility(TextView.VISIBLE);
                     btn_bt_connect.setImageResource(R.drawable.bt_on_2);
-                    tv_btn_bt.setTextColor(Color.rgb(104, 149, 197));
+                    tv_btn_bt.setTextColor(Color.rgb(255, 255, 255));
                     tv_btn_bt.setText("Désactiver");
                     break;
                  //Si le Bluetooth n'est aps supporté
@@ -269,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
                     aa_bt_decouverte.clear();
                     lv_bt_discover.setAdapter(aa_bt_decouverte);
                     aa_bt_decouverte.notifyDataSetChanged();
-                    tv_btn_recherche.setTextColor(Color.rgb(255, 127, 80));
+                    tv_btn_recherche.setTextColor(Color.rgb(255, 200, 80));
                     tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
                     tv_bluetooth.setText("Découverte des périphériques à proximité ...");
                     tv_btn_recherche.setText("Arrêter");
@@ -384,7 +380,7 @@ public class MainActivity extends AppCompatActivity {
                     tv_bluetooth.setText("");
                     tv_discovered.setVisibility(TextView.VISIBLE);
                     btn_bt_recherche.setImageResource(R.drawable.loupe_1);
-                    tv_btn_recherche.setTextColor(Color.rgb(104, 149, 197));
+                    tv_btn_recherche.setTextColor(Color.rgb(255, 255, 255));
                     tv_btn_recherche.setText("Rechercher");
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     tv_bluetooth.setText("Fin de la recherche ...");
