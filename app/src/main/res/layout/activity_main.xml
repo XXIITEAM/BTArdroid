@@ -10,12 +10,8 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +26,6 @@
                 android:layout_width="59dp"
                 android:layout_height="59dp"
                 android:background="@android:color/transparent"
-                android:baselineAligned="false"
                 android:contentDescription="@string/bt_activation"
                 android:onClick="btnBTOn"
                 android:padding="5dp"
@@ -56,7 +51,7 @@
                 android:layout_width="59dp"
                 android:layout_height="59dp"
                 android:background="@android:color/transparent"
-                android:contentDescription="@string/bt_recherche"
+                android:contentDescription="@string/bt_refresh"
                 android:maxWidth="5dp"
                 android:maxHeight="5dp"
                 android:onClick="BtnRafraichir"
@@ -68,7 +63,7 @@
                 android:layout_width="59dp"
                 android:layout_height="59dp"
                 android:background="@android:color/transparent"
-                android:contentDescription="@string/bt_recherche"
+                android:contentDescription="@string/bt_voiture"
                 android:maxWidth="5dp"
                 android:maxHeight="5dp"
                 android:onClick="BtnVoiture"
@@ -79,13 +74,12 @@
                 android:id="@+id/btnQuitter"
                 android:layout_width="match_parent"
                 android:layout_height="59dp"
+                android:layout_marginEnd="5dp"
                 android:background="@android:color/transparent"
-                android:contentDescription="Quitter"
+                android:contentDescription="@string/bt_quitter"
                 android:maxWidth="5dp"
                 android:maxHeight="5dp"
                 android:onClick="BtnQuitter"
-                android:paddingRight="5dp"
-                android:paddingBottom="0dp"
                 android:scaleType="fitEnd"
                 app:srcCompat="@drawable/quitter" />
 
@@ -95,7 +89,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/BlueXXII"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="480dp"
@@ -107,22 +103,20 @@
                     android:id="@+id/textViewBtnBt"
                     android:layout_width="59dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Désactiver"
+                    android:text="@string/TV_desactive"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="8sp"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textViewBtnRecherche"
                     android:layout_width="59dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Rechercher"
+                    android:text="@string/TV_rechercher"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="8sp"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -130,10 +124,10 @@
                     android:layout_width="59dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Rafraichir"
+                    android:text="@string/bt_refresh"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="8sp"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -141,10 +135,10 @@
                     android:layout_width="59dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Voiture"
+                    android:text="@string/bt_voiture"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="8sp"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -158,12 +152,12 @@
                     android:id="@+id/textViewBtnQuitter"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:paddingRight="13dp"
-                    android:text="Quitter"
+                    android:text="@string/bt_quitter"
                     android:textAlignment="textEnd"
                     android:textColor="@android:color/white"
-                    android:textSize="8sp"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -181,8 +175,7 @@
                 android:id="@+id/textViewBT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="L'équipe XXIITEAM vous souhaite la bienvenue sur l'application BTArdroid"
+                android:text="@string/Text_accueil"
                 android:textAlignment="viewStart"
                 android:textColor="#7c7c7c"
                 android:textSize="12sp"
@@ -200,11 +193,12 @@
 
             <TextView
                 android:id="@+id/textViewAppaires"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingLeft="5dp"
                 android:paddingTop="5dp"
+                android:paddingRight="5dp"
                 android:paddingBottom="5dp"
                 android:textColor="#6895c5"
                 android:textSize="14sp"
@@ -247,10 +241,10 @@
 
             <TextView
                 android:id="@+id/textViewDiscovered"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Liste des périphériques découverts :"
+                android:text="@string/listDevice"
                 android:textColor="#6895c5"
                 android:textSize="14sp"
                 android:visibility="invisible" />

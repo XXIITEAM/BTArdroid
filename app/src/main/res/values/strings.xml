@@ -13,6 +13,13 @@
     <string name="strCommandeAuto">Mode A</string>
     <string name="strBoutonDonnees">Données</string>
     <string name="bt_recherche">Rechercher des périphériques</string>
+    <string name="bt_refresh">Rafraîchir</string>
+    <string name="bt_voiture">Voiture</string>
+    <string name="bt_quitter">Quitter</string>
     <string name="title_activity_option_vehicule">OptionVehicule</string>
     <string name="donnees_capteurs">Données capteurs :</string>
+    <string name="TV_desactive">Désactiver</string>
+    <string name="TV_rechercher">Rechercher</string>
+    <string name="listDevice">Liste des périphériques découverts :</string>
+    <string name="Text_accueil">L\'équipe XXIITEAM vous souhaite la bienvenue sur l\'application BTArdroid Cette application nécessite une carte Arduino avec un module Bluetooth. Pour ce projet nous utilisons une voiture autonome avec une carte Arduino Mega 2650. Le Buetooth de votre téléphone doit être activé.</string>
 </resources>
