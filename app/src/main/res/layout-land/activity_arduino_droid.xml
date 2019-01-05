@@ -9,7 +9,7 @@
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_green_dark"
+        android:background="@color/BlueXXII"
         android:gravity="bottom">
 
         <TableRow
@@ -66,12 +66,30 @@
     </TableLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="410dp"
         android:layout_height="wrap_content"
         android:background="@android:color/background_light"
         android:gravity="top"
         android:minWidth="300dp"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/BlueXXII"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/title"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/titre"
@@ -94,19 +112,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="bottom|left"
-        android:gravity="right">
+        android:layout_gravity="start"
+        android:gravity="end">
 
         <io.github.controlwear.virtual.joystick.android.JoystickView
             android:id="@+id/joyStick"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="bottom|center"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="120dp"
             custom:JV_backgroundColor="@android:color/darker_gray"
             custom:JV_backgroundSizeRatio="90%"
             custom:JV_borderColor="@android:color/black"
             custom:JV_borderWidth="4dp"
-            custom:JV_buttonColor="@android:color/holo_green_dark"
+            custom:JV_buttonColor="@color/BlueXXII"
             custom:JV_buttonSizeRatio="25%"
             custom:JV_fixedCenter="false" />
     </LinearLayout>
