@@ -94,6 +94,7 @@ public class ArduinoDroid extends MainActivity {
                 }
             }
         });
+        sbt_device_interface.sendMessage("T");
     }
     public void traitementReponse(String messageEnvoye, String messageRecu) {
         String cmdRetour;

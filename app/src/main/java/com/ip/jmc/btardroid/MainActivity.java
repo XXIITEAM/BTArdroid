@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 while(true) {
                     try {
-                        Thread.sleep(1500);
+                        Thread.sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
