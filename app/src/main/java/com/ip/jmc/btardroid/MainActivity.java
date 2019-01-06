@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 else
                 {
                     BluetoothDevice deviceConnecte = new BluetoothCustom().deviceConnected();
-                    tv_bluetooth.setTextColor(Color.rgb(34, 134, 227));
+                    tv_bluetooth.setTextColor(Color.rgb(34,139,34));
                     tv_bluetooth.setText("L'application est connectée avec le périphérique " + deviceConnecte.getName());
                 }
             }
@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                 BluetoothDevice deviceConnected = new BluetoothCustom().deviceConnected();
                 if(deviceConnected != null)
                 {
-                    tv_bluetooth.setTextColor(Color.rgb(34, 134, 227));
+                    tv_bluetooth.setTextColor(Color.rgb(34,139,34));
                     tv_bluetooth.setText("L'application est connectée avec le périphérique " + deviceConnected.getName());
                 }
             }
@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 //Si on active le Bluetooth en cliquant sur l'icone Bluetooth
                 case "on":
-                    tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+                    tv_bluetooth.setTextColor(Color.rgb(34,139,34));
                     tv_bluetooth.setText("Activation du Bluetooth ...");
                     //btn_bt_connect.setImageResource(R.drawable.bt_on_2);
                     //tv_btn_bt.setTextColor(Color.rgb(104, 149, 197));
@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
                     lv_bt_discover.setAdapter(aa_bt_decouverte);
                     aa_bt_decouverte.notifyDataSetChanged();
                     tv_btn_recherche.setTextColor(Color.rgb(255, 200, 80));
-                    tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+                    tv_bluetooth.setTextColor(Color.rgb(34,139,34));
                     tv_bluetooth.setText("Découverte des périphériques à proximité ...");
                     tv_btn_recherche.setText("Arrêter");
                     break;
@@ -334,7 +334,7 @@ public class MainActivity extends AppCompatActivity {
                  //Si on parvient à se connecter à un périphérique en port série
                 case "connecte":
                     device= intent.getStringExtra("set_device");
-                    tv_bluetooth.setTextColor(Color.rgb(58, 134, 227));
+                    tv_bluetooth.setTextColor(Color.rgb(34,139,34));
                     tv_bluetooth.setText("L'application est connectée avec le périphérique "+device);
                     break;
                 //Après une déconnexiona vec un périphérique Bluetooth
@@ -347,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
                 //Si on essai de se connecter à un périphérique en port série
                 case "connexion":
                     device= intent.getStringExtra("set_device");
-                    tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+                    tv_bluetooth.setTextColor(Color.rgb(34,139,34));
                     tv_bluetooth.setText("Connexion en port série avec le périphérique : "+device);
                     break;
                 //Si l'application ne peut pas appairer le périphérique
@@ -401,7 +401,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 //Si on rafraichit la liste des périphériques appairés
                 case "majBt":
-                    tv_bluetooth.setTextColor(Color.rgb(0,200,0));
+                    tv_bluetooth.setTextColor(Color.rgb(34,139,34));
                     tv_bluetooth.setText("Mise à jour de la liste des périphériques appairés ...");
                     tv_appaires.setText("");
                     aa_bt_paired.clear();
