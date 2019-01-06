@@ -82,7 +82,6 @@ public class BluetoothCustom extends MainActivity {
         else
         {
                 deviceConnected = null;
-                bo_serial_test = false;
                 //Sinon on met à jour l'interface pour afficher l'icone Bluetooth inactif et vider les listes
                 intent_set_bluetooth.putExtra("set_bluetooth", "btPasActive");
                 LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
@@ -99,7 +98,6 @@ public BluetoothDevice deviceConnected(){
             return deviceConnected;
         }
         else {
-            bo_serial_test = false;
             return null;
         }
 }
@@ -107,7 +105,6 @@ public BluetoothDevice deviceConnected(){
     public boolean testBluetooth() {
         if (!bt_adapter.isEnabled()) {
             deviceConnected = null;
-            bo_serial_test = false;
             intent_set_bluetooth.putExtra("set_bluetooth", "testBluetooth");
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
             return false;
@@ -141,7 +138,6 @@ public BluetoothDevice deviceConnected(){
         }else
         {
             deviceConnected = null;
-            bo_serial_test = false;
             intent_set_bluetooth.putExtra("set_bluetooth", "off");
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
             bt_adapter.disable();
@@ -178,15 +174,16 @@ public BluetoothDevice deviceConnected(){
     //Fonction appelée lors du clique sur un périphérique appairé
     public void connectDevice(BluetoothDevice device) {
         if(bo_serial_test == false) {
-            intent_set_bluetooth.putExtra("set_bluetooth", "connexion");
-            intent_set_bluetooth.putExtra("set_device", device.getName());
-            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+            bo_serial_test = true;
             deviceConnected = device;
             //Connection en port série
-             bt_manager.openSerialDevice(device.getAddress())
+            bt_manager.openSerialDevice(device.getAddress())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::onConnected, this::onError);
+            intent_set_bluetooth.putExtra("set_bluetooth", "connexion");
+            intent_set_bluetooth.putExtra("set_device", device.getName());
+            LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
         else
         {
@@ -221,8 +218,9 @@ public BluetoothDevice deviceConnected(){
     {
         if(bt_adapter.isEnabled())
         {
+
             //Si on est connecté en port série on lance l'application
-            if (bo_serial_test == true) {
+            if (bo_serial_test == true && deviceConnected != null) {
                 intent_set_bluetooth.putExtra("set_bluetooth", "voiture");
                 LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
             } else {
@@ -259,8 +257,7 @@ public BluetoothDevice deviceConnected(){
 
     //S'il y a une erreur de message
     public void onErrorMessage(Throwable error) {
-        deviceConnected = null;
-        bo_serial_test = false;
+
     }
 
     //Fonction pour rafraichir la liste des périphériques appairés
