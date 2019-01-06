@@ -176,8 +176,8 @@ public class MainActivity extends AppCompatActivity {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
-                        tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
-                        tv_bluetooth.setText(deviceConnected.getName() + " est connecté");
+                        tv_bluetooth.setTextColor(Color.rgb(34, 134, 227));
+                        tv_bluetooth.setText("Le périphérique "+deviceConnected.getName()+ " est connecté");
                 }
             }, 3000);
         }
@@ -213,6 +213,11 @@ public class MainActivity extends AppCompatActivity {
                     btn_bt_connect.setImageResource(R.drawable.bt_on_2);
                     tv_btn_bt.setTextColor(Color.rgb(255, 255, 255));
                     tv_btn_bt.setText("Désactiver");
+                    device= intent.getStringExtra("set_device");
+                    if(device != "null")
+                    {
+                        handlerHome();
+                    }
                     break;
                  //Si le Bluetooth n'est aps supporté
                 case"btPasSupporte":
@@ -281,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
                 case "appaireDevice":
                     deviceList = intent.getStringArrayListExtra("set_deviceList");
                     al_bt_devices.clear();
-                    tv_appaires.setTextColor(Color.rgb(104, 149, 197));
+                    tv_appaires.setTextColor(Color.rgb(58, 134, 227));
                     tv_appaires.setText("Liste des périphériques appairés :");
                     tv_appaires.setVisibility(TextView.VISIBLE);
                     lv_bt_devices.setVisibility(TextView.VISIBLE);
@@ -323,13 +328,13 @@ public class MainActivity extends AppCompatActivity {
                  //Si on parvient à se connecter à un périphérique en port série
                 case "connecte":
                     device= intent.getStringExtra("set_device");
-                    tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
-                    tv_bluetooth.setText(device+" est connecté");
+                    tv_bluetooth.setTextColor(Color.rgb(58, 134, 227));
+                    tv_bluetooth.setText("Le périphérique " +device+" est connecté");
                     break;
                 //Après une déconnexiona vec un périphérique Bluetooth
                 case "handlerHomeDeconnexion":
                     device= intent.getStringExtra("set_device");
-                    tv_bluetooth.setTextColor(Color.rgb(0, 200, 0));
+                    tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     tv_bluetooth.setText("Déconnexion du périphérique : "+device);
                     handlerHome();
                     break;

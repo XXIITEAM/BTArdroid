@@ -8,7 +8,7 @@
 
     <TableLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/BlueXXII"
         android:gravity="bottom">
 
@@ -151,6 +151,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/BlueXXII"
         android:gravity="end">
 
         <io.github.controlwear.virtual.joystick.android.JoystickView
@@ -160,7 +161,7 @@
             android:layout_gravity="bottom|center"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="120dp"
-            custom:JV_backgroundColor="@android:color/darker_gray"
+            custom:JV_backgroundColor="@android:color/white"
             custom:JV_backgroundSizeRatio="90%"
             custom:JV_borderColor="@android:color/black"
             custom:JV_borderWidth="4dp"

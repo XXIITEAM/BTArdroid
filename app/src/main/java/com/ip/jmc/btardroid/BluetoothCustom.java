@@ -109,14 +109,23 @@ public BluetoothDevice deviceConnected(){
         }
         else
         {
+            BluetoothDevice device = deviceConnected();
+            if(device != null)
+            {
+                intent_set_bluetooth.putExtra("set_device", device.getName());
+            }
+            else
+            {
+                intent_set_bluetooth.putExtra("set_device", "null");
+            }
             intent_set_bluetooth.putExtra("set_bluetooth", "testBluetoothActive");
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
-            Handler handler = new Handler();
+            /*Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
                     listDevicesBT();
                 }
-            }, 1500);
+            }, 1500);*/
         }
     }
 

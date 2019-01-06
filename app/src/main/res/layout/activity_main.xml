@@ -277,7 +277,7 @@
                         android:paddingTop="5dp"
                         android:paddingRight="5dp"
                         android:paddingBottom="5dp"
-                        android:textColor="#6895c5"
+                        android:textColor="#FF4086DB"
                         android:textSize="14sp"
                         android:visibility="invisible" />
 
@@ -320,7 +320,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/listDevice"
-                        android:textColor="#6895c5"
+                        android:textColor="#FF4086DB"
                         android:textSize="14sp"
                         android:visibility="invisible" />
                 </LinearLayout>
