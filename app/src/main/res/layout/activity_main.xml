@@ -81,7 +81,7 @@
                     android:id="@+id/btnVoiture"
                     android:layout_width="59dp"
                     android:layout_height="59dp"
-                    android:background="@android:color/transparent"
+                    android:background="@drawable/voiture"
                     android:contentDescription="@string/bt_voiture"
                     android:maxWidth="5dp"
                     android:maxHeight="5dp"
@@ -101,6 +101,13 @@
                     android:onClick="BtnQuitter"
                     android:scaleType="fitEnd"
                     app:srcCompat="@drawable/quitter" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="file:///C:/Users/stan/Downloads/steering-wheel-64.png" />
 
             </LinearLayout>
 
