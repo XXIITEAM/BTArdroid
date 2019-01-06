@@ -44,16 +44,18 @@
                     style="@style/Widget.AppCompat.ImageButton"
                     android:layout_width="59dp"
                     android:layout_height="59dp"
+                    android:layout_marginTop="3dp"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/bt_activation"
                     android:onClick="btnBTOn"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@drawable/bt_on"/>
+                    app:srcCompat="@drawable/bt_on" />
 
                 <ImageButton
                     android:id="@+id/BtnRecherche"
                     android:layout_width="59dp"
                     android:layout_height="59dp"
+                    android:layout_marginTop="3dp"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/bt_recherche"
                     android:onClick="BtnRecherche"
@@ -63,6 +65,7 @@
                     android:id="@+id/BtnRafraichir"
                     android:layout_width="59dp"
                     android:layout_height="59dp"
+                    android:layout_marginTop="3dp"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/bt_refresh"
                     android:onClick="BtnRafraichir"
@@ -72,6 +75,7 @@
                     android:id="@+id/btnVoiture"
                     android:layout_width="59dp"
                     android:layout_height="59dp"
+                    android:layout_marginTop="3dp"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/bt_voiture"
                     android:onClick="BtnVoiture"
@@ -175,13 +179,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/BleuClaire"
+                android:background="@color/XXIITEAM_BIS"
                 android:orientation="horizontal"></LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="545dp"
+                android:layout_height="550dp"
                 android:orientation="vertical"
                 android:scrollbarAlwaysDrawHorizontalTrack="?android:attr/windowOverscan"
                 android:scrollbarAlwaysDrawVerticalTrack="?android:attr/windowSwipeToDismiss"
@@ -299,7 +303,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/BleuClaire"
+                    android:background="@color/XXIITEAM_BIS"
                     android:orientation="horizontal"></LinearLayout>
 
                 <LinearLayout
