@@ -50,7 +50,7 @@
                     android:padding="5dp"
                     android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@drawable/bt_on_2"
+                    app:srcCompat="@drawable/bt_on"
                     tools:layout_editor_absoluteY="0dp" />
 
                 <ImageButton

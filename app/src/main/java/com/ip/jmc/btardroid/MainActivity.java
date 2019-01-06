@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
                 //Si le Bluetooth est actif
                 case "testBluetoothActive":
                     tv_appaires.setVisibility(TextView.VISIBLE);
-                    btn_bt_connect.setImageResource(R.drawable.bt_on_2);
+                    btn_bt_connect.setImageResource(R.drawable.bt_on);
                     tv_btn_bt.setTextColor(Color.rgb(255, 255, 255));
                     tv_btn_bt.setText("Désactiver");
                     handlerDevice();
@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
                     tv_btn_bt.setText("Activer");
                     break;
                 case "btActive":
-                    btn_bt_connect.setImageResource(R.drawable.bt_on_2);
+                    btn_bt_connect.setImageResource(R.drawable.bt_on);
                     tv_btn_bt.setTextColor(Color.rgb(104, 149, 197));
                     tv_btn_bt.setText("Désactiver");
                     break;
