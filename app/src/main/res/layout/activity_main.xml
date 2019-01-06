@@ -79,15 +79,16 @@
 
                 <ImageButton
                     android:id="@+id/btnVoiture"
-                    android:layout_width="59dp"
-                    android:layout_height="59dp"
-                    android:background="@drawable/voiture"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/volant_voiture_bleu"
                     android:contentDescription="@string/bt_voiture"
                     android:maxWidth="5dp"
                     android:maxHeight="5dp"
                     android:onClick="BtnVoiture"
-                    android:paddingBottom="0dp"
-                    app:srcCompat="@drawable/voiture" />
+                    android:paddingBottom="0dp" />
 
                 <ImageButton
                     android:id="@+id/btnQuitter"
