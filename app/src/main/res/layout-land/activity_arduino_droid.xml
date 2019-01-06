@@ -75,6 +75,25 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:background="@color/BlueXXII"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewTitleBorderTop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="cursive"
+                android:text="@string/titleBorder"
+                android:textAlignment="center"
+                android:textColor="@color/BleuClaire"
+                android:textSize="12sp"
+                android:textStyle="bold|italic" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/BlueXXII"
             android:orientation="horizontal">
@@ -89,6 +108,25 @@
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:background="@color/BlueXXII"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewTitleBorderBottom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="cursive"
+                android:text="@string/titleBorder"
+                android:textAlignment="center"
+                android:textColor="@color/BleuClaire"
+                android:textSize="12sp"
+                android:textStyle="bold|italic" />
         </LinearLayout>
 
         <TextView
