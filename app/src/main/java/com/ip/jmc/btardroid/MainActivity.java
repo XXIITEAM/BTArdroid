@@ -165,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 BluetoothDevice deviceConnected = new BluetoothCustom().deviceConnected();
                 if (deviceConnected == null) {
-
                     tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
                     tv_bluetooth.setText(R.string.Text_accueil);
                 } else {
