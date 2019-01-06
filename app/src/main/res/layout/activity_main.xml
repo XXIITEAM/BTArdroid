@@ -279,7 +279,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/listDevice"
-                        android:textColor="#FF4086DB"
+                        android:textColor="@color/BlueXXII"
                         android:textSize="14sp"
                         android:visibility="invisible" />
                 </LinearLayout>

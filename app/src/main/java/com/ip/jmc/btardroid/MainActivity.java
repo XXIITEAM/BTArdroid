@@ -292,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
                 case "appaireDevice":
                     deviceList = intent.getStringArrayListExtra("set_deviceList");
                     al_bt_devices.clear();
-                    tv_appaires.setTextColor(Color.rgb(58, 134, 227));
+                    tv_appaires.setTextColor(Color.rgb(13, 114, 134));
                     tv_appaires.setText("Liste des périphériques appairés :");
                     tv_appaires.setVisibility(TextView.VISIBLE);
                     lv_bt_devices.setVisibility(TextView.VISIBLE);
