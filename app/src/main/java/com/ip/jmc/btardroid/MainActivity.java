@@ -93,17 +93,16 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            BluetoothDevice bd = new BluetoothCustom().deviceConnected();
-                            if(bd != null && ArduinoDroid.testCenter == true)
-                            {
-                                new BluetoothCustom().capteurs();
-                            }
-                            else
-                            {   //Liste des périphériques appairés
-                                new BluetoothCustom().listDevicesBT();
-                            }
                             //Test de la connectivité bluetooth
-                            new BluetoothCustom().testBluetooth();
+                            boolean testBT = new BluetoothCustom().testBluetooth();
+                            if(testBT == true) {
+                                BluetoothDevice bd = new BluetoothCustom().deviceConnected();
+                                if (bd != null && ArduinoDroid.testCenter == true) {
+                                    new BluetoothCustom().capteurs();
+                                } else {   //Liste des périphériques appairés
+                                    new BluetoothCustom().listDevicesBT();
+                                }
+                            }
                         }
                     });
                 }
@@ -161,26 +160,22 @@ public class MainActivity extends AppCompatActivity {
     //Handler pour réafficher le message d'accueil après 2500 millisecondes
     private void handlerHome()
     {
-        BluetoothDevice deviceConnected = new BluetoothCustom().deviceConnected();
-        if(deviceConnected == null) {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                BluetoothDevice deviceConnected = new BluetoothCustom().deviceConnected();
+                if (deviceConnected == null) {
+
                     tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
                     tv_bluetooth.setText(R.string.Text_accueil);
+                } else {
+                    tv_bluetooth.setTextColor(Color.rgb(34, 134, 227));
+                    tv_bluetooth.setText("L'application est connectée avec le périphérique " + deviceConnected.getName());
+
                 }
-            }, 3000);
-        }
-        else
-        {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                        tv_bluetooth.setTextColor(Color.rgb(34, 134, 227));
-                        tv_bluetooth.setText("Le périphérique "+deviceConnected.getName()+ " est connecté");
-                }
-            }, 3000);
-        }
+            }
+        }, 3000);
+
     }
 
     //Receiver local pour traiter la partie affichage dynamique. Il est utilisé dans les méthodes de BluetoothCustom.
@@ -213,11 +208,7 @@ public class MainActivity extends AppCompatActivity {
                     btn_bt_connect.setImageResource(R.drawable.bt_on_2);
                     tv_btn_bt.setTextColor(Color.rgb(255, 255, 255));
                     tv_btn_bt.setText("Désactiver");
-                    device= intent.getStringExtra("set_device");
-                    if(device != "null")
-                    {
-                        handlerHome();
-                    }
+                    handlerHome();
                     break;
                  //Si le Bluetooth n'est aps supporté
                 case"btPasSupporte":
@@ -329,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
                 case "connecte":
                     device= intent.getStringExtra("set_device");
                     tv_bluetooth.setTextColor(Color.rgb(58, 134, 227));
-                    tv_bluetooth.setText("Le périphérique " +device+" est connecté");
+                    tv_bluetooth.setText("L'application est connectée avec le périphérique "+device);
                     break;
                 //Après une déconnexiona vec un périphérique Bluetooth
                 case "handlerHomeDeconnexion":

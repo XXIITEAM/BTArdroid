@@ -57,6 +57,7 @@ public class BluetoothCustom extends MainActivity {
     public void BluetoothCustomOnCreate() {
         //Si le Bluetooth n'est pas supporté
         if (bt_manager == null) {
+            deviceConnected = null;
             intent_set_bluetooth.putExtra("set_bluetooth", "btPasSupporte");
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
             finish();
@@ -98,26 +99,21 @@ public BluetoothDevice deviceConnected(){
             return deviceConnected;
         }
         else {
+            bo_serial_test = false;
             return null;
         }
 }
     //Fonction pour tester le Bluetooth en asynchrone
-    public void testBluetooth() {
+    public boolean testBluetooth() {
         if (!bt_adapter.isEnabled()) {
+            deviceConnected = null;
+            bo_serial_test = false;
             intent_set_bluetooth.putExtra("set_bluetooth", "testBluetooth");
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+            return false;
         }
         else
         {
-            BluetoothDevice device = deviceConnected();
-            if(device != null)
-            {
-                intent_set_bluetooth.putExtra("set_device", device.getName());
-            }
-            else
-            {
-                intent_set_bluetooth.putExtra("set_device", "null");
-            }
             intent_set_bluetooth.putExtra("set_bluetooth", "testBluetoothActive");
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
             /*Handler handler = new Handler();
@@ -126,6 +122,7 @@ public BluetoothDevice deviceConnected(){
                     listDevicesBT();
                 }
             }, 1500);*/
+            return true;
         }
     }
 
@@ -143,6 +140,8 @@ public BluetoothDevice deviceConnected(){
             }, 1500);
         }else
         {
+            deviceConnected = null;
+            bo_serial_test = false;
             intent_set_bluetooth.putExtra("set_bluetooth", "off");
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
             bt_adapter.disable();
