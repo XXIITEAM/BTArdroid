@@ -111,10 +111,10 @@ public class ArduinoDroid extends MainActivity {
             }
             switch (cmdRetour) {
                 case "A":
-                    bt_mode_vh.setImageResource(R.drawable.autonome);
+                    bt_mode_vh.setImageResource(R.drawable.auto_mode);
                     break;
                 case "M":
-                    bt_mode_vh.setImageResource(R.drawable.human);
+                    bt_mode_vh.setImageResource(R.drawable.manuel_mode);
                     break;
                 case "Z":
                     listParams(listParams);

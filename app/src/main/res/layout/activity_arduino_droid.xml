@@ -38,28 +38,28 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="TODO"
                 android:onClick="boutonModeClick"
-                custom:srcCompat="@drawable/mode_manuel2" />
+                custom:srcCompat="@drawable/manuel_mode" />
 
             <ImageButton
                 android:id="@+id/boutonDonnees"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="boutonDonneesClick"
-                custom:srcCompat="@drawable/empty" />
+                custom:srcCompat="@drawable/vehicule_donnees" />
 
             <ImageButton
                 android:id="@+id/bt3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="btn3Click"
-                android:src="@drawable/vh" />
+                android:src="@drawable/en_attente" />
 
             <ImageButton
                 android:id="@+id/bt4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="boutonConfigurationVhClick"
-                android:src="@drawable/opt" />
+                android:src="@drawable/vehicule_options" />
         </TableRow>
 
     </TableLayout>
