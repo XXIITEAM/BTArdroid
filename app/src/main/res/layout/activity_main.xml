@@ -72,7 +72,6 @@
                     android:maxWidth="5dp"
                     android:maxHeight="5dp"
                     android:onClick="BtnRafraichir"
-                    android:paddingBottom="0dp"
                     app:srcCompat="@drawable/accueil_refresh" />
 
                 <ImageButton
