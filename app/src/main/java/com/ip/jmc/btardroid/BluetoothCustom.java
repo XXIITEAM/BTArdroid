@@ -194,7 +194,7 @@ public BluetoothDevice deviceConnected(){
                 public void run() {
                     bt_adapter.enable();
                 }
-            }, 2000);
+            }, 1500);
             intent_set_bluetooth.putExtra("set_bluetooth", "handlerHomeDeconnexion");
             intent_set_bluetooth.putExtra("set_device", device.getName());
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
@@ -267,10 +267,15 @@ public BluetoothDevice deviceConnected(){
         {
             intent_set_bluetooth.putExtra("set_bluetooth", "majBt");
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    listDevicesBT();
+                }
+            }, 1000);
         }
         else
         {
-            listDevicesBT();
             intent_set_bluetooth.putExtra("set_bluetooth", "btDesactive");
             LocalBroadcastManager.getInstance(con_main_activity).sendBroadcast(intent_set_bluetooth);
         }
