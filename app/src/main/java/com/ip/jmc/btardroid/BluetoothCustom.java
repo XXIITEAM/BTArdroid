@@ -174,7 +174,7 @@ public BluetoothDevice deviceConnected(){
     //Fonction appelée lors du clique sur un périphérique appairé
     public void connectDevice(BluetoothDevice device) {
         if(bo_serial_test == false) {
-            bo_serial_test = true;
+            //bo_serial_test = true;
             deviceConnected = device;
             //Connection en port série
             bt_manager.openSerialDevice(device.getAddress())
