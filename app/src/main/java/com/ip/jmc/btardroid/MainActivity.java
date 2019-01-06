@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 //Si on lance une découverte de périphériques à proximité
                 case "decouverte":
-                    btn_bt_recherche.setImageResource(R.drawable.loupe_2);
+                    //btn_bt_recherche.setImageResource(R.drawable.loupe_2);
                     aa_bt_decouverte.clear();
                     lv_bt_discover.setAdapter(aa_bt_decouverte);
                     aa_bt_decouverte.notifyDataSetChanged();
@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                  //Si on arrête la découverte de périphériques à proximité en cliquant sur l'icone loupe
                 case "stopDecouverte":
-                    btn_bt_recherche.setImageResource(R.drawable.loupe_1);
+                    //btn_bt_recherche.setImageResource(R.drawable.loupe_1);
                     tv_btn_recherche.setTextColor(Color.rgb(255, 255, 255));
                     tv_btn_recherche.setText("Rechercher");
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
@@ -388,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
                 case "finRecherche":
                     tv_bluetooth.setText("");
                     tv_discovered.setVisibility(TextView.VISIBLE);
-                    btn_bt_recherche.setImageResource(R.drawable.loupe_1);
+                    //btn_bt_recherche.setImageResource(R.drawable.loupe_1);
                     tv_btn_recherche.setTextColor(Color.rgb(255, 255, 255));
                     tv_btn_recherche.setText("Rechercher");
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));

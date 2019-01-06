@@ -47,7 +47,6 @@
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/bt_activation"
                     android:onClick="btnBTOn"
-                    android:padding="5dp"
                     android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
                     app:srcCompat="@drawable/bt_on"
@@ -62,8 +61,7 @@
                     android:maxWidth="5dp"
                     android:maxHeight="5dp"
                     android:onClick="BtnRecherche"
-                    android:paddingBottom="0dp"
-                    app:srcCompat="@drawable/loupe_1" />
+                    app:srcCompat="@drawable/accueil_recherche" />
 
                 <ImageButton
                     android:id="@+id/BtnRafraichir"
@@ -75,20 +73,17 @@
                     android:maxHeight="5dp"
                     android:onClick="BtnRafraichir"
                     android:paddingBottom="0dp"
-                    app:srcCompat="@drawable/rafraichir" />
+                    app:srcCompat="@drawable/accueil_refresh" />
 
                 <ImageButton
                     android:id="@+id/btnVoiture"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/volant_voiture_bleu"
+                    android:layout_width="59dp"
+                    android:layout_height="59dp"
+                    android:background="@drawable/accueil_volant"
                     android:contentDescription="@string/bt_voiture"
                     android:maxWidth="5dp"
                     android:maxHeight="5dp"
-                    android:onClick="BtnVoiture"
-                    android:paddingBottom="0dp" />
+                    android:onClick="BtnVoiture" />
 
                 <ImageButton
                     android:id="@+id/btnQuitter"
