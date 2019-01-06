@@ -167,14 +167,30 @@ public class MainActivity extends AppCompatActivity {
                 if (deviceConnected == null) {
                     tv_bluetooth.setTextColor(Color.rgb(124, 124, 124));
                     tv_bluetooth.setText(R.string.Text_accueil);
-                } else {
+                }
+                else
+                {
+                    BluetoothDevice deviceConnecte = new BluetoothCustom().deviceConnected();
                     tv_bluetooth.setTextColor(Color.rgb(34, 134, 227));
-                    tv_bluetooth.setText("L'application est connectée avec le périphérique " + deviceConnected.getName());
-
+                    tv_bluetooth.setText("L'application est connectée avec le périphérique " + deviceConnecte.getName());
                 }
             }
         }, 3000);
 
+    }
+    private void handlerDevice()
+    {
+        Handler handlerDevice = new Handler();
+        handlerDevice.postDelayed(new Runnable() {
+            public void run() {
+                BluetoothDevice deviceConnected = new BluetoothCustom().deviceConnected();
+                if(deviceConnected != null)
+                {
+                    tv_bluetooth.setTextColor(Color.rgb(34, 134, 227));
+                    tv_bluetooth.setText("L'application est connectée avec le périphérique " + deviceConnected.getName());
+                }
+            }
+        }, 3000);
     }
 
     //Receiver local pour traiter la partie affichage dynamique. Il est utilisé dans les méthodes de BluetoothCustom.
@@ -207,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
                     btn_bt_connect.setImageResource(R.drawable.bt_on_2);
                     tv_btn_bt.setTextColor(Color.rgb(255, 255, 255));
                     tv_btn_bt.setText("Désactiver");
-                    handlerHome();
+                    handlerDevice();
                     break;
                  //Si le Bluetooth n'est aps supporté
                 case"btPasSupporte":
@@ -266,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
                  //Si on arrête la découverte de périphériques à proximité en cliquant sur l'icone loupe
                 case "stopDecouverte":
                     btn_bt_recherche.setImageResource(R.drawable.loupe_1);
-                    tv_btn_recherche.setTextColor(Color.rgb(104, 149, 197));
+                    tv_btn_recherche.setTextColor(Color.rgb(255, 255, 255));
                     tv_btn_recherche.setText("Rechercher");
                     tv_bluetooth.setTextColor(Color.rgb(200, 0, 0));
                     tv_bluetooth.setText("Fin de la recherche ...");
