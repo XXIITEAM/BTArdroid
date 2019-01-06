@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="TODO"
                 android:onClick="boutonModeClick"
-                custom:srcCompat="@drawable/human" />
+                custom:srcCompat="@drawable/mode_manuel2" />
 
             <ImageButton
                 android:id="@+id/boutonDonnees"
