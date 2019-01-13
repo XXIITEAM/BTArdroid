@@ -127,7 +127,6 @@ public class ArduinoDroid extends MainActivity {
                     listCapteurs(listParams);
                     break;
                 case "W":
-
                     intent_set_tv_retour_voiture.putExtra("set_tv_retour_voiture", "Application des paramètres");
                     LocalBroadcastManager.getInstance(con_arduino_droid).sendBroadcast(intent_set_tv_retour_voiture);
                     Handler handlerW = new Handler();
@@ -138,7 +137,6 @@ public class ArduinoDroid extends MainActivity {
 
                         }
                     }, 3000);
-
                     break;
                 case "Q":
                     intent_set_tv_retour_voiture.putExtra("set_tv_retour_voiture", "Sauvegarde des paramètres actuels");
