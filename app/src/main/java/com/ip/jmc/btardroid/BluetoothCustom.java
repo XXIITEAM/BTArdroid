@@ -361,7 +361,7 @@ public BluetoothDevice deviceConnected(){
     public void capteurs() {
         if(bo_serial_test == true)
         {
-            //sbt_device_interface.sendMessage("T");
+            sbt_device_interface.sendMessage("Z");
         }
     }
 }

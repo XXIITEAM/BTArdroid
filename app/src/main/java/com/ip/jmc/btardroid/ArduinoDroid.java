@@ -34,6 +34,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,10 +120,10 @@ public class ArduinoDroid extends MainActivity {
                 case "Z":
                     listParams(listParams);
                     break;
-                /*case "O":
+                case "O":
                     intent_list_distance.putStringArrayListExtra("al_list_distances", listParams);
                     LocalBroadcastManager.getInstance(con_arduino_droid).sendBroadcast(intent_list_distance);
-                    break;*/
+                    break;
                 case"T" :
                     listCapteurs(listParams);
                     break;
@@ -161,22 +162,21 @@ public class ArduinoDroid extends MainActivity {
             sbt_device_interface.sendMessage("A");
             testCenter = true;
         } else {
-
             sbt_device_interface.sendMessage("M");
         }
     }
     public void boutonDonneesClick(View v) {
-        /*bt_donnees = findViewById(R.id.boutonDonnees);
+        bt_donnees = findViewById(R.id.boutonDonnees);
         Drawable drawableBtDonnees = bt_donnees.getDrawable();
         sbt_device_interface.sendMessage("Z");
-        if (!drawableBtDonnees.getConstantState().equals(getResources().getDrawable(R.drawable.empty).getConstantState())) {
-            bt_donnees.setImageResource(R.drawable.empty);
+        if (!drawableBtDonnees.getConstantState().equals(getResources().getDrawable(R.drawable.vehicule_donnees).getConstantState())) {
+            bt_donnees.setImageResource(R.drawable.vehicule_donnees);
 
         } else {
-            bt_donnees.setImageResource(R.drawable.req_data);
+            bt_donnees.setImageResource(R.drawable.vehicule_donnees_transfert);
 
-        }*/
-            //sbt_device_interface.sendMessage("T");
+        }
+        //sbt_device_interface.sendMessage("T");
 
     }
 
@@ -186,26 +186,27 @@ public class ArduinoDroid extends MainActivity {
     }
     public void listParams(ArrayList<String> listParams) {
 
-        //lv_get_vh_data = findViewById(R.id.listViewParams);
+
 
         aa_vh_params = new ArrayAdapter(con_arduino_droid, android.R.layout.simple_list_item_1, listParams);
 
-        lv_get_vh_data.setAdapter(aa_vh_params);
-        bt_donnees.setImageResource(R.drawable.empty);
+       lv_capteurs.setAdapter(aa_vh_params);
+        aa_vh_params.notifyDataSetChanged();
+        lv_capteurs.setVisibility(TextView.VISIBLE);
+        bt_donnees.setImageResource(R.drawable.vehicule_donnees);
 
     }
 
     public void btn3Click(View v) {
-        Intent i_options = new Intent(con_app, OptionVehicule.class);
-        con_app.startActivity(i_options);
+        //Intent myIntent = new Intent(con_main_activity, OptionVehicule.class);
+        //startActivity(myIntent);
     }
 
     public void boutonConfigurationVhClick(View v) {
 
         sbt_device_interface.sendMessage("O");
-        Intent i_options = new Intent(con_app, OptionVehicule.class);
-        con_app.startActivity(i_options);
-
+        Intent myIntent = new Intent(con_main_activity, OptionVehicule.class);
+        startActivity(myIntent);
     }
     @Override
     protected void onDestroy() {
