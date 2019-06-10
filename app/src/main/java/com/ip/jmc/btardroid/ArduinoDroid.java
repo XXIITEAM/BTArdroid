@@ -94,7 +94,7 @@ public class ArduinoDroid extends MainActivity {
                 }
             }
         });
-        sbt_device_interface.sendMessage("T");
+        sbt_device_interface.sendMessage("S");
     }
     public void traitementReponse(String messageEnvoye, String messageRecu) {
         String cmdRetour;
@@ -119,10 +119,10 @@ public class ArduinoDroid extends MainActivity {
                 case "Z":
                     listParams(listParams);
                     break;
-                case "O":
+                /*case "O":
                     intent_list_distance.putStringArrayListExtra("al_list_distances", listParams);
                     LocalBroadcastManager.getInstance(con_arduino_droid).sendBroadcast(intent_list_distance);
-                    break;
+                    break;*/
                 case"T" :
                     listCapteurs(listParams);
                     break;
@@ -157,8 +157,7 @@ public class ArduinoDroid extends MainActivity {
     public void boutonModeClick(View v) {
         bt_mode_vh = findViewById(R.id.boutonMode);
         Drawable drawable = bt_mode_vh.getDrawable();
-        if (!drawable.getConstantState().equals(getResources().getDrawable(R.drawable.autonome).getConstantState())) {
-
+        if (!drawable.getConstantState().equals(getResources().getDrawable(R.drawable.auto_mode).getConstantState())) {
             sbt_device_interface.sendMessage("A");
             testCenter = true;
         } else {
@@ -177,7 +176,7 @@ public class ArduinoDroid extends MainActivity {
             bt_donnees.setImageResource(R.drawable.req_data);
 
         }*/
-            sbt_device_interface.sendMessage("T");
+            //sbt_device_interface.sendMessage("T");
 
     }
 

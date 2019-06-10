@@ -211,6 +211,7 @@ public BluetoothDevice deviceConnected(){
         sbt_device_interface = connectedDevice.toSimpleDeviceInterface();
         //On écoute le périphérique
         sbt_device_interface.setListeners(this::onMessageReceived, this::onMessageSent, this::onErrorMessage);
+        new BluetoothCustom().lancementVoiture();
     }
 
     //Lorsqu'on lance l'application ArduinoDroid lorsqu'on clique sur l'icone voiture
@@ -360,7 +361,7 @@ public BluetoothDevice deviceConnected(){
     public void capteurs() {
         if(bo_serial_test == true)
         {
-            sbt_device_interface.sendMessage("T");
+            //sbt_device_interface.sendMessage("T");
         }
     }
 }
