@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         aa_bt_paired = new ArrayAdapter(con_main_activity, android.R.layout.simple_list_item_1, al_bt_devices);
     }
 
+
     //Bouton Bluetooth (icone Bluetooth)
     public void btnBTOn(View v) {
         //Activation ou désactivation du Bluetooth
